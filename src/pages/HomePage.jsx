@@ -1,4 +1,4 @@
-import Navbar from "../components/Shared/Navbar";
+import Navbar from "../components/ui/Navbar";
 import Modules from "./Modules";
 
 export default function HomePage() {

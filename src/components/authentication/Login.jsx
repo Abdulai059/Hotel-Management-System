@@ -1,28 +1,13 @@
 import { useState } from "react";
-import {
-    Eye,
-    EyeOff,
-    Hotel,
-    BedDouble,
-    KeyRound,
-    Bell,
-    Coffee,
-    Utensils,
-    MapPin,
-    DoorOpen,
-    ConciergeBell
-} from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router";
-import { OrbitingCircles } from "../ui/orbiting-circles";
-import { OrbitingCirclesLogos } from "../Shared/orbiting-logos";
+import { OrbitingCirclesLogos } from "../ui/orbiting-logos";
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
@@ -33,9 +18,9 @@ export default function Login() {
         }
     };
 
-
     return (
         <div className="flex min-h-screen">
+
             <div className="relative w-1/2 flex flex-col items-center justify-center px-12">
                 <div className="w-full max-w-md bg-white rounded-sm shadow-sm p-8">
                     <div className="mb-8 text-center">
@@ -112,9 +97,7 @@ export default function Login() {
             </div>
 
 
-
             <div className="relative w-1/2 flex items-center justify-center bg-[#e3fdff]">
-
                 <OrbitingCirclesLogos />
             </div>
         </div>

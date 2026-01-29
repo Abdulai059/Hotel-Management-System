@@ -1,9 +1,12 @@
 import { Building2, MapPin, Shield } from "lucide-react";
+import { useNavigate } from "react-router";
 
 export default function Modules() {
+    const navigate = useNavigate();
+
     const user = {
         name: 'Abdulai Zesung Uosumanu',
-        role: 'Front Desk',
+        role: 'Front Desk!',
         avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop',
         hotel: {
             name: 'Global Dream Hotel',
@@ -24,6 +27,7 @@ export default function Modules() {
             title: 'Front Desk Module',
             description: 'Handles all front desk operations including guest management and room assignments.',
             color: 'green',
+            path: '/dashboard/frontdesk',
         },
         {
             title: 'Restaurant Module',
@@ -39,7 +43,9 @@ export default function Modules() {
 
     const colorStyles = {
         green: { bg: 'bg-green-100', border: 'border-green-500', title: 'text-green-700', text: 'text-green-800' },
+
         red: { bg: 'bg-red-100', border: 'border-red-500', title: 'text-red-700', text: 'text-red-800' },
+
         yellow: { bg: 'bg-yellow-100', border: 'border-yellow-500', title: 'text-yellow-700', text: 'text-yellow-800' },
     };
 
@@ -93,9 +99,10 @@ export default function Modules() {
                         </div>
                     </div>
 
-                    <div className="bg-green-900 border border-gray-800 rounded-lg p-4">
+                    <div className="bg-green-900 border border-gray-800 rounded-sm p-4">
                         <p className="text-white text-center text-sm">
-                            Welcome to your dashboard! You have access to all {user.role} modules below.
+                            Welcome to your dashboard! You have access to all <span className="font-bold">{user.role}
+                            </span>  modules below.
                         </p>
                     </div>
                 </div>
@@ -103,10 +110,12 @@ export default function Modules() {
                 <div className="flex flex-wrap gap-6">
                     {modules.map((module) => {
                         const style = colorStyles[module.color] || colorStyles.green;
+
                         return (
                             <div
                                 key={module.title}
-                                className={`flex-1 min-w-63 ${style.bg} border-l-4 ${style.border} rounded-lg shadow p-6 hover:scale-105 transition-transform`}
+                                onClick={() => navigate(module.path)}
+                                className={`flex-1 min-w-63 cursor-pointer ${style.bg} border-l-4 ${style.border} rounded-lg shadow p-6 hover:scale-105 transition-transform`}
                             >
                                 <h2 className={`text-2xl font-bold mb-2 ${style.title}`}>{module.title}</h2>
                                 <p className={`${style.text}`}>{module.description}</p>
@@ -114,6 +123,7 @@ export default function Modules() {
                         );
                     })}
                 </div>
+
 
             </div>
         </div>
