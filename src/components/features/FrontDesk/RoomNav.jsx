@@ -13,8 +13,8 @@ export default function RoomNav() {
         <div className="w-full bg-white border-b border-gray-200">
             <div className="px-6 py-5">
 
-                <div className="mb-4 text-sm font-semibold text-gray-500">
-                    Rooms
+                <div className="mb-4 text-sm font-semibold uppercase text-gray-500">
+                   All Rooms
                 </div>
 
 

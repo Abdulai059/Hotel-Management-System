@@ -19,7 +19,7 @@ export function Filter({ filterField, options }) {
                         key={option.value}
                         onClick={() => handleClick(option.value)}
                         disabled={active}
-                        className={`px-3 py-1 rounded-md font-medium text-sm transition
+                        className={`px-3 border border-gray-300 rounded-full w-32 py-2 text-xs font-medium transition
               ${active ? "bg-indigo-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-indigo-600 hover:text-white"}`}
                     >
                         {option.label}

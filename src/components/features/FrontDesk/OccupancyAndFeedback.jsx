@@ -53,7 +53,7 @@ const OccupancyAndFeedback = () => {
                                 <div key={month} className="flex flex-col items-center flex-1 gap-2">
                                     <div className="flex items-end justify-center h-40 w-full">
                                         <div
-                                            className="w-5 bg-indigo-500 rounded-t hover:bg-indigo-600 transition-all"
+                                            className="w-5 bg-indigo-600 rounded-t hover:bg-indigo-700 transition-all"
                                             style={{ height: `${(value / maxValue) * 100}%` }}
                                         />
                                     </div>

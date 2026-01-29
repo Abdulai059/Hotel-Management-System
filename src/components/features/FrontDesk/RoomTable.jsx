@@ -1,7 +1,7 @@
 import Pagination from "@/components/ui/Pagination";
 import { useState } from "react";
 
-export default function RoomTable() {
+export default function zRoomTable() {
     const [currentPage, setCurrentPage] = useState(1);
     const totalPages = 7;
 
@@ -25,11 +25,11 @@ export default function RoomTable() {
                 <table className="w-full">
                     <thead className="border-b bg-gray-50 border-gray-200">
                         <tr>
-                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Room</th>
-                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Bed</th>
-                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Floor</th>
-                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Facilities</th>
-                            <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Status</th>
+                            <th className="px-6 py-4 uppercase text-left text-sm font-medium text-gray-600">Room</th>
+                            <th className="px-6 py-4 uppercase text-left text-sm font-medium text-gray-600">Bed</th>
+                            <th className="px-6 py-4 uppercase text-left text-sm font-medium text-gray-600">Floor</th>
+                            <th className="px-6 py-4 uppercase text-left text-sm font-medium text-gray-600">Facilities</th>
+                            <th className="px-6 py-4 uppercase text-left text-sm font-medium text-gray-600">Status</th>
                             <th className="px-6 py-4"></th>
                         </tr>
                     </thead>

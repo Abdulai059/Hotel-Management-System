@@ -4,16 +4,16 @@ import Tag from "@/components/ui/Tag";
 import Pagination from "@/components/ui/Pagination";
 
 const reservationsData = [
-    { id: "#5644", name: "Alexander", room: "A647", totalAmount: 467, amountPaid: 200, status: "unconfirmed" },
-    { id: "#6112", name: "Pegasus", room: "A456", totalAmount: 645, amountPaid: 250, status: "checked-in" },
-    { id: "#6141", name: "Martin", room: "A645", totalAmount: 686, amountPaid: 400, status: "checked-out" },
-    { id: "#6535", name: "Cecil", room: "A684", totalAmount: 8413, amountPaid: 2500, status: "checked-in" },
-    { id: "#6541", name: "Luke", room: "B464", totalAmount: 841, amountPaid: 400, status: "checked-in" },
-    { id: "#9846", name: "Yadrin", room: "C648", totalAmount: 684, amountPaid: 300, status: "checked-out" },
-    { id: "#4921", name: "Kiand", room: "D644", totalAmount: 984, amountPaid: 513, status: "unconfirmed" },
-    { id: "#4921", name: "Kiand", room: "D644", totalAmount: 984, amountPaid: 513, status: "checked-in" },
-    { id: "#9841", name: "Turen", room: "B641", totalAmount: 984, amountPaid: 600, status: "checked-out" },
-    { id: "#9841", name: "Turen", room: "B641", totalAmount: 984, amountPaid: 600, status: "unconfirmed" }
+    { id: "5644", name: "Alexander", room: "A647", totalAmount: 467, amountPaid: 200, status: "unconfirmed" },
+    { id: "6112", name: "Pegasus", room: "A456", totalAmount: 645, amountPaid: 250, status: "checked-in" },
+    { id: "6141", name: "Martin", room: "A645", totalAmount: 686, amountPaid: 400, status: "checked-out" },
+    { id: "6535", name: "Cecil", room: "A684", totalAmount: 8413, amountPaid: 2500, status: "checked-in" },
+    { id: "6541", name: "Luke", room: "B464", totalAmount: 841, amountPaid: 400, status: "checked-in" },
+    { id: "9846", name: "Yadrin", room: "C648", totalAmount: 684, amountPaid: 300, status: "checked-out" },
+    { id: "4921", name: "Kiand", room: "D644", totalAmount: 984, amountPaid: 513, status: "unconfirmed" },
+    { id: "4921", name: "Kiand", room: "D644", totalAmount: 984, amountPaid: 513, status: "checked-in" },
+    { id: "9841", name: "Turen", room: "B641", totalAmount: 984, amountPaid: 600, status: "checked-out" },
+    { id: "9841", name: "Turen", room: "B641", totalAmount: 984, amountPaid: 600, status: "unconfirmed" }
 ];
 
 
@@ -49,7 +49,7 @@ export default function GuestReservationsTable() {
                             const status = res.status || "unconfirmed";
                             return (
                                 <tr key={i} className="hover:bg-gray-50 transition-colors">
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{res.id}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap font-semibold text-sm text-gray-900">{res.id}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{res.name}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{res.room}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${res.totalAmount.toLocaleString()}</td>

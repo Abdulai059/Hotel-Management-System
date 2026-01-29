@@ -44,7 +44,7 @@ function Stats() {
                         <span className="text-sm text-gray-500 mb-1">{stat.timeframe}</span>
                         <div className="flex items-baseline gap-2">
                             <span className="text-xs text-gray-600 font-medium">{stat.label}</span>
-                            <span className={`text-3xl font-bold ${stat.color}`}>
+                            <span className={`text-3xl font-semibold ${stat.color}`}>
                                 {stat.value}
                             </span>
                         </div>

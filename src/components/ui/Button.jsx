@@ -21,8 +21,8 @@ export default function Button({
     const variants = {
         primary: "bg-indigo-600 text-white",
         secondary: "bg-white text-gray-500 border border-gray-300",
-        slate: "bg-slate-700 text-white",
-        ghost: "bg-white text-gray-600 border border-gray-300 hover:bg-indigo-50",
+        slate: "bg-gray-700 text-white",
+        ghost: "bg-gray-100 text-gray-700 border border-gray-300 hover:text-white hover:bg-indigo-600",
     };
 
     return (

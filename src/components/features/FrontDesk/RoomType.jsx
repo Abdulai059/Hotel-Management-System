@@ -47,7 +47,7 @@ function RoomType(){
             {/* Deal Badge */}
             {room.dealCount && (
               <div className="absolute top-3 left-3">
-                <span className="bg-emerald-100 text-emerald-700 text-xs font-medium px-2 py-1 rounded">
+                <span className="bg-indigo-100 text-indigo-700 text-xs font-medium px-2 py-1 rounded">
                   {room.dealCount} Deals
                 </span>
               </div>
@@ -68,7 +68,7 @@ function RoomType(){
               </div>
               
               <div className="flex items-baseline gap-1">
-                <span className="text-indigo-600 text-xl font-bold">
+                <span className="text-indigo-600 text-xl font-semibold">
                   $ {room.price.toLocaleString()}
                 </span>
                 <span className="text-gray-500 text-sm">/day</span>
