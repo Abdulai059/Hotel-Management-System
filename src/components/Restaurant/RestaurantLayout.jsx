@@ -1,55 +1,48 @@
-import { LayoutDashboard, Users, CalendarCheck, BedDouble, Receipt } from "lucide-react";
+import { LayoutDashboard, Coffee, Utensils, Table, FileText } from "lucide-react";
 import { HiArrowLeftEndOnRectangle } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router";
 
 const links = [
   {
     label: "Dashboard",
-    path: "/dashboard/frontdesk",
+    path: "/dashboard/restaurant",
     icon: LayoutDashboard,
+    module: "restaurant",
   },
   {
-    label: "Guests",
-    path: "/dashboard/frontdesk/guests",
-    icon: Users,
+    label: "Orders",
+    path: "/dashboard/restaurant/orders",
+    icon: Coffee,
+    module: "restaurant",
   },
   {
-    label: "Bookings",
-    path: "/dashboard/frontdesk/bookings",
-    icon: CalendarCheck,
+    label: "Menu",
+    path: "/dashboard/restaurant/menu",
+    icon: Utensils,
+    module: "restaurant",
   },
   {
-    label: "Rooms",
-    path: "/dashboard/frontdesk/rooms",
-    icon: BedDouble,
+    label: "Tables",
+    path: "/dashboard/restaurant/tables",
+    icon: Table,
+    module: "restaurant",
   },
   {
-    label: "Billing",
-    path: "/dashboard/frontdesk/billing",
-    icon: Receipt,
+    label: "Reports",
+    path: "/dashboard/restaurant/reports",
+    icon: FileText,
+    module: "restaurant",
   },
 ];
 
-export default function FrontDeskLayout() {
+export default function RestaurantLayout() {
   const navigate = useNavigate();
 
   return (
     <div className="flex h-screen bg-gray-50">
       <aside className="flex w-16 flex-col border-r border-gray-200 bg-white md:w-64">
-        <div className="p- flex items-center gap-4 p-2">
-          <div className="flex h-12 w-12 rotate-3 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-xl">
-            <span className="text-xl font-black">
-              <img src="/global-dreams.png" alt="global dream logo" />
-            </span>
-          </div>
-
-          <div>
-            <h1 className="text-sm font-black tracking-tight text-slate-900">GLOBAL DREAM HOTEL</h1>
-            <div className="flex items-center gap-2">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
-              <p className="text-[11px] font-semibold tracking-widest text-slate-500 uppercase">Frontdesk Live</p>
-            </div>
-          </div>
+        <div className="flex h-20 items-center justify-center border-b border-gray-200">
+          <span className="font-bold text-indigo-600">HMS</span>
         </div>
 
         <nav className="flex flex-col justify-center gap-2 px-2 pt-15">
@@ -59,7 +52,7 @@ export default function FrontDeskLayout() {
               to={path}
               className={({ isActive }) =>
                 `flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition ${
-                  isActive ? "bg-indigo-50 text-blue-500" : "text-gray-600 hover:bg-gray-100"
+                  isActive ? "bg-indigo-50 text-indigo-600" : "text-gray-600 hover:bg-gray-100"
                 }`
               }
             >
@@ -71,7 +64,7 @@ export default function FrontDeskLayout() {
 
         <button
           onClick={() => navigate("/dashboard")}
-          className="mx-auto mt-auto mb-12 w-auto rounded-md bg-blue-500 px-3 py-2 text-white transition-colors hover:bg-blue-600 md:w-50"
+          className="mx-auto mt-auto mb-12 w-auto rounded-md bg-indigo-600 px-3 py-2 text-white transition-colors hover:bg-indigo-700 md:w-50"
         >
           <div className="flex items-center justify-center gap-2">
             <HiArrowLeftEndOnRectangle size={20} />
@@ -81,10 +74,10 @@ export default function FrontDeskLayout() {
       </aside>
 
       <div className="flex flex-1 flex-col">
-        <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-green-100 px-6 shadow-sm">
+        <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-sm">
           <div className="flex items-center gap-3">
             <span className="text-base font-semibold text-gray-800">
-              Welcome to <span className="text-red-600">Restaurant</span>
+              Welcome to <span className="text-indigo-600">Restaurant</span>
             </span>
 
             <span className="animate-wave inline-block origin-bottom text-2xl">👋</span>

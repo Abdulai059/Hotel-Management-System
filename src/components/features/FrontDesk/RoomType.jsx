@@ -2,7 +2,7 @@
 import { MoreVertical } from 'lucide-react';
 
 
-function RoomType(){
+function RoomType() {
   const rooms = [
     {
       dealCount: 2,
@@ -37,36 +37,36 @@ function RoomType(){
   return (
     <div className="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-6">Rooms</h2>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {rooms.map((room, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow relative"
           >
             {/* Deal Badge */}
             {room.dealCount && (
               <div className="absolute top-3 left-3">
-                <span className="bg-indigo-100 text-indigo-700 text-xs font-medium px-2 py-1 rounded">
+                <span className="bg-green-100 text-green-700 shadow-sm text-xs font-medium px-2 py-1 rounded-full">
                   {room.dealCount} Deals
                 </span>
               </div>
             )}
-            
+
             {/* Menu Button */}
             <button className="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
               <MoreVertical size={20} />
             </button>
-            
+
             {/* Room Info */}
             <div className="mt-8">
               <h3 className="text-gray-700 font-medium mb-2">{room.name}</h3>
-              
+
               <div className="flex items-baseline gap-1 mb-3">
                 <span className="text-2xl font-bold text-gray-800">{room.occupied}</span>
                 <span className="text-gray-400 text-lg">/{room.total}</span>
               </div>
-              
+
               <div className="flex items-baseline gap-1">
                 <span className="text-indigo-600 text-xl font-semibold">
                   $ {room.price.toLocaleString()}

@@ -1,77 +1,102 @@
-import Pagination from "@/components/ui/Pagination";
 import { useState } from "react";
+import { RoomStatus } from "@/hooks/types";
+import { MOCK_ROOMS } from "@/services/mockData";
+import RoomCard from "@/components/ui/RoomCard";
+import FilterButton from "@/components/ui/FilterButton";
+import { Icons } from "@/components/ui/constants";
 
-export default function zRoomTable() {
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = 7;
+import { FILTER_ALL } from "@/lib/roomFilters";
+import { useFilteredRooms } from "@/hooks/useFilteredRooms";
+import { Search } from "lucide-react";
 
-    const rooms = [
-        { id: "#001", bedType: "Double bed", floor: "Floor - 1", facilities: "AC, shower, Double bed, towel bathtub, TV", status: "Available", statusColor: "bg-indigo-50 text-indigo-600" },
-        { id: "#002", bedType: "Single bed", floor: "Floor - 2", facilities: "AC, shower, Double bed, towel bathtub, TV", status: "Booked", statusColor: "bg-red-50 text-red-600" },
-        { id: "#003", bedType: "VIP", floor: "Floor - 1", facilities: "AC, shower, Double bed, towel bathtub, TV", status: "Booked", statusColor: "bg-red-50 text-red-600" },
-        { id: "#004", bedType: "VIP", floor: "Floor - 1", facilities: "AC, shower, Double bed, towel bathtub, TV", status: "Reserved", statusColor: "bg-emerald-50 text-emerald-600" },
-        { id: "#005", bedType: "Single bed", floor: "Floor - 1", facilities: "AC, shower, Double bed, towel bathtub, TV", status: "Reserved", statusColor: "bg-emerald-50 text-emerald-600" },
-        { id: "#006", bedType: "Double bed", floor: "Floor - 2", facilities: "AC, shower, Double bed, towel bathtub, TV", status: "Waitlist", statusColor: "bg-amber-50 text-amber-600" },
-        { id: "#007", bedType: "Double bed", floor: "Floor - 3", facilities: "AC, shower, Double bed, towel bathtub, TV", status: "Reserved", statusColor: "bg-emerald-50 text-emerald-600" },
-        { id: "#008", bedType: "Single bed", floor: "Floor - 5", facilities: "AC, shower, Double bed, towel bathtub, TV", status: "Blocked", statusColor: "bg-orange-50 text-orange-600" },
-    ];
+export default function RoomPage() {
+  const rooms = MOCK_ROOMS;
 
-    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const [filterStatus, setFilterStatus] = useState(FILTER_ALL);
+  const [searchQuery, setSearchQuery] = useState("");
 
-    return (
-        <div className="w-full bg-white shadow-sm border border-gray-200 rounded-sm">
-            {/* Desktop table */}
-            <div className="hidden md:block overflow-x-auto">
-                <table className="w-full">
-                    <thead className="border-b bg-gray-50 border-gray-200">
-                        <tr>
-                            <th className="px-6 py-4 uppercase text-left text-sm font-medium text-gray-600">Room</th>
-                            <th className="px-6 py-4 uppercase text-left text-sm font-medium text-gray-600">Bed</th>
-                            <th className="px-6 py-4 uppercase text-left text-sm font-medium text-gray-600">Floor</th>
-                            <th className="px-6 py-4 uppercase text-left text-sm font-medium text-gray-600">Facilities</th>
-                            <th className="px-6 py-4 uppercase text-left text-sm font-medium text-gray-600">Status</th>
-                            <th className="px-6 py-4"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rooms.map((room) => (
-                            <tr key={room.id} className="border-b border-gray-100 hover:bg-gray-50">
-                                <td className="px-6 py-4 text-sm font-semibold text-gray-900">{room.id}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{room.bedType}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{room.floor}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">{room.facilities}</td>
-                                <td className="px-6 py-4">
-                                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${room.statusColor}`}>
-                                        {room.status}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <button className="text-gray-400 hover:text-gray-600">•••</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+  const filteredRooms = useFilteredRooms(rooms, filterStatus, searchQuery);
 
-            {/* Mobile cards */}
-            <div className="md:hidden divide-y">
-                {rooms.map((room) => (
-                    <div key={room.id} className="p-4 space-y-2">
-                        <div className="flex items-center justify-between">
-                            <span className="font-semibold text-gray-900">{room.id}</span>
-                            <span className={`px-3 py-1 rounded-full text-xs font-medium ${room.statusColor}`}>
-                                {room.status}
-                            </span>
-                        </div>
-                        <div className="text-sm text-gray-600">{room.bedType} · {room.floor}</div>
-                        <div className="text-sm text-gray-500 line-clamp-2">{room.facilities}</div>
-                    </div>
-                ))}
-            </div>
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] pb-20">
+      <main className="mx-auto mt-10 max-w-7xl space-y-10 px-6">
+        <div className="flex flex-col gap-8 xl:flex-row xl:items-center xl:justify-between">
+          <div className="flex flex-wrap justify-center gap-3">
+            <FilterButton active={filterStatus === FILTER_ALL} onClick={() => setFilterStatus(FILTER_ALL)}>
+              All Rooms
+            </FilterButton>
 
-            {/* Pagination */}
-            <Pagination />
+            <FilterButton
+              active={filterStatus === RoomStatus.AVAILABLE}
+              onClick={() => setFilterStatus(RoomStatus.AVAILABLE)}
+              color="emerald"
+            >
+              Available
+            </FilterButton>
+
+            <FilterButton
+              active={filterStatus === RoomStatus.OCCUPIED}
+              onClick={() => setFilterStatus(RoomStatus.OCCUPIED)}
+              color="rose"
+            >
+              Occupied
+            </FilterButton>
+
+            <FilterButton
+              active={filterStatus === RoomStatus.MAINTENANCE}
+              onClick={() => setFilterStatus(RoomStatus.MAINTENANCE)}
+              color="amber"
+            >
+              Service
+            </FilterButton>
+          </div>
+
+          <div className="flex h-[40px] w-92 max-w-md items-center gap-2 overflow-hidden rounded-full border border-gray-500/30 pl-4">
+            <Search size={22} className="text-gray-500" />
+
+            <input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              type="text"
+              placeholder="Search by room number or type..."
+              className="h-full w-full bg-transparent text-sm text-gray-500 placeholder-gray-500 outline-none"
+            />
+          </div>
         </div>
-    );
+
+        {filteredRooms.length ? (
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {filteredRooms.map((room) => (
+              <RoomCard key={room.id} room={room} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            onReset={() => {
+              setFilterStatus(FILTER_ALL);
+              setSearchQuery("");
+            }}
+          />
+        )}
+      </main>
+    </div>
+  );
+}
+
+function EmptyState({ onReset }) {
+  return (
+    <div className="rounded-sm border-2 border-dashed border-slate-100 bg-white py-32 shadow-inner">
+      <div className="mb-6 rounded-full bg-slate-50 p-8 text-slate-200">
+        <Icons.Search />
+      </div>
+      <h3 className="text-2xl font-black text-slate-800">No Results Found</h3>
+      <p className="mt-1 font-medium text-slate-400">No rooms match your current filters.</p>
+      <button
+        onClick={onReset}
+        className="mt-8 rounded-2xl bg-slate-100 px-8 py-3 font-bold text-slate-600 hover:bg-slate-200"
+      >
+        Reset Dashboard
+      </button>
+    </div>
+  );
 }

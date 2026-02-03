@@ -4,24 +4,24 @@ import Login from "./components/authentication/Login";
 import HomePage from "./pages/HomePage";
 import AppLayout from "./components/ui/AppLayout";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
-
 import FrontDeskLayout from "./components/FrontDesk/FrontDeskLayout";
-import Guests from "./components/FrontDesk/ Guests";
-import Bookings from "./components/FrontDesk/ Bookings";
-import Rooms from "./components/FrontDesk/ Rooms";
+import Guests from "./components/FrontDesk/Guests";
+import Rooms from "./components/FrontDesk/Rooms";
 import Billing from "./components/FrontDesk/Billing";
 import Dashboard from "./components/FrontDesk/Dashboard";
-
+import RestaurantDashboard from "./components/Restaurant/RestaurantDashboard";
+import Tables from "./components/Restaurant/Tables";
+import RestaurantReports from "./components/Restaurant/RestaurantReports";
+import RestaurantLayout from "./components/Restaurant/RestaurantLayout";
+import Menu from "./components/Restaurant/Menu";
+import Orders from "./components/Restaurant/Orders";
+import Bookings from "./components/FrontDesk/Bookings";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* PUBLIC ROUTE */}
         <Route path="/" element={<Login />} />
-
-        {/* PROTECTED ROUTES */}
         <Route
           path="/dashboard"
           element={
@@ -30,10 +30,7 @@ export default function App() {
             </ProtectedRoute>
           }
         >
-          {/* dashboard home */}
           <Route index element={<HomePage />} />
-
-          {/* modules */}
           <Route path="frontdesk" element={<FrontDeskLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="guests" element={<Guests />} />
@@ -41,10 +38,14 @@ export default function App() {
             <Route path="rooms" element={<Rooms />} />
             <Route path="billing" element={<Billing />} />
           </Route>
-
+          <Route path="restaurant" element={<RestaurantLayout />}>
+            <Route index element={<RestaurantDashboard />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="menu" element={<Menu />} />
+            <Route path="tables" element={<Tables />} />
+            <Route path="reports" element={<RestaurantReports />} />
+          </Route>
         </Route>
-
-        {/* fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
