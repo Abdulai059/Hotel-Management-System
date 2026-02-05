@@ -5,7 +5,7 @@ export default function SelectField({ label, options, ...props }) {
         {label}
       </label>
       <select
-        className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 focus:ring-2 focus:ring-blue-500"
+        className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 ring-sky-500 focus:ring-2 focus:ring-sky-500"
         {...props}
       >
         {options.map((option) => (

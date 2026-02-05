@@ -1,7 +1,7 @@
 export default function ConfirmationScreen({ formData, calculateNights, onNewBooking }) {
   return (
     <div className="py-8 text-center">
-      <div className="animate-in fade-in mx-auto max-w-2xl rounded-3xl border border-slate-100 bg-white p-8 text-center shadow-xl duration-500">
+      <div className="animate-in fade-in mx-auto max-w-2xl rounded-lg border border-slate-100 bg-white p-8 text-center shadow-sm duration-500">
         <div className="mb-6 flex justify-center">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500">
             <svg className="h-12 w-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -22,7 +22,7 @@ export default function ConfirmationScreen({ formData, calculateNights, onNewBoo
             setSubmitted(false);
             setFormData(INITIAL_DATA);
           }}
-          className="rounded-2xl bg-indigo-600 px-8 py-3 font-semibold text-white shadow-lg shadow-indigo-200 transition-all hover:bg-indigo-700"
+          className="rounded-sm bg-rose-500 px-8 py-3 font-semibold text-white shadow-lg shadow-rose-200 transition-all hover:bg-rose-600"
         >
           Book Another Stay
         </button>

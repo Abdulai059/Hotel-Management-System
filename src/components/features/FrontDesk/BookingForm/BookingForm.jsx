@@ -1,9 +1,9 @@
 import { useState } from "react";
 import StepIndicator from "./StepIndicator";
+import ConfirmationScreen from "./ConfirmationScreen";
 import GuestInfoStep from "./steps/GuestInfoStep";
 import StayDetailsStep from "./steps/StayDetailsStep";
-import RoomLocationStep from "./steps/RoomLocationStep";
-import ConfirmationScreen from "./ConfirmationScreen";
+import RoomDetailsStep from "./steps/RoomDetailsStep";
 
 export default function BookingForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -62,13 +62,8 @@ export default function BookingForm() {
   };
 
   return (
-    <div className="min-h-screen px-4 py-12">
+    <div className="px-4 py-12 md:min-h-screen">
       <div className="mx-auto max-w-4xl">
-        <div className="mb-12 text-center">
-          <h1 className="mb-3 text-5xl font-bold text-gray-900">Reserve Your Stay</h1>
-          <p className="text-lg text-gray-600">Find and book your perfect hotel with ease</p>
-        </div>
-
         {!isConfirmed && (
           <div className="mb-12 flex items-center justify-center gap-4 px-20">
             <StepIndicator
@@ -120,9 +115,7 @@ export default function BookingForm() {
               {currentStep === 2 && (
                 <StayDetailsStep formData={formData} onChange={handleChange} onNext={handleNext} onBack={handleBack} />
               )}
-              {currentStep === 3 && (
-                <RoomLocationStep formData={formData} onChange={handleChange} onBack={handleBack} />
-              )}
+              {currentStep === 3 && <RoomDetailsStep formData={formData} onChange={handleChange} onBack={handleBack} />}
             </form>
           )}
         </div>

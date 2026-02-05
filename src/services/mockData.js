@@ -32,7 +32,7 @@ export const MOCK_ROOMS = [
     floor: 2,
     guest: { name: "Michael Brown", checkIn: "2023-10-22", checkOut: "2023-10-26", nights: 4 },
   },
-  { id: "8", number: "203", type: RoomType.DOUBLE, status: RoomStatus.CLEANING, price: 200, floor: 2 },
+  { id: "8", number: "203", type: RoomType.DOUBLE, status: RoomStatus.MAINTENANCE, price: 200, floor: 2 },
   { id: "9", number: "204", type: RoomType.DOUBLE, status: RoomStatus.AVAILABLE, price: 200, floor: 2 },
   {
     id: "10",

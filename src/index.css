@@ -24,7 +24,7 @@
   --color-ring: var(--ring);
 
   /* Orbit animation */
-  --animate-orbit: orbit calc(var(--duration)*1s) linear infinite;
+  --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
 }
 
 /* Base Radius */
@@ -48,11 +48,13 @@
 /* Orbit Animation - for orbiting circles/logos */
 @keyframes orbit {
   0% {
-    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
+    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px))
+      rotate(calc(var(--angle) * -1deg));
   }
 
   100% {
-    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));
+    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px))
+      rotate(calc((var(--angle) * -1deg) - 360deg));
   }
 }
 
@@ -115,7 +117,6 @@
 }
 
 @keyframes float {
-
   0%,
   100% {
     transform: translateY(0);
@@ -123,5 +124,27 @@
 
   50% {
     transform: translateY(-6px);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
   }
 }

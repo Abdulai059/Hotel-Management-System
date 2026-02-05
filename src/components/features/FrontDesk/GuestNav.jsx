@@ -20,7 +20,7 @@ export default function GuestNav() {
         </div>
       </div>
 
-      <BookingingSlider />
+      {/* <BookingingSlider /> */}
     </div>
   );
 }

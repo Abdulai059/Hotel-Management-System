@@ -15,7 +15,7 @@ export default function ActivityAvailability() {
     { name: "Remaining", value: 100 - floorPercentage },
   ];
 
-  const COLORS = ["#4f46e5", "#e5e7eb"]; // Indigo and Gray
+  const COLORS = ["#FF007F", "#e5e7eb"]; // Indigo and Gray
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -64,17 +64,17 @@ export default function ActivityAvailability() {
           <div className="flex flex-col justify-center space-y-4">
             <h3 className="text-sm font-medium text-gray-700">Room Occupancy</h3>
             <div className="grid grid-cols-3 gap-4 text-sm">
-              <div className="rounded-md bg-gray-50 p-3 text-center">
+              <div className="rounded-md bg-sky-50 p-3 text-center">
                 <p className="text-gray-500">Total</p>
                 <p className="text-lg font-semibold text-gray-800 md:text-2xl">20</p>
               </div>
               <div className="rounded-md bg-red-50 p-3 text-center">
                 <p className="text-gray-500">Occupied</p>
-                <p className="text-lg font-semibold text-red-600 md:text-2xl">14</p>
+                <p className="text-lg font-semibold text-rose-600 md:text-2xl">14</p>
               </div>
               <div className="rounded-md bg-green-50 p-3 text-center">
                 <p className="text-gray-500">Available</p>
-                <p className="text-lg font-semibold text-green-600 md:text-2xl">6</p>
+                <p className="text-lg font-semibold text-emerald-600 md:text-2xl">6</p>
               </div>
             </div>
           </div>
