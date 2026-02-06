@@ -1,4 +1,4 @@
-export default function PaymentDetails({ bookingData, isEditing, handleInputChange }) {
+export default function PaymentCard({ bookingData, isEditing, handleInputChange }) {
   const total =
     bookingData.payment.roomTariff +
     bookingData.payment.roomTax +
@@ -49,8 +49,8 @@ export default function PaymentDetails({ bookingData, isEditing, handleInputChan
       </div>
 
       <div className="my-4 border-t border-dashed pt-3">
-        <div className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
-          <span className="text-sm font-semibold text-slate-700">Total Price</span>
+        <div className="flex items-center justify-between rounded-lg bg-gray-100 px-3 py-2">
+          <span className="text-base font-semibold text-slate-700 uppercase">Total Price</span>
           <span className="text-xl font-bold text-slate-900">${total.toFixed(2)}</span>
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function PaymentDetails({ bookingData, isEditing, handleInputChan
 
       <div className="mt-5 rounded-lg border-t-2 pt-4">
         <div className="flex items-center justify-between">
-          <span className="text-lg font-semibold text-gray-700">Amount Due</span>
+          <span className="text-base font-semibold text-gray-700 uppercase">Amount Due</span>
           <span className={`text-2xl font-bold ${balance > 0 ? "text-red-600" : "text-green-600"}`}>
             ${Math.abs(balance).toFixed(2)}
           </span>

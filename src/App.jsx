@@ -18,12 +18,15 @@ import Orders from "./components/Restaurant/Orders";
 import Bookings from "./components/FrontDesk/Bookings";
 import CorporateBookings from "./components/features/FrontDesk/CorporateBookings";
 import BookingDetails from "./components/FrontDesk/BookingDetails";
+import PaymentDetails from "./components/features/FrontDesk/Payment/PaymentDetails";
+import Payment from "./components/FrontDesk/Payment";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+
         <Route
           path="/dashboard"
           element={
@@ -33,15 +36,18 @@ export default function App() {
           }
         >
           <Route index element={<HomePage />} />
+
           <Route path="frontdesk" element={<FrontDeskLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="guests" element={<Guests />} />
             <Route path="guests/reservation" element={<BookingDetails />} />
+            <Route path="guests/payment" element={<Payment />} />
             <Route path="bookings" element={<Bookings />} />
             <Route path="corporate-bookings" element={<CorporateBookings />} />
             <Route path="rooms" element={<Rooms />} />
             <Route path="billing" element={<Billing />} />
           </Route>
+
           <Route path="restaurant" element={<RestaurantLayout />}>
             <Route index element={<RestaurantDashboard />} />
             <Route path="orders" element={<Orders />} />
@@ -50,6 +56,7 @@ export default function App() {
             <Route path="reports" element={<RestaurantReports />} />
           </Route>
         </Route>
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

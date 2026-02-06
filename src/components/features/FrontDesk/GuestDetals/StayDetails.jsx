@@ -32,7 +32,7 @@ export default function StayDetails({ bookingData, isEditing, handleInputChange,
           onClick={() => isEditing && checkInInputRef.current?.showPicker()}
         >
           {isEditing && (
-            <div className="absolute top-12 right-2 hidden p-1 opacity-0 transition-opacity group-hover:opacity-100">
+            <div className="absolute top-12 right-2 hidden bg-white p-1 shadow group-hover:block">
               <Edit className="h-4 w-4 text-gray-600" />
             </div>
           )}
@@ -64,6 +64,35 @@ export default function StayDetails({ bookingData, isEditing, handleInputChange,
             <Bed size={16} />
             <span className="text-sm">{bookingData.stay.guests}</span>
           </div>
+        </div>
+
+        <div
+          className={`group relative min-w-32.5 rounded-lg pb-4 text-center shadow-sm ${isEditing ? "cursor-pointer hover:ring-2 hover:ring-blue-400" : ""}`}
+          onClick={() => isEditing && checkOutInputRef.current?.showPicker()}
+        >
+          {isEditing && (
+            <div className="absolute top-12 right-2 hidden rounded bg-white p-1 shadow group-hover:block">
+              <Edit className="h-4 w-4 text-gray-600" />
+            </div>
+          )}
+
+          <div className="rounded-t-md bg-red-600 p-2 text-xs font-semibold text-white">
+            {bookingData.stay.checkOutDate}
+          </div>
+
+          <span className="block bg-gray-50 py-2 text-center">
+            <div className="pb-2 text-2xl font-bold text-gray-900">{bookingData.stay.checkOutDay}</div>
+            <div className="text-xs">{bookingData.stay.checkOutMonth}</div>
+          </span>
+
+          {isEditing && (
+            <input
+              ref={checkOutInputRef}
+              type="date"
+              onChange={(e) => handleDateChange("checkOut", e.target.value)}
+              className="pointer-events-none absolute opacity-0"
+            />
+          )}
         </div>
       </div>
 

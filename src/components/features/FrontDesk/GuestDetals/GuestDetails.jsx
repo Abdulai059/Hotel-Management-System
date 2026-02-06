@@ -46,8 +46,8 @@ export default function GuestDetails({ bookingData, isEditing, handleInputChange
   );
 
   return (
-    <div className="w-full rounded-2xl bg-gradient-to-br from-slate-400 to-slate-500 p-6">
-      <h2 className="mb-6 text-lg font-semibold text-white uppercase">Guest Details</h2>
+    <div className="w-full rounded-2xl bg-gradient-to-br from-slate-400 to-[#666666] p-6">
+      <h2 className="mb-4 text-lg font-semibold text-white uppercase">Guest Details</h2>
 
       <div className="w-full rounded-xl bg-white p-6">
         <div className="mb-4 flex items-center gap-4">

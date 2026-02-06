@@ -2,7 +2,7 @@ import { Bed } from "lucide-react";
 
 export default function BookingHeader({ bookingData, isEditing, setIsEditing, handleInputChange }) {
   return (
-    <div className="mb-4 flex items-center justify-between bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-white">
+    <div className="mb-4 flex items-center justify-between rounded-sm bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-white">
       <div className="flex items-center gap-4">
         <button
           onClick={() => setIsEditing((prev) => !prev)}
