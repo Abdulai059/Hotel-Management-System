@@ -14,7 +14,7 @@ const tableHeaders = [
   { label: "Amount", right: true },
   { label: "Paid", right: true },
   { label: "Balance", right: true },
-  { label: "Actions", center: true },
+  { label: "Actions", center: true, noPrint: true },
 ];
 
 const STATUS_STYLES = {
@@ -254,7 +254,7 @@ const Flag = ({ show, label, color }) =>
 export default function GuestsTable() {
   return (
     <div className="w-full overflow-hidden bg-white shadow-sm">
-      <div className="overflow-x-auto">
+      <div className="print-guests overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
             <tr className="border-b-2 border-gray-300 bg-gray-100">
@@ -265,7 +265,7 @@ export default function GuestsTable() {
                     !header.noBorder ? "border-r border-gray-300" : ""
                   } px-3 py-3 text-xs font-bold tracking-wide text-gray-700 uppercase ${
                     header.center ? "text-center" : header.right ? "text-right" : "text-left"
-                  }`}
+                  } ${header.noPrint ? "no-print" : ""}`}
                 >
                   {header.type === "checkbox" ? (
                     <input type="checkbox" className="h-4 w-4 rounded border-gray-300" />
@@ -359,7 +359,7 @@ export default function GuestsTable() {
                   {booking.balance}
                 </td>
 
-                <td className="px-3 py-1.5">
+                <td className="no-print px-3 py-1.5">
                   <div className="flex items-center justify-center gap-1.5">
                     <button className="text-gray-500 transition hover:text-gray-700" title="Print">
                       <Printer size={16} />

@@ -1,3 +1,4 @@
+import BookingActions from "../features/FrontDesk/BookingForm/BookingActions";
 import BookingFilters from "../features/FrontDesk/BookingForm/BookingFilters";
 import GuestNav from "../features/FrontDesk/GuestNav";
 import GuestsTable from "../features/FrontDesk/GuestsTable";
@@ -11,6 +12,8 @@ export default function Guests() {
       <div className="w-full shadow-sm">
         <GuestsTable />
       </div>
+
+      <BookingActions />
     </div>
   );
 }

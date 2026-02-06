@@ -17,6 +17,7 @@ import Menu from "./components/Restaurant/Menu";
 import Orders from "./components/Restaurant/Orders";
 import Bookings from "./components/FrontDesk/Bookings";
 import CorporateBookings from "./components/features/FrontDesk/CorporateBookings";
+import BookingDetails from "./components/FrontDesk/BookingDetails";
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="frontdesk" element={<FrontDeskLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="guests" element={<Guests />} />
+            <Route path="guests/reservation" element={<BookingDetails />} />
             <Route path="bookings" element={<Bookings />} />
             <Route path="corporate-bookings" element={<CorporateBookings />} />
             <Route path="rooms" element={<Rooms />} />

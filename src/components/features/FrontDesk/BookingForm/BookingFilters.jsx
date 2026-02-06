@@ -46,34 +46,34 @@ export default function BookingFilters() {
         </div>
       </div>
 
-      <div className="bg-[#3c76a3] px-4 py-3">
+      <div className="bg-green-900 px-4 py-3">
         <div className="mb-3 flex items-center gap-2">
           <input
             type="text"
             placeholder="Name/Group/Res ID"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-48 rounded border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-40 rounded border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
 
-          <label className="flex items-center gap-2 text-sm text-white">
-            <input type="radio" name="dateType" className="h-4 w-4" defaultChecked />
-            <span>CreatedOn</span>
-          </label>
+          <div className="flex gap-2 rounded-sm border-2 border-gray-400 px-2 py-1.5">
+            <label className="flex items-center gap-2 text-sm text-white">
+              <input type="radio" name="dateType" className="h-4 w-4" defaultChecked />
+              <span>CreatedOn</span>
+            </label>
 
-          <label className="flex items-center gap-2 text-sm text-white">
-            <input type="radio" name="dateType" className="h-4 w-4" />
-            <span>Check In</span>
-          </label>
+            <label className="flex items-center gap-2 text-sm text-white">
+              <input type="radio" name="dateType" className="h-4 w-4" />
+              <span>Check In</span>
+            </label>
 
-          <div className="flex gap-2">
             <div className="relative">
               <input
                 type="text"
                 value={createdOnDate}
                 onChange={(e) => setCreatedOnDate(e.target.value)}
                 placeholder="Select date"
-                className="w-32 rounded border border-gray-300 bg-white px-3 py-1 pr-9 text-sm text-gray-700 placeholder-gray-400 shadow-sm transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                className="w-34 rounded border border-gray-300 bg-white px-3 py-1 pr-9 text-sm text-gray-700 placeholder-gray-400 shadow-sm transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               />
               <CalendarDays className="absolute top-1/2 right-2 -translate-y-1/2 text-gray-500" size={16} />
             </div>
@@ -84,15 +84,16 @@ export default function BookingFilters() {
                 value={checkInDate}
                 onChange={(e) => setCheckInDate(e.target.value)}
                 placeholder="Select date"
-                className="w-32 rounded border border-gray-300 bg-white px-3 py-1 pr-9 text-sm text-gray-700 placeholder-gray-400 shadow-sm transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                className="w-34 rounded border border-gray-300 bg-white px-3 py-1 pr-9 text-sm text-gray-700 placeholder-gray-400 shadow-sm transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
               />
               <CalendarDays className="absolute top-1/2 right-2 -translate-y-1/2 text-gray-500" size={16} />
             </div>
           </div>
+
           <select
             value={notesFilter}
             onChange={(e) => setNotesFilter(e.target.value)}
-            className="rounded border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-24 rounded border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             <option>All Notes Title</option>
             <option>With Notes</option>
@@ -102,7 +103,7 @@ export default function BookingFilters() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="rounded border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-20 rounded border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             <option>Filter By Status</option>
             <option>Checked In</option>
@@ -110,21 +111,31 @@ export default function BookingFilters() {
             <option>Unconfirmed</option>
           </select>
 
-          <select
-            value={filterBy}
-            onChange={(e) => setFilterBy(e.target.value)}
-            className="rounded border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          >
-            <option>Filter By</option>
-            <option>Room</option>
-            <option>Room Type</option>
-            <option>Block</option>
-          </select>
+          <div className="flex gap-2 rounded-sm border-2 border-gray-400 px-2 py-1.5">
+            <select
+              value={filterBy}
+              onChange={(e) => setFilterBy(e.target.value)}
+              className="rounded border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+              <option>Filter By</option>
+              <option>Room</option>
+              <option>Room Type</option>
+              <option>Block</option>
+            </select>
+
+            <input
+              type="text"
+              placeholder="e.g. A204"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-24 rounded border border-gray-200 bg-white px-2 py-1 text-sm text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
 
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="rounded border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-24 rounded border border-gray-300 bg-white px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             <option>Sort By</option>
             <option>Guest Name</option>
@@ -157,16 +168,6 @@ export default function BookingFilters() {
               className="h-4 w-4 rounded"
             />
             <span>3rd Party ResID</span>
-          </label>
-
-          <label className="flex cursor-pointer items-center gap-2 text-sm text-white">
-            <input
-              type="checkbox"
-              checked={showWebRefID}
-              onChange={(e) => setShowWebRefID(e.target.checked)}
-              className="h-4 w-4 rounded"
-            />
-            <span>Show Web Ref ID</span>
           </label>
 
           <label className="flex cursor-pointer items-center gap-2 text-sm text-white">

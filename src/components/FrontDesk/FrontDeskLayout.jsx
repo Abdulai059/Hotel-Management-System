@@ -224,7 +224,7 @@ export default function FrontDeskLayout() {
           </button>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-gray-50 px-6 py-4">
+        <main className="flex-1 overflow-y-auto bg-gray-100 px-6 py-4">
           <Outlet />
         </main>
       </div>
