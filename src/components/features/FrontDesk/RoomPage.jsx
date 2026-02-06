@@ -8,6 +8,7 @@ import { Icons } from "@/components/ui/constants";
 import { FILTER_ALL } from "@/lib/roomFilters";
 import { useFilteredRooms } from "@/hooks/useFilteredRooms";
 import { Search } from "lucide-react";
+import { Legend } from "recharts";
 
 export default function RoomPage() {
   const rooms = MOCK_ROOMS;
@@ -18,8 +19,8 @@ export default function RoomPage() {
   const filteredRooms = useFilteredRooms(rooms, filterStatus, searchQuery);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] pb-20">
-      <main className="mx-auto mt-10 max-w-7xl space-y-10 px-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 pb-20">
+      <main className="max-w-8xl mx-auto mt-10 space-y-10 px-6">
         <div className="flex flex-col gap-8 xl:flex-row xl:items-center xl:justify-between">
           <div className="flex flex-wrap justify-center gap-3">
             <FilterButton active={filterStatus === FILTER_ALL} onClick={() => setFilterStatus(FILTER_ALL)}>
@@ -51,7 +52,7 @@ export default function RoomPage() {
             </FilterButton>
           </div>
 
-          <div className="flex h-[40px] w-92 max-w-md items-center gap-2 overflow-hidden rounded-full border border-gray-500/30 pl-4">
+          <div className="flex h-[40px] w-92 max-w-md items-center gap-2 overflow-hidden rounded-full border border-gray-500/30 bg-white pl-4 shadow-sm">
             <Search size={22} className="text-gray-500" />
 
             <input
@@ -64,8 +65,10 @@ export default function RoomPage() {
           </div>
         </div>
 
+        <Legend />
+
         {filteredRooms.length ? (
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {filteredRooms.map((room) => (
               <RoomCard key={room.id} room={room} />
             ))}

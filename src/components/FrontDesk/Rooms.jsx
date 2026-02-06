@@ -1,5 +1,5 @@
 import RoomNav from "../features/FrontDesk/RoomNav";
-import RoomPage from "../features/FrontDesk/RoomTable";
+import RoomPage from "../features/FrontDesk/RoomPage";
 
 export default function Rooms() {
   return (

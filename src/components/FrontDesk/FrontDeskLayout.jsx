@@ -23,7 +23,7 @@ const links = [
     color: "text-slate-500",
     items: [
       {
-        label: "Dashboard",
+        label: "Management Dashboard",
         path: "/dashboard/frontdesk",
         icon: LayoutDashboard,
       },

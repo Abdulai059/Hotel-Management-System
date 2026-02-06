@@ -9,7 +9,7 @@ export default function RoomNav({ rooms }) {
     <header className="sticky top-0 z-40 w-full">
       <div className="absolute inset-0 border-b border-slate-200/50 bg-white/70 backdrop-blur-xl" />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-5">
+      <div className="relative mx-auto max-w-7xl px-6 py-0">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4">
             <div className="flex h-12 w-12 rotate-3 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-xl">

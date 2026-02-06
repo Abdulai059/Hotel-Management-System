@@ -26,7 +26,7 @@ export default function BookingFilters() {
     <div className="w-full border-b border-gray-200 bg-white">
       <div className="px-4 py-2">
         <div className="flex items-center gap-2">
-          <button className="rounded border-b-2 border-blue-700 bg-blue-700 px-4 py-1.5 text-sm font-semibold text-white shadow-sm">
+          <button className="rounded border-b-2 border-blue-700 bg-green-700 px-4 py-1.5 text-sm font-semibold text-white shadow-sm">
             FrontDesk
           </button>
 
@@ -46,7 +46,7 @@ export default function BookingFilters() {
         </div>
       </div>
 
-      <div className="bg-green-900 px-4 py-3">
+      <div className="bg-[#3c76a3] px-4 py-3">
         <div className="mb-3 flex items-center gap-2">
           <input
             type="text"

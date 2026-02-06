@@ -7,32 +7,103 @@ export default function RoomCard({ room, onClick }) {
   const [isHovered, setIsHovered] = useState(false);
   const isOccupied = room.status === RoomStatus.OCCUPIED;
 
+  // Heatmap-style color intensity based on status
+  const getHeatmapStyle = () => {
+    const baseStyles = "relative overflow-hidden transition-all duration-300";
+
+    switch (room.status) {
+      case RoomStatus.AVAILABLE:
+        return `${baseStyles} bg-gradient-to-br from-emerald-400 to-emerald-600 ${
+          isHovered ? "shadow-[0_0_30px_rgba(16,185,129,0.6)]" : "shadow-lg"
+        }`;
+      case RoomStatus.OCCUPIED:
+        return `${baseStyles} bg-gradient-to-br from-rose-500 to-rose-700 ${
+          isHovered ? "shadow-[0_0_30px_rgba(244,63,94,0.6)]" : "shadow-lg"
+        }`;
+      case RoomStatus.MAINTENANCE:
+        return `${baseStyles} bg-gradient-to-br from-amber-400 to-amber-600 ${
+          isHovered ? "shadow-[0_0_30px_rgba(251,191,36,0.6)]" : "shadow-lg"
+        }`;
+      default:
+        return `${baseStyles} bg-gradient-to-br from-gray-400 to-gray-600 shadow-lg`;
+    }
+  };
+
   return (
     <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       {isOccupied && isHovered && room.guest && <GuestTooltip guest={room.guest} />}
 
       <button
         type="button"
-        onClick={() => onClick(room)}
-        className={`flex h-36 w-full flex-col items-center justify-center gap-1 rounded-sm border-2 transition-all duration-500 ease-out ${STATUS_COLORS[room.status]} ${isHovered ? "-translate-y-2 scale-105 shadow-[0_20px_50px_rgba(0,0,0,0.15)]" : "scale-100 shadow-sm"} group overflow-hidden text-white active:scale-95`}
+        onClick={() => onClick?.(room)}
+        className={`flex h-36 w-full flex-col items-center justify-center gap-1 rounded-lg border-2 border-white/20 text-white ${getHeatmapStyle()} ${
+          isHovered ? "-translate-y-2 scale-105" : "scale-100"
+        } group active:scale-95`}
       >
-        <div className="absolute top-3 right-4 opacity-30 transition-opacity duration-300 group-hover:opacity-60">
+        {/* Animated background gradient overlay */}
+        <div
+          className={`absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 opacity-0 transition-opacity duration-500 ${
+            isHovered ? "opacity-100" : ""
+          }`}
+        />
+
+        {/* Pulsing effect for available rooms */}
+        {room.status === RoomStatus.AVAILABLE && (
+          <div className="absolute inset-0 animate-pulse rounded-lg bg-white/10" />
+        )}
+
+        {/* Corner icon with enhanced visibility */}
+        <div
+          className={`absolute top-3 right-4 transition-all duration-300 ${
+            isHovered ? "scale-110 opacity-80" : "opacity-40"
+          }`}
+        >
           {isOccupied ? <Icons.Users /> : <Icons.Bed />}
         </div>
 
-        <div className="flex flex-col items-center">
-          <span className="mb-1 text-3xl font-black tracking-tighter drop-shadow-md">{room.number}</span>
-          <div className="mb-2 h-px w-8 bg-white/30 transition-all duration-300 group-hover:w-12" />
-          <span className="text-[10px] font-bold tracking-[0.2em] uppercase opacity-90">{room.type}</span>
+        {/* Main content */}
+        <div className="relative z-10 flex flex-col items-center">
+          {/* Room number with enhanced glow */}
+          <span
+            className={`mb-1 text-3xl font-black tracking-tighter transition-all duration-300 ${
+              isHovered ? "scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" : "drop-shadow-md"
+            }`}
+          >
+            {room.number}
+          </span>
+
+          {/* Animated divider */}
+          <div className={`mb-2 h-px bg-white/40 transition-all duration-300 ${isHovered ? "w-16" : "w-8"}`} />
+
+          {/* Room type */}
+          <span className="text-[10px] font-bold tracking-[0.2em] uppercase opacity-90 drop-shadow-sm">
+            {room.type}
+          </span>
         </div>
 
-        <div className="mt-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 backdrop-blur-md">
+        {/* Status badge with enhanced styling */}
+        <div
+          className={`relative z-10 mt-2 rounded-full border backdrop-blur-md transition-all duration-300 ${
+            isHovered ? "border-white/30 bg-white/20 px-4 py-1.5" : "border-white/10 bg-white/10 px-3 py-1"
+          }`}
+        >
           <span className="flex items-center gap-1.5 text-[9px] font-black tracking-tighter uppercase">
             {room.status === RoomStatus.AVAILABLE && (
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white shadow-[0_0_4px_rgba(255,255,255,0.8)]" />
             )}
             {room.status.replace("_", " ")}
           </span>
+        </div>
+
+        {/* Heatmap grid overlay effect */}
+        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-10">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 8px, white 8px, white 9px),
+                             repeating-linear-gradient(90deg, transparent, transparent 8px, white 8px, white 9px)`,
+            }}
+          />
         </div>
       </button>
     </div>
