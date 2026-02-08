@@ -1,7 +1,11 @@
+import { formatDate } from "@/utils/dateHelpers";
 import { Phone, Edit, Trash2 } from "lucide-react";
 
-export default function GuestDetails({ bookingData, isEditing, handleInputChange, onEdit, onDelete }) {
-  const guest = bookingData.guest || {};
+export default function GuestDetails({ booking, isEditing, handleInputChange, onEdit, onDelete }) {
+  const guest = booking.guests || {};
+  console.log("Guest info:", guest);
+
+  const dobFormatted = formatDate(booking.guest?.date_of_birth);
 
   const renderInput = (field, type = "text") => {
     const value = guest[field] || "";
@@ -32,18 +36,25 @@ export default function GuestDetails({ bookingData, isEditing, handleInputChange
     return value;
   };
 
-  const renderRow = (label1, field1, type1, label2, field2, type2) => (
-    <div className="mb-1 flex justify-between text-sm">
-      <div className="flex items-center gap-1">
-        <span className="font-semibold text-slate-600">{label1}:</span>
-        <span className="text-slate-500">{renderInput(field1, type1)}</span>
+  const renderRow = (label1, field1, type1, label2, field2, type2) => {
+    const value1 = guest[field1] || "";
+    const value2 = guest[field2] || "";
+
+    return (
+      <div className="mb-1 flex justify-between text-sm">
+        <div className="flex items-center gap-1">
+          <span className="font-semibold text-slate-600">{label1}:</span>
+          <span className="text-slate-500">{renderInput(field1, type1)}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="font-semibold text-slate-600">{label2}:</span>
+          <span className="text-slate-500">
+            {type2 === "date" ? formatDate(value2)?.full : renderInput(field2, type2)}
+          </span>
+        </div>
       </div>
-      <div className="flex items-center gap-1">
-        <span className="font-semibold text-slate-600">{label2}:</span>
-        <span className="text-slate-500">{renderInput(field2, type2)}</span>
-      </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="w-full rounded-2xl bg-gradient-to-br from-slate-400 to-[#666666] p-6">
@@ -57,7 +68,7 @@ export default function GuestDetails({ bookingData, isEditing, handleInputChange
             </svg>
           </div>
           <div className="flex flex-col justify-center">
-            <span className="text-xl font-bold text-blue-600">{guest.name || ""}</span>
+            <span className="text-xl font-bold text-blue-600">{guest.full_name || ""}</span>
             <span className="text-sm font-semibold text-gray-600">{guest.pId || ""}</span>
           </div>
         </div>
@@ -69,8 +80,8 @@ export default function GuestDetails({ bookingData, isEditing, handleInputChange
           </div>
 
           {renderRow("City", "city", "text", "State", "state", "text")}
-          {renderRow("Country", "country", "text", "Zip Code", "zipCode", "text")}
-          {renderRow("Gender", "gender", "select", "DOB", "dob", "date")}
+          {renderRow("Country", "country", "text", "Zipcode", "zip_code", "text")}
+          {renderRow("Gender", "gender", "select", "DOB", "date_of_birth", "date", dobFormatted?.full)}
           {renderRow("Nationality", "nationality", "text", "E-mail", "email", "email")}
 
           <div className="mt-1 flex items-center gap-1">

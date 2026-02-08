@@ -1,6 +1,6 @@
 import { Bed } from "lucide-react";
 
-export default function BookingHeader({ bookingData, isEditing, setIsEditing, handleInputChange }) {
+export default function BookingHeader({ booking, isEditing, setIsEditing, handleInputChange }) {
   return (
     <div className="mb-4 flex items-center justify-between rounded-sm bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-white">
       <div className="flex items-center gap-4">
@@ -18,12 +18,12 @@ export default function BookingHeader({ bookingData, isEditing, setIsEditing, ha
           {isEditing ? (
             <input
               type="text"
-              value={bookingData.room.type || ""}
-              onChange={(e) => handleInputChange("room", "type", e.target.value)}
+              value={booking.rooms.room_type || ""}
+              onChange={(e) => handleInputChange("room", "room_type", e.target.value)}
               className="border-b border-white bg-transparent px-2 text-lg font-semibold text-white outline-none"
             />
           ) : (
-            <span className="text-lg font-semibold">{bookingData.room.type}</span>
+            <span className="text-lg font-semibold">{booking.rooms.room_type}</span>
           )}
         </div>
 
@@ -32,12 +32,12 @@ export default function BookingHeader({ bookingData, isEditing, setIsEditing, ha
           {isEditing ? (
             <input
               type="text"
-              value={bookingData.room.number || ""}
-              onChange={(e) => handleInputChange("room", "number", e.target.value)}
+              value={booking.rooms.room_number || ""}
+              onChange={(e) => handleInputChange("room", "room_number", e.target.value)}
               className="ml-1 w-24 border-b border-white bg-transparent text-white outline-none"
             />
           ) : (
-            bookingData.room.number
+            booking.rooms.room_number
           )}
         </span>
       </div>
@@ -50,7 +50,7 @@ export default function BookingHeader({ bookingData, isEditing, setIsEditing, ha
         <span className="text-lg font-semibold text-yellow-300">
           {isEditing ? (
             <select
-              value={bookingData.room.status || ""}
+              value={booking.status || ""}
               onChange={(e) => handleInputChange("room", "status", e.target.value)}
               className="border-b border-yellow-300 bg-transparent text-yellow-300 outline-none"
             >
@@ -65,7 +65,7 @@ export default function BookingHeader({ bookingData, isEditing, setIsEditing, ha
               </option>
             </select>
           ) : (
-            bookingData.room.status
+            booking.status
           )}
         </span>
 
@@ -74,12 +74,12 @@ export default function BookingHeader({ bookingData, isEditing, setIsEditing, ha
           {isEditing ? (
             <input
               type="text"
-              value={bookingData.room.resId || ""}
+              value={booking.resId || ""}
               onChange={(e) => handleInputChange("room", "resId", e.target.value)}
               className="ml-1 w-24 border-b border-yellow-300 bg-transparent text-yellow-300 outline-none"
             />
           ) : (
-            ` ${bookingData.room.resId}`
+            ` ${booking.resId}`
           )}
         </span>
       </div>

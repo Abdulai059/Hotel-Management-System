@@ -8,7 +8,7 @@ import { Icons } from "@/components/ui/constants";
 import { FILTER_ALL } from "@/lib/roomFilters";
 import { useFilteredRooms } from "@/hooks/useFilteredRooms";
 import { Search } from "lucide-react";
-import { Legend } from "recharts";
+import { Legend } from "./room/Legend";
 
 export default function RoomPage() {
   const rooms = MOCK_ROOMS;

@@ -1,19 +1,16 @@
-import BookingActions from "../features/FrontDesk/BookingForm/BookingActions";
 import BookingFilters from "../features/FrontDesk/BookingForm/BookingFilters";
-import GuestNav from "../features/FrontDesk/GuestNav";
 import GuestsTable from "../features/FrontDesk/GuestsTable";
+import { useBookings } from "../features/FrontDesk/useBookings";
 
 export default function Guests() {
+  const { bookings, isLoading, error } = useBookings();
+
   return (
     <div className="flex flex-col gap-8">
-      {/* <GuestNav /> */}
       <BookingFilters />
-
       <div className="w-full shadow-sm">
-        <GuestsTable />
+        <GuestsTable bookings={bookings} isLoading={isLoading} error={error} />
       </div>
-
-      <BookingActions />
     </div>
   );
 }

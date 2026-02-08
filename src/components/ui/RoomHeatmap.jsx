@@ -69,15 +69,6 @@ export default function RoomHeatmap() {
   );
 }
 
-function LegendItem({ color, label }) {
-  return (
-    <div className="flex items-center gap-2">
-      <span className={`h-4 w-4 rounded ${color}`} />
-      <span className="text-sm text-slate-700">{label}</span>
-    </div>
-  );
-}
-
 function Tooltip({ room }) {
   return (
     <div className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 rounded border bg-white px-3 py-2 text-xs shadow-lg">

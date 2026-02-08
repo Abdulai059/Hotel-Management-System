@@ -1,7 +1,9 @@
-
+import Payment from "./Payment";
 
 export default function Billing() {
   return (
-    <div>Billing Page</div>
-  )
+    <div>
+      <Payment />
+    </div>
+  );
 }

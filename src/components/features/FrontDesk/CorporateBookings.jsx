@@ -117,11 +117,11 @@ export default function CorporateBookings() {
               <tbody>
                 {bookings.map((b) => (
                   <tr key={b.id} className="transition hover:bg-slate-50">
-                    <td className="border border-slate-200 px-4 py-3 text-base text-slate-800">{b.companyName}</td>
-                    <td className="border border-slate-200 px-4 py-3 text-slate-700">{b.contactPerson}</td>
-                    <td className="border border-slate-200 px-4 py-3 text-slate-600">{b.contactPhone}</td>
-                    <td className="border border-slate-200 px-4 py-3 text-blue-600">{b.contactEmail}</td>
-                    <td className="border border-slate-200 px-4 py-3">
+                    <td className="border border-slate-200 px-4 py-2 text-sm text-slate-800">{b.companyName}</td>
+                    <td className="border border-slate-200 px-4 py-2 text-sm text-slate-700">{b.contactPerson}</td>
+                    <td className="border border-slate-200 px-4 py-2 text-sm text-slate-600">{b.contactPhone}</td>
+                    <td className="border border-slate-200 px-4 py-2 text-sm text-blue-600">{b.contactEmail}</td>
+                    <td className="border border-slate-200 px-4 py-2 text-sm">
                       <span
                         className={`rounded-full px-3 py-1 text-xs font-semibold ${
                           b.billingType === "Invoice"
@@ -132,12 +132,12 @@ export default function CorporateBookings() {
                         {b.billingType}
                       </span>
                     </td>
-                    <td className="border border-slate-200 px-4 py-3">
+                    <td className="border border-slate-200 px-4 py-2">
                       <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-medium text-orange-700">
                         {b.discountRate}
                       </span>
                     </td>
-                    <td className="border border-slate-200 px-4 py-3 text-slate-700">{b.paymentTerms}</td>
+                    <td className="border border-slate-200 px-4 py-2 text-sm text-slate-700">{b.paymentTerms}</td>
                   </tr>
                 ))}
               </tbody>
