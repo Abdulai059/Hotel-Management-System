@@ -5,7 +5,7 @@ export default function ActionButtons() {
   const navigate = useNavigate();
 
   const handleEnableEditing = () => {
-    console.log("Enable Editing clicked");
+    // Enable editing logic here
   };
 
   const handlePayment = () => {

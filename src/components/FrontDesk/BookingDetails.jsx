@@ -13,12 +13,14 @@ import PaymentCard from "../features/FrontDesk/GuestDetals/PaymentCard";
 export default function BookingDetails() {
   const { booking, isLoading, error } = useBooking();
   const [isEditing, setIsEditing] = useState(false);
-  console.log(booking);
+  const [formData, setFormData] = useState({});
 
-  const handleInputChange = (section, field, value) => {
-    setBookingData((prev) => ({
-      ...prev,
-      [section]: { ...prev[section], [field]: value },
+  // Define the handleInputChange function
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
     }));
   };
 

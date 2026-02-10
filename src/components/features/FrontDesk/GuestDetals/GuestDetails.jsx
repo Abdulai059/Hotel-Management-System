@@ -3,7 +3,6 @@ import { Phone, Edit, Trash2 } from "lucide-react";
 
 export default function GuestDetails({ booking, isEditing, handleInputChange, onEdit, onDelete }) {
   const guest = booking.guests || {};
-  console.log("Guest info:", guest);
 
   const dobFormatted = formatDate(booking.guest?.date_of_birth);
 

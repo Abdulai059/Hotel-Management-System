@@ -2,29 +2,33 @@ import { useSearchParams } from "react-router";
 
 export function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentFilter = searchParams.get(filterField) || options[0].value;
 
-  function handleClick(value) {
+  const currentFilter = searchParams.get(filterField) ?? options[0].value;
+
+  function handleChange(e) {
+    const value = e.target.value;
+
     searchParams.set(filterField, value);
-    if (searchParams.get("page")) searchParams.set("page", "1");
+
+    // reset pagination if present
+    if (searchParams.get("page")) {
+      searchParams.set("page", "1");
+    }
+
     setSearchParams(searchParams);
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((option) => {
-        const active = currentFilter === option.value;
-        return (
-          <button
-            key={option.value}
-            onClick={() => handleClick(option.value)}
-            disabled={active}
-            className={`w-32 rounded-full border border-gray-300 px-3 py-2 text-xs font-medium transition ${active ? "bg-slate-900 text-white" : "bg-gray-100 text-gray-700 hover:bg-blue-500 hover:text-white"}`}
-          >
-            {option.label}
-          </button>
-        );
-      })}
-    </div>
+    <select
+      value={currentFilter}
+      onChange={handleChange}
+      className="w-36 rounded border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-2 focus:ring-sky-700 focus:outline-none"
+    >
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
   );
 }

@@ -14,7 +14,7 @@ export default function DepartureForm() {
   const updateField = (field, value) => setFormData((prev) => ({ ...prev, [field]: value }));
 
   const handleSubmit = () => {
-    console.log("Form submitted:", formData);
+    // Form submission logic here
   };
 
   return (

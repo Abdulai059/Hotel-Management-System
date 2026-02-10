@@ -2,7 +2,6 @@ export default function PaymentCard({ booking, isEditing, onUpdate }) {
   if (!booking) return null;
 
   const payment = booking.payments || {};
-  console.log("payment info:", payment);
 
   if (!payment || Object.keys(payment).length === 0) return null;
 
