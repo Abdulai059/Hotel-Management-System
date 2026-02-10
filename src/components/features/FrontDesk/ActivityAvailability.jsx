@@ -9,13 +9,13 @@ export default function ActivityAvailability() {
     { label: "Inspected", value: 60 },
   ];
 
-  const floorPercentage = 80; // Completed %
+  const floorPercentage = 80;
   const floorData = [
     { name: "Completed", value: floorPercentage },
     { name: "Remaining", value: 100 - floorPercentage },
   ];
 
-  const COLORS = ["#FF007F", "#e5e7eb"]; // Indigo and Gray
+  const COLORS = ["#FF007F", "#e5e7eb"];
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">

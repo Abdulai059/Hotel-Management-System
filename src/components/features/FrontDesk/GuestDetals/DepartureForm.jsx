@@ -13,10 +13,6 @@ export default function DepartureForm() {
 
   const updateField = (field, value) => setFormData((prev) => ({ ...prev, [field]: value }));
 
-  const handleSubmit = () => {
-    // Form submission logic here
-  };
-
   return (
     <div className="space-y-4">
       <div className="overflow-hidden rounded-lg border-2 border-gray-300 bg-white">
@@ -99,15 +95,6 @@ export default function DepartureForm() {
               onChange={(e) => updateField("sendEmail", e.target.checked)}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500"
             />
-          </div>
-
-          <div className="flex justify-end pt-1">
-            <button
-              onClick={handleSubmit}
-              className="rounded bg-blue-600 px-6 py-1.5 font-medium text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              SAVE
-            </button>
           </div>
         </div>
       </div>

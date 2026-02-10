@@ -6,8 +6,8 @@ export default function RoomSharers({ booking }) {
   if (!booking) return null;
 
   const adultCount = booking.num_guests || 1;
-  const childCount = 0; // Not in your API data
-  const infantCount = 0; // Not in your API data
+  const childCount = 0;
+  const infantCount = 0;
 
   const actions = ["Preferences", "Messages", "Tasks", "Notes"];
 

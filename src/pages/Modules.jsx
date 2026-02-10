@@ -14,7 +14,6 @@ export default function Modules() {
     return "Good Evening";
   };
 
-  // Define modules with allowed roles
   const modules = [
     {
       title: "Admin Panel",
@@ -42,7 +41,7 @@ export default function Modules() {
       description: "Tracks hotel purchases, supplier orders, and inventory management.",
       color: "yellow",
       path: "/dashboard/purchase",
-      roles: ["admin"], // only admin can see it
+      roles: ["admin"],
     },
   ];
 

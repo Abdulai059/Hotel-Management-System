@@ -4,11 +4,9 @@ import { Gift, Plus } from "lucide-react";
 export default function RatesPackages({ booking }) {
   if (!booking) return null;
 
-  // Format dates using your utility
   const checkIn = formatDate(booking.start_date);
   const checkOut = formatDate(booking.end_date);
 
-  // Get room rate information
   const roomRate = booking.rooms?.price_per_night || 0;
   const totalPrice = booking.total_price || 0;
   const roomType = booking.rooms?.room_type || "Standard";

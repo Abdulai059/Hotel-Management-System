@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RoomStatus } from "@/hooks/types";
-import { Icons, STATUS_COLORS } from "./constants";
+import { Icons } from "./constants";
 import GuestTooltip from "./GuestTooltip";
 
 export default function RoomCard({ room, onClick }) {

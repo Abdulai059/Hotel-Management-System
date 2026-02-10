@@ -10,7 +10,6 @@ export default function StayDetails({ booking, isEditing, onUpdate }) {
 
   if (!booking) return null;
 
-  // Use your utility function to format dates
   const checkIn = formatDate(booking.start_date);
   const checkOut = formatDate(booking.end_date);
 
@@ -24,7 +23,6 @@ export default function StayDetails({ booking, isEditing, onUpdate }) {
     }
   };
 
-  // Get day of week for the dates
   const checkInDay = format(parseISO(booking.start_date), "EEE");
   const checkOutDay = format(parseISO(booking.end_date), "EEE");
 

@@ -42,12 +42,10 @@ export default function App() {
 
         <BrowserRouter>
           <Routes>
-            {/* Public */}
             <Route path="/login" element={<Login />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/" element={<Login />} />
 
-            {/* Protected routes with layout */}
             <Route
               path="/dashboard"
               element={
@@ -58,7 +56,6 @@ export default function App() {
             >
               <Route index element={<HomePage />} />
 
-              {/* Admin routes */}
               <Route
                 path="admin"
                 element={
@@ -68,7 +65,6 @@ export default function App() {
                 }
               />
 
-              {/* Front Desk routes */}
               <Route
                 path="frontdesk"
                 element={
@@ -87,7 +83,6 @@ export default function App() {
                 <Route path="billing" element={<Billing />} />
               </Route>
 
-              {/* Restaurant routes */}
               <Route
                 path="restaurant"
                 element={
@@ -104,7 +99,6 @@ export default function App() {
               </Route>
             </Route>
 
-            {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>

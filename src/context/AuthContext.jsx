@@ -23,10 +23,8 @@ export const AuthProvider = ({ children }) => {
 
   const [sessionInfo, setSessionInfo] = useLocalStorageState(null, "sessionInfo");
 
-  // Fetch profile using React Query
   const { data: profile, isLoading: profileLoading } = useProfile(user?.id);
 
-  // Initialize auth state
   useEffect(() => {
     const initAuth = async () => {
       try {
@@ -45,7 +43,6 @@ export const AuthProvider = ({ children }) => {
 
     initAuth();
 
-    // Listen to auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
