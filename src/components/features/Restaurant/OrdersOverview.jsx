@@ -1,8 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip } from "recharts";
 import { UtensilsCrossed, ShoppingBag, Monitor } from "lucide-react";
 
-/* ----------------------------- Data ----------------------------- */
-
 const ORDERS_DATA = [
   { day: "Mon", orders: 120 },
   { day: "Tue", orders: 140 },
@@ -19,12 +17,9 @@ const ORDER_TYPES = [
   { label: "Online", percentage: 25, count: 500, icon: Monitor },
 ];
 
-/* --------------------------- Component --------------------------- */
-
 function OrdersOverview() {
   return (
     <div className="flex flex-wrap gap-6 py-6">
-      {/* -------------------- Orders Chart -------------------- */}
       <section className="min-w-[300px] flex-1 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
         <Header title="Orders Overview" filter="This Week" />
 
@@ -51,7 +46,6 @@ function OrdersOverview() {
         </ResponsiveContainer>
       </section>
 
-      {/* -------------------- Order Types -------------------- */}
       <section className="w-full rounded-xl border border-gray-200 bg-white p-6 shadow-sm sm:w-[300px] md:w-[350px]">
         <Header title="Order Types" filter="This Month" />
 
@@ -81,8 +75,6 @@ function OrdersOverview() {
     </div>
   );
 }
-
-/* --------------------------- Helpers --------------------------- */
 
 function Header({ title, filter }) {
   return (

@@ -1,3 +1,4 @@
+import { useAuth } from "@/context/AuthContext";
 import { LayoutDashboard, Coffee, Utensils, Table, FileText } from "lucide-react";
 import { HiArrowLeftEndOnRectangle } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router";
@@ -37,6 +38,7 @@ const links = [
 
 export default function RestaurantLayout() {
   const navigate = useNavigate();
+  const { profile } = useAuth();
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -77,7 +79,8 @@ export default function RestaurantLayout() {
         <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-sm">
           <div className="flex items-center gap-3">
             <span className="text-base font-semibold text-gray-800">
-              Welcome to <span className="text-indigo-600">Restaurant</span>
+              Welcome to{" "}
+              <span className="text-indigo-600">{profile?.role === "admin" ? "Admin" : "Restaurant Staff"}!</span>
             </span>
 
             <span className="animate-wave inline-block origin-bottom text-2xl">👋</span>

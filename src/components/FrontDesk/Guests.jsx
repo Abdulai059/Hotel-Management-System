@@ -3,14 +3,16 @@ import GuestsTable from "../features/FrontDesk/GuestsTable";
 import { useBookings } from "../features/FrontDesk/useBookings";
 
 export default function Guests() {
-  const { bookings, isLoading, error } = useBookings();
+  const { bookings, count, isLoading, error } = useBookings();
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col">
       <BookingFilters />
+
       <div className="w-full shadow-sm">
-        <GuestsTable bookings={bookings} isLoading={isLoading} error={error} />
+        <GuestsTable bookings={bookings} count={count} isLoading={isLoading} error={error} />
       </div>
     </div>
   );
 }
+

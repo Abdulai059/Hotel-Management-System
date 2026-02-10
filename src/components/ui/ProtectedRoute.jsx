@@ -1,30 +1,31 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import { useUser } from "../authentication/useUser";
+import { useAuth } from "@/context/AuthContext";
 import Spinner from "./Spinner";
+import { Navigate } from "react-router-dom";
 
-function ProtectedRoute({ children }) {
-  const navigate = useNavigate();
+export default function ProtectedRoute({ children, allowedRoles = [] }) {
+  const { user, profile, loading } = useAuth();
 
-  const { isLoading, isAuthenticated } = useUser();
-
-  useEffect(() => {
-    if (!isAuthenticated && !isLoading) {
-      navigate("/");
-    }
-  }, [isAuthenticated, isLoading, navigate]);
-
-  if (isLoading) {
+  if (loading) {
     return (
-      <div className="h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex h-screen items-center justify-center bg-gray-50">
         <Spinner />
       </div>
     );
   }
 
-  if (isAuthenticated) return children;
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
-  return null;
+  if (allowedRoles.length > 0) {
+    if (!profile || !profile.role) {
+      return <Navigate to="/login" replace />;
+    }
+
+    if (!allowedRoles.includes(profile.role)) {
+      return <Navigate to="/unauthorized" replace />;
+    }
+  }
+
+  return children;
 }
-
-export default ProtectedRoute;

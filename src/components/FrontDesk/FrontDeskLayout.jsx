@@ -17,6 +17,8 @@ import {
 import { HiArrowLeftEndOnRectangle } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router";
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+
 const links = [
   {
     group: "Overview",
@@ -112,13 +114,14 @@ const links = [
 export default function FrontDeskLayout() {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(true);
+  const { profile } = useAuth();
 
   return (
     <div className="flex h-screen bg-gray-50">
       <aside
         className={`flex flex-col border-r border-gray-200 bg-white transition-all duration-300 ${isExpanded ? "w-64" : "w-16"}`}
       >
-        <div className="flex items-center gap-4 bg-amber-100 p-2 shadow-sm">
+        <div className="flex items-center gap-4 bg-sky-100 p-2 shadow-sm">
           <div className="flex h-12 w-12 shrink-0 rotate-3 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-xl">
             <img src="/global-dreams.png" alt="global dream logo" />
           </div>
@@ -214,7 +217,8 @@ export default function FrontDeskLayout() {
         <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-md">
           <div className="flex items-center gap-3">
             <span className="text-base font-semibold text-gray-800">
-              Welcome to <span className="text-red-600">Frontdesk</span>
+              Welcome to{" "}
+              <span className="text-red-600"> {profile?.role === "admin" ? "Admin" : "Front Desk Staff"}</span>
             </span>
             <span className="animate-wave inline-block origin-bottom text-2xl">👋</span>
           </div>

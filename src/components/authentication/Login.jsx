@@ -1,105 +1,196 @@
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { useNavigate } from "react-router";
-import { OrbitingCirclesLogos } from "../ui/orbiting-logos";
+import { useAuth } from "@/context/AuthContext";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSignIn, useSignUp } from "./useAuthQueries";
 
 export default function Login() {
-    const [showPassword, setShowPassword] = useState(false);
-    const [rememberMe, setRememberMe] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        if (email && password) {
-            localStorage.setItem("isAuthenticated", "true");
-            navigate("/dashboard");
+  // React Query mutations
+  const signInMutation = useSignIn();
+  const signUpMutation = useSignUp();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (isSignUp) {
+        const result = await signUpMutation.mutateAsync({ email, password });
+        if (result.error) {
+          // Error is handled by mutation error state
+        } else {
+          alert("Please check your email to confirm your account!");
+          setEmail("");
+          setPassword("");
         }
-    };
+      } else {
+        await signInMutation.mutateAsync({ email, password });
+        // Navigation happens automatically via useEffect when user state updates
+      }
+    } catch (error) {
+      // Error is already captured in mutation state
+      console.error("Authentication error:", error);
+    }
+  };
 
-    return (
-        <div className="flex min-h-screen">
+  const currentMutation = isSignUp ? signUpMutation : signInMutation;
+  const isLoading = currentMutation.isPending;
+  const error = currentMutation.error?.message || currentMutation.error;
 
-            <div className="relative w-1/2 flex flex-col items-center justify-center px-12">
-                <div className="w-full max-w-md bg-white rounded-sm shadow-sm p-8">
-                    <div className="mb-8 text-center">
-                        <h1 className="text-5xl font-bold text-teal-600">HOTEL</h1>
-                        <p className="text-gray-500">Management Service</p>
-                    </div>
+  return (
+    <div className="flex min-h-screen">
+      <style>
+        {`
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+        `}
+      </style>
+      <div className="relative flex w-1/2 flex-col items-center justify-center px-12">
+        <div className="w-full max-w-md rounded-sm bg-white p-8 shadow-sm">
+          <div className="mb-8 text-center">
+            <h1 className="text-5xl font-bold text-teal-600">HOTEL</h1>
+            <p className="text-gray-500">Management Service</p>
+          </div>
 
-                    <form onSubmit={handleLogin} className="space-y-5">
-                        <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-2">
-                                Email Address
-                            </label>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="example@gmail.com"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 outline-none"
-                                required
-                            />
-                        </div>
+          <div
+            style={{
+              maxWidth: "400px",
+              margin: "100px auto",
+              padding: "20px",
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+            }}
+          >
+            <h2 style={{ textAlign: "center" }}>{isSignUp ? "Sign Up" : "Login"}</h2>
 
-                        <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-2">
-                                Password
-                            </label>
-                            <div className="relative">
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 outline-none"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword((s) => !s)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
-                                >
-                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                                </button>
-                            </div>
-                        </div>
+            {error && (
+              <div
+                style={{
+                  padding: "10px",
+                  background: "#ffebee",
+                  color: "#c62828",
+                  borderRadius: "4px",
+                  marginBottom: "15px",
+                }}
+              >
+                {error}
+              </div>
+            )}
 
-                        <div className="flex items-center justify-between text-sm">
-                            <label className="flex items-center gap-2">
-                                <input
-                                    type="checkbox"
-                                    checked={rememberMe}
-                                    onChange={(e) => setRememberMe(e.target.checked)}
-                                    className="w-4 h-4 text-teal-600 rounded"
-                                />
-                                <span className="text-gray-600">Remember me</span>
-                            </label>
-                            <a className="text-teal-600 font-medium cursor-pointer">
-                                Forgot Password?
-                            </a>
-                        </div>
+            <form onSubmit={handleSubmit}>
+              <div style={{ marginBottom: "15px" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>Email:</label>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #ddd",
+                    borderRadius: "4px",
+                    opacity: isLoading ? 0.6 : 1,
+                  }}
+                />
+              </div>
 
-                        <button className="w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-lg shadow transition">
-                            Login
-                        </button>
-                    </form>
+              <div style={{ marginBottom: "15px" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>Password:</label>
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  disabled={isLoading}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #ddd",
+                    borderRadius: "4px",
+                    opacity: isLoading ? 0.6 : 1,
+                  }}
+                />
+              </div>
 
-                    <div className="mt-8 text-center">
-                        <button className="text-sm text-teal-600 font-medium hover:underline">
-                            Create Account
-                        </button>
-                    </div>
-                </div>
+              <button
+                type="submit"
+                disabled={isLoading}
+                style={{
+                  width: "100%",
+                  padding: "12px",
+                  background: "#4CAF50",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: isLoading ? "not-allowed" : "pointer",
+                  fontSize: "16px",
+                  opacity: isLoading ? 0.7 : 1,
+                }}
+              >
+                {isLoading ? "Please wait..." : isSignUp ? "Sign Up" : "Login"}
+                {isLoading && (
+                  <span
+                    style={{
+                      marginLeft: "8px",
+                      display: "inline-block",
+                      width: "12px",
+                      height: "12px",
+                      border: "2px solid #ffffff",
+                      borderRadius: "50%",
+                      borderTopColor: "transparent",
+                      animation: "spin 1s ease-in-out infinite",
+                    }}
+                  />
+                )}
+              </button>
+            </form>
 
-                <p className="mt-8 text-sm translate-y-20 text-gray-400">
-                    Developed by <span className="text-black font-semibold">Zesung</span>
-                </p>
-            </div>
-
-
-            <div className="relative w-1/2 flex items-center justify-center bg-[#e3fdff]">
-                <OrbitingCirclesLogos />
-            </div>
+            <button
+              onClick={() => {
+                setIsSignUp(!isSignUp);
+                // Reset mutation states when switching
+                signInMutation.reset();
+                signUpMutation.reset();
+              }}
+              disabled={isLoading}
+              style={{
+                marginTop: "15px",
+                width: "100%",
+                background: "none",
+                border: "none",
+                color: "#2196F3",
+                cursor: isLoading ? "not-allowed" : "pointer",
+                textDecoration: "underline",
+                opacity: isLoading ? 0.6 : 1,
+              }}
+            >
+              {isSignUp ? "Already have an account? Login" : "Need an account? Sign Up"}
+            </button>
+          </div>
         </div>
-    );
+
+        <p className="mt-8 translate-y-20 text-sm text-gray-400">
+          Developed by <span className="font-semibold text-black">Zesung</span>
+        </p>
+      </div>
+
+      <div className="relative flex w-1/2 items-center justify-center bg-[#e3fdff]" />
+    </div>
+  );
 }

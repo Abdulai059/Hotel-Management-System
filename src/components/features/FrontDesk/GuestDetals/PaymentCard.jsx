@@ -2,14 +2,11 @@ export default function PaymentCard({ booking, isEditing, onUpdate }) {
   if (!booking) return null;
 
   const payment = booking.payments || {};
-  console.log("payment info:", payment);
 
   if (!payment || Object.keys(payment).length === 0) return null;
 
-  // Helper function to safely convert null to 0
   const toNumber = (value) => value ?? 0;
 
-  // Calculate total from API fields
   const roomTariff = toNumber(payment.roomTariff);
   const roomTax = toNumber(payment.roomTax);
   const addOns = toNumber(payment.addOns);
@@ -18,7 +15,6 @@ export default function PaymentCard({ booking, isEditing, onUpdate }) {
 
   const total = roomTariff + roomTax + addOns + otherCharges + otherTax;
 
-  // Calculate deductions
   const amountPaid = toNumber(payment.amount);
   const discount = toNumber(payment.discount);
   const otherDiscount = toNumber(payment.otherDiscount);
