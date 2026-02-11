@@ -81,12 +81,8 @@ export default function Modules() {
           <div className="rounded-sm p-8 shadow-md">
             <div className="mb-6 flex w-full flex-col items-center gap-6 lg:flex-row lg:items-start">
               <div className="relative">
-                <div className="h-24 w-24 overflow-hidden rounded-full border-4 border-blue-700 shadow-lg shadow-blue-500/30">
-                  <img
-                    src={user?.avatar || "/default-avatar.png"}
-                    alt={user?.name}
-                    className="h-full w-full object-cover"
-                  />
+                <div className="h-24 w-24 overflow-hidden rounded-full border-2 border-blue-700 shadow-lg shadow-blue-500/30">
+                  <img src={user?.avatar || "/avator.webp"} alt={user?.name} className="h-full w-full object-cover" />
                 </div>
                 <div className="absolute -right-1 -bottom-1 flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-900 bg-gradient-to-br from-blue-500 to-indigo-500">
                   <Shield size={16} className="text-white" />
