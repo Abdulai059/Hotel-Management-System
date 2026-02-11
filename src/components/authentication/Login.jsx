@@ -38,7 +38,7 @@ export default function Login() {
 
       <div className="relative z-10 flex w-full max-w-7xl overflow-hidden rounded-2xl bg-white shadow-2xl md:h-[75vh]">
         <div className="hidden w-1/2 lg:block">
-          <img className="h-full w-[500px] object-cover" src="/dubai.jpg" alt="Login background" />
+          <img className="h-full w-[500px] object-cover" src="/globaldr2.jpg" alt="Login background" />
         </div>
 
         <div className="flex w-full flex-col items-center justify-center bg-white p-6 sm:p-8 md:p-10 lg:w-1/2">
