@@ -22,7 +22,7 @@ export default function Dashboard() {
         <Stats stats={stats} isLoading={isLoading} error={error} />
         <RoomHeatmap />
         <RoomType />
-        <ActivityAvailability />
+        <ActivityAvailability stats={stats} isLoading={isLoading} error={error} />
         <OccupancyAndFeedback />
       </div>
       <WelcomePoppin />

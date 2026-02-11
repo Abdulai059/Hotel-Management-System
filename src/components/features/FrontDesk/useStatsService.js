@@ -9,9 +9,7 @@ export function useStats() {
 
       const [checkIns, checkOuts, allRooms] = await Promise.all([
         supabase.from("bookings").select("*").eq("start_date", today).eq("status", "CHECKED_IN"),
-
         supabase.from("bookings").select("*").eq("end_date", today).eq("status", "CHECKED_OUT"),
-
         supabase.from("rooms").select("id, status"),
       ]);
 
@@ -28,12 +26,16 @@ export function useStats() {
       const availableRooms = allRooms.data?.filter((room) => room.status === "AVAILABLE").length || 0;
       const occupiedRooms = allRooms.data?.filter((room) => room.status === "OCCUPIED").length || 0;
 
+      // Calculate occupancy percentage
+      const occupancyPercentage = totalRooms > 0 ? Math.round((occupiedRooms / totalRooms) * 100) : 0;
+
       return {
         todayCheckIns: checkIns.data?.length || 0,
         todayCheckOuts: checkOuts.data?.length || 0,
         totalRooms,
         availableRooms,
         occupiedRooms,
+        occupancyPercentage, // Add this
       };
     },
     refetchInterval: 60000,

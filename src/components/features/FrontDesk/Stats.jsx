@@ -1,5 +1,3 @@
-import { useStats } from "./useStatsService";
-
 function Stats({ stats, isLoading, error }) {
   if (isLoading) {
     return (

@@ -48,49 +48,47 @@ export default function RoomHeatmap() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-slate-50 to-slate-100">
-      <main className="mt-4 space-y-4">
-        <Legend />
+    <div className="mt-4 space-y-4 bg-gradient-to-br from-slate-50 to-slate-100">
+      <Legend />
 
-        {sortedRooms.length ? (
-          <div className="rounded-lg bg-white p-4 shadow-sm">
-            <div className="grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15">
-              {sortedRooms.map((room) => (
-                <div
-                  key={room.id}
-                  className="relative"
-                  onMouseEnter={() => setHoveredRoom(room)}
-                  onMouseLeave={() => setHoveredRoom(null)}
+      {sortedRooms.length ? (
+        <div className="rounded-lg bg-white p-4 shadow-sm">
+          <div className="grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15">
+            {sortedRooms.map((room) => (
+              <div
+                key={room.id}
+                className="relative"
+                onMouseEnter={() => setHoveredRoom(room)}
+                onMouseLeave={() => setHoveredRoom(null)}
+              >
+                {hoveredRoom?.id === room.id && <Tooltip room={room} />}
+
+                <button
+                  type="button"
+                  className={`relative aspect-square w-full rounded text-xs font-bold text-white shadow transition ${
+                    statusColor[room.status] ?? "bg-gray-400"
+                  }`}
                 >
-                  {hoveredRoom?.id === room.id && <Tooltip room={room} />}
+                  <span className="absolute inset-0 flex items-center justify-center">{room.number}</span>
 
-                  <button
-                    type="button"
-                    className={`relative aspect-square w-full rounded text-xs font-bold text-white shadow transition ${
-                      statusColor[room.status] ?? "bg-gray-400"
-                    }`}
-                  >
-                    <span className="absolute inset-0 flex items-center justify-center">{room.number}</span>
-
-                    {room.status === "AVAILABLE" && (
-                      <span className="absolute inset-0 animate-pulse rounded bg-white/10" />
-                    )}
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <Stats rooms={sortedRooms} />
+                  {room.status === "AVAILABLE" && (
+                    <span className="absolute inset-0 animate-pulse rounded bg-white/10" />
+                  )}
+                </button>
+              </div>
+            ))}
           </div>
-        ) : (
-          <EmptyState
-            onReset={() => {
-              setFilterStatus(FILTER_ALL);
-              setSearchQuery("");
-            }}
-          />
-        )}
-      </main>
+
+          <Stats rooms={sortedRooms} />
+        </div>
+      ) : (
+        <EmptyState
+          onReset={() => {
+            setFilterStatus(FILTER_ALL);
+            setSearchQuery("");
+          }}
+        />
+      )}
     </div>
   );
 }
