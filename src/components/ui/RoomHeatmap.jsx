@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { RoomStatus } from "@/hooks/types";
-import { MOCK_ROOMS } from "@/services/mockData";
+import { useRooms } from "../features/FrontDesk/room/useRoomsQuery";
 import { FILTER_ALL } from "@/lib/roomFilters";
 import { useFilteredRooms } from "@/hooks/useFilteredRooms";
 import { Search } from "lucide-react";
@@ -11,71 +10,101 @@ export default function RoomHeatmap() {
   const [searchQuery, setSearchQuery] = useState("");
   const [hoveredRoom, setHoveredRoom] = useState(null);
 
-  const filteredRooms = useFilteredRooms(MOCK_ROOMS, filterStatus, searchQuery);
+  const { data: rooms, isLoading, error } = useRooms();
 
+  const filteredRooms = useFilteredRooms(rooms || [], filterStatus, searchQuery);
   const sortedRooms = [...filteredRooms].sort((a, b) => parseInt(a.number) - parseInt(b.number));
 
   const statusColor = {
-    [RoomStatus.AVAILABLE]: "bg-emerald-500 hover:bg-emerald-600",
-    [RoomStatus.OCCUPIED]: "bg-rose-500 hover:bg-rose-600",
-    [RoomStatus.MAINTENANCE]: "bg-amber-500 hover:bg-amber-600",
+    AVAILABLE: "bg-emerald-500 hover:bg-emerald-600",
+    OCCUPIED: "bg-rose-500 hover:bg-rose-600",
+    MAINTENANCE: "bg-amber-500 hover:bg-amber-600",
   };
 
-  return (
-    <div className="bg-gradient-to-br from-slate-50 to-slate-100">
-      <main className="mt-4 space-y-4">
-        <Legend />
-
-        {sortedRooms.length ? (
+  if (isLoading) {
+    return (
+      <div className="bg-gradient-to-br from-slate-50 to-slate-100">
+        <main className="mt-4 space-y-4">
           <div className="rounded-lg bg-white p-4 shadow-sm">
-            <div className="grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15">
-              {sortedRooms.map((room) => (
-                <div
-                  key={room.id}
-                  className="relative"
-                  onMouseEnter={() => setHoveredRoom(room)}
-                  onMouseLeave={() => setHoveredRoom(null)}
-                >
-                  {hoveredRoom?.id === room.id && <Tooltip room={room} />}
-
-                  <button
-                    type="button"
-                    className={`relative aspect-square w-full rounded text-xs font-bold text-white shadow transition ${
-                      statusColor[room.status] ?? "bg-gray-400"
-                    }`}
-                  >
-                    <span className="absolute inset-0 flex items-center justify-center">{room.number}</span>
-
-                    {room.status === RoomStatus.AVAILABLE && (
-                      <span className="absolute inset-0 animate-pulse rounded bg-white/10" />
-                    )}
-                  </button>
-                </div>
-              ))}
+            <div className="flex h-32 items-center justify-center">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-indigo-500"></div>
             </div>
-
-            <Stats rooms={sortedRooms} />
           </div>
-        ) : (
-          <EmptyState
-            onReset={() => {
-              setFilterStatus(FILTER_ALL);
-              setSearchQuery("");
-            }}
-          />
-        )}
-      </main>
+        </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-gradient-to-br from-slate-50 to-slate-100">
+        <main className="mt-4 space-y-4">
+          <div className="rounded-lg border border-red-200 bg-red-50 p-6 shadow-sm">
+            <p className="text-sm text-red-800">Failed to load rooms: {error.message}</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-4 space-y-4 bg-gradient-to-br from-slate-50 to-slate-100">
+      <Legend />
+
+      {sortedRooms.length ? (
+        <div className="rounded-lg bg-white p-4 shadow-sm">
+          <div className="grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15">
+            {sortedRooms.map((room) => (
+              <div
+                key={room.id}
+                className="relative"
+                onMouseEnter={() => setHoveredRoom(room)}
+                onMouseLeave={() => setHoveredRoom(null)}
+              >
+                {hoveredRoom?.id === room.id && <Tooltip room={room} />}
+
+                <button
+                  type="button"
+                  className={`relative aspect-square w-full rounded text-xs font-bold text-white shadow transition ${
+                    statusColor[room.status] ?? "bg-gray-400"
+                  }`}
+                >
+                  <span className="absolute inset-0 flex items-center justify-center">{room.number}</span>
+
+                  {room.status === "AVAILABLE" && (
+                    <span className="absolute inset-0 animate-pulse rounded bg-white/10" />
+                  )}
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <Stats rooms={sortedRooms} />
+        </div>
+      ) : (
+        <EmptyState
+          onReset={() => {
+            setFilterStatus(FILTER_ALL);
+            setSearchQuery("");
+          }}
+        />
+      )}
     </div>
   );
 }
 
 function Tooltip({ room }) {
   return (
-    <div className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 rounded border bg-white px-3 py-2 text-xs shadow-lg">
+    <div className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 rounded border bg-white px-3 py-2 text-xs whitespace-nowrap shadow-lg">
       <div className="font-bold">Room {room.number}</div>
-      <div className="text-slate-600">{room.type}</div>
-      <div className="text-slate-500 capitalize">{room.status.replace("_", " ")}</div>
-      {room.guest && <div className="mt-1 border-t pt-1">{room.guest.name}</div>}
+      {room.name && <div className="text-slate-600">{room.name}</div>}
+      {room.type && <div className="text-slate-600">{room.type}</div>}
+      <div className="text-slate-500 capitalize">{room.status.toLowerCase().replace("_", " ")}</div>
+      {room.guest && (
+        <div className="mt-1 border-t pt-1">
+          <div className="font-medium text-slate-700">{room.guest.name}</div>
+        </div>
+      )}
     </div>
   );
 }
@@ -86,9 +115,9 @@ function Stats({ rooms }) {
   return (
     <div className="mt-6 flex gap-6 border-t border-gray-300 pt-4 text-sm">
       <span>Total: {rooms.length}</span>
-      <span className="text-emerald-600">Available: {count(RoomStatus.AVAILABLE)}</span>
-      <span className="text-rose-600">Occupied: {count(RoomStatus.OCCUPIED)}</span>
-      <span className="text-amber-600">Maintenance: {count(RoomStatus.MAINTENANCE)}</span>
+      <span className="text-emerald-600">Available: {count("AVAILABLE")}</span>
+      <span className="text-rose-600">Occupied: {count("OCCUPIED")}</span>
+      <span className="text-amber-600">Maintenance: {count("MAINTENANCE")}</span>
     </div>
   );
 }
