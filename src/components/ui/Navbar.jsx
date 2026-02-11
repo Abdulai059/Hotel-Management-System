@@ -39,13 +39,14 @@ export default function Navbar() {
     <nav className="bg-white shadow-md">
       <div className="mx-auto max-w-375 px-4 py-2 sm:px-6">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo Section */}
           <div className="flex items-center gap-2 sm:gap-4">
             <div className="flex h-10 w-10 rotate-3 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-xl sm:h-12 sm:w-12">
-              <span className="text-lg font-black sm:text-xl">LS</span>
+              <span className="text-lg font-black sm:text-xl">
+                <img src="/global-dreams.png" alt="logo" />
+              </span>
             </div>
             <div>
-              <h1 className="text-lg font-black tracking-tight text-slate-900 sm:text-2xl">Global Dream</h1>
+              <h1 className="text-lg font-bold tracking-tight text-slate-900 sm:text-2xl">Global Dream</h1>
               <div className="hidden items-center gap-2 sm:flex">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
                 <p className="text-[11px] font-bold tracking-widest text-slate-500 uppercase">Hotel Operations Live</p>
@@ -53,7 +54,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Desktop Menu */}
           <div className="hidden items-center space-x-4 md:flex">
             <button className="text-gray-600 hover:text-gray-800">
               <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +83,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="flex items-center gap-2 md:hidden">
             <button className="text-gray-600 hover:text-gray-800">
               <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,7 +106,6 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown */}
         {showMobileMenu && (
           <div className="border-t border-gray-200 pt-4 pb-3 md:hidden">
             <div className="mb-4 flex items-center gap-3 px-4">

@@ -80,7 +80,6 @@ export default function Modules() {
         <div className="flex flex-col gap-20">
           <div className="rounded-sm p-8 shadow-md">
             <div className="mb-6 flex w-full flex-col items-center gap-6 lg:flex-row lg:items-start">
-              {/* User Avatar */}
               <div className="relative">
                 <div className="h-24 w-24 overflow-hidden rounded-full border-4 border-blue-700 shadow-lg shadow-blue-500/30">
                   <img
@@ -94,7 +93,6 @@ export default function Modules() {
                 </div>
               </div>
 
-              {/* User Info */}
               <div className="flex flex-1 flex-col items-center gap-4 lg:items-start">
                 <div className="text-center lg:text-left">
                   <p className="text-sm font-medium text-gray-900">{getGreeting()},</p>

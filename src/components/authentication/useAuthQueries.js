@@ -42,7 +42,23 @@ export function useSignIn() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ email, password }) => authService.signIn(email, password),
+    mutationFn: async ({ email, password }) => {
+      try {
+        return await authService.signIn(email, password);
+      } catch (error) {
+        const errorMessage = error?.message || "";
+
+        if (
+          errorMessage.includes("Invalid login credentials") ||
+          errorMessage.includes("Invalid email or password") ||
+          errorMessage.includes("Email not confirmed")
+        ) {
+          throw new Error("Invalid email or password");
+        }
+
+        throw new Error("Something went wrong. Please try again.");
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: authKeys.session });
     },
