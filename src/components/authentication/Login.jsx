@@ -2,7 +2,6 @@ import { useAuth } from "@/context/AuthContext";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignIn } from "./useAuthQueries";
-import LogInImageSlider from "../ui/LogInImageSlider";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -31,21 +30,21 @@ export default function Login() {
   const error = signInMutation.error;
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center">
-      <div className="absolute inset-0 flex">
+    <div className="relative flex min-h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="absolute inset-0 hidden md:flex">
         <div className="w-1/2 bg-[#e3fdff]"></div>
         <div className="w-1/2 bg-white"></div>
       </div>
 
-      <div className="relative z-10 flex h-[75vh] w-full max-w-7xl overflow-hidden rounded-2xl bg-white shadow-2xl">
-        <div className="hidden w-1/2 md:block">
+      <div className="relative z-10 flex w-full max-w-7xl overflow-hidden rounded-2xl bg-white shadow-2xl md:h-[75vh]">
+        <div className="hidden w-1/2 lg:block">
           <img className="h-full w-[500px] object-cover" src="/dubai.jpg" alt="Login background" />
         </div>
 
-        <div className="flex w-full flex-col items-center justify-center bg-white p-8 md:w-1/2">
+        <div className="flex w-full flex-col items-center justify-center bg-white p-6 sm:p-8 md:p-10 lg:w-1/2">
           <div className="w-full max-w-sm">
-            <h2 className="text-4xl font-medium text-gray-900">Sign in</h2>
-            <p className="mt-3 text-sm text-gray-500/90">Welcome back! Please sign in to continue</p>
+            <h2 className="text-3xl font-medium text-gray-900 sm:text-4xl">Sign in</h2>
+            <p className="mt-2 text-sm text-gray-500/90 sm:mt-3">Welcome back! Please sign in to continue</p>
 
             {error && (
               <div className="mt-4 rounded-lg border border-red-300 bg-red-50 p-3 text-center text-sm text-red-800">
@@ -55,7 +54,7 @@ export default function Login() {
 
             <button
               type="button"
-              className="mt-8 flex h-12 w-full items-center justify-center rounded-full bg-gray-500/10 transition-colors hover:bg-gray-500/20"
+              className="mt-6 flex h-12 w-full items-center justify-center rounded-full bg-gray-500/10 transition-colors hover:bg-gray-500/20 sm:mt-8"
             >
               <img
                 src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/googleLogo.svg"
@@ -63,14 +62,14 @@ export default function Login() {
               />
             </button>
 
-            <div className="my-5 flex w-full items-center gap-4">
+            <div className="my-4 flex w-full items-center gap-3 sm:my-5 sm:gap-4">
               <div className="h-px w-full bg-gray-300/90"></div>
-              <p className="w-full text-sm text-nowrap text-gray-500/90">or sign in with email</p>
+              <p className="text-xs text-nowrap text-gray-500/90 sm:text-sm">or sign in with email</p>
               <div className="h-px w-full bg-gray-300/90"></div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="flex h-12 w-full items-center gap-2 overflow-hidden rounded-full border border-gray-300/60 bg-transparent pl-6">
+            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+              <div className="flex h-11 w-full items-center gap-2 overflow-hidden rounded-full border border-gray-300/60 bg-transparent pl-4 sm:h-12 sm:pl-6">
                 <svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
@@ -90,7 +89,7 @@ export default function Login() {
                 />
               </div>
 
-              <div className="flex h-12 w-full items-center gap-2 overflow-hidden rounded-full border border-gray-300/60 bg-transparent pl-6">
+              <div className="flex h-11 w-full items-center gap-2 overflow-hidden rounded-full border border-gray-300/60 bg-transparent pl-4 sm:h-12 sm:pl-6">
                 <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M13 8.5c0-.938-.729-1.7-1.625-1.7h-.812V4.25C10.563 1.907 8.74 0 6.5 0S2.438 1.907 2.438 4.25V6.8h-.813C.729 6.8 0 7.562 0 8.5v6.8c0 .938.729 1.7 1.625 1.7h9.75c.896 0 1.625-.762 1.625-1.7zM4.063 4.25c0-1.406 1.093-2.55 2.437-2.55s2.438 1.144 2.438 2.55V6.8H4.061z"
@@ -112,13 +111,13 @@ export default function Login() {
               <div className="flex w-full items-center justify-between text-gray-500/80">
                 <div className="flex items-center gap-2">
                   <input
-                    className="h-5 cursor-pointer"
+                    className="h-4 cursor-pointer sm:h-5"
                     type="checkbox"
                     id="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
                   />
-                  <label className="cursor-pointer text-sm" htmlFor="checkbox">
+                  <label className="cursor-pointer text-xs sm:text-sm" htmlFor="checkbox">
                     Remember me
                   </label>
                 </div>
@@ -127,7 +126,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="h-11 w-full rounded-full bg-indigo-500 text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
+                className="h-11 w-full rounded-full bg-indigo-500 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70 sm:text-base"
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -140,7 +139,7 @@ export default function Login() {
               </button>
             </form>
 
-            <p className="mt-6 text-center text-sm text-gray-500/90">
+            <p className="mt-4 text-center text-xs text-gray-500/90 sm:mt-6 sm:text-sm">
               Don't have an account?{" "}
               <a className="text-indigo-400 hover:underline" href="#">
                 Contact Admin
@@ -148,7 +147,7 @@ export default function Login() {
             </p>
           </div>
 
-          <p className="mt-8 text-center text-sm text-gray-400">
+          <p className="mt-6 text-center text-xs text-gray-400 sm:mt-8 sm:text-sm">
             Engineered by <span className="font-semibold text-black">Zesung</span>
           </p>
         </div>
