@@ -1,43 +1,62 @@
-function Stats() {
-  const stats = [
+import { useStats } from "./useStatsService";
+
+function Stats({ stats, isLoading, error }) {
+  if (isLoading) {
+    return (
+      <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="flex h-32 items-center justify-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-indigo-500"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full rounded-lg border border-red-200 bg-red-50 p-6 shadow-sm">
+        <p className="text-sm text-red-800">Failed to load statistics</p>
+      </div>
+    );
+  }
+
+  const statsData = [
     {
       label: "Check-in",
       timeframe: "Today's",
-      value: 23,
+      value: stats?.todayCheckIns || 0,
       color: "text-sky-600",
     },
     {
       label: "Check-out",
       timeframe: "Today's",
-      value: 13,
+      value: stats?.todayCheckOuts || 0,
       color: "text-amber-600",
     },
     {
       label: "In hotel",
       timeframe: "Total",
-      value: 60,
+      value: stats?.totalRooms || 0,
       color: "text-emerald-600",
     },
     {
       label: "Available room",
       timeframe: "Total",
-      value: 10,
+      value: stats?.availableRooms || 0,
       color: "text-violet-600",
     },
     {
       label: "Occupied room",
       timeframe: "Total",
-      value: 90,
+      value: stats?.occupiedRooms || 0,
       color: "text-rose-600",
     },
   ];
-
   return (
     <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
       <h2 className="mb-6 text-xl font-semibold text-gray-800">Overview</h2>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
-        {stats.map((stat, index) => (
+        {statsData.map((stat, index) => (
           <div key={index} className="flex flex-col">
             <span className="mb-1 text-sm text-gray-500">{stat.timeframe}</span>
             <div className="flex items-baseline gap-2">
