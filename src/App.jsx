@@ -75,7 +75,7 @@ export default function App() {
               >
                 <Route index element={<Dashboard />} />
                 <Route path="guests" element={<Guests />} />
-                <Route path="guests/reservation/:id" element={<BookingDetails />} />
+                <Route path="guests/:id" element={<BookingDetails />} />
                 <Route path="guests/payment" element={<Payment />} />
                 <Route path="bookings" element={<Bookings />} />
                 <Route path="corporate-bookings" element={<CorporateBookings />} />
