@@ -127,9 +127,6 @@ const ActionButtons = () => (
 
 const TableRow = ({ booking, index, onRowClick }) => {
   const rowClass = booking.corporate ? "bg-amber-50 hover:bg-amber-100" : "bg-white hover:bg-gray-50";
-
-  console.log(booking);
-
   const handleClick = () => {
     if (onRowClick) onRowClick(booking);
   };

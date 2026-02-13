@@ -73,7 +73,7 @@ export default function BookingDetails() {
           <RatesPackages booking={booking} />
         </div>
       </div>
-      <ActionButtons />
+      <ActionButtons booking={booking} />
     </div>
   );
 }

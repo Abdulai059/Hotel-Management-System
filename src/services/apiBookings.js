@@ -46,8 +46,7 @@ export async function getBookings({ filters = [], sortBy, page = 1 }) {
     payment:payment_id (
       id,
       amount,
-      paid,
-      balance
+      paid
     )
   `,
     { count: "exact" },

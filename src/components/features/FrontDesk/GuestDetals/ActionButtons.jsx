@@ -1,11 +1,10 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function ActionButtons() {
+export default function ActionButtons({ booking }) {
   const navigate = useNavigate();
 
   const handlePayment = () => {
-    navigate("/dashboard/frontdesk/guests/payment");
+    navigate(`/dashboard/frontdesk/payment/${booking.id}`);
   };
 
   const handleClose = () => {

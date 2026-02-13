@@ -10,7 +10,7 @@ export default function BookingingSlider() {
       <button
         onClick={() => setOpen(true)}
         style={{ animation: "float 3s ease-in-out infinite" }}
-        className="fixed top-24 right-6 z-50 flex items-center justify-center gap-2 rounded-full bg-rose-500 px-4 py-4 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-rose-600 focus:ring-2 focus:ring-rose-500/40 focus:outline-none"
+        className="fixed top-24 right-6 z-50 flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-sky-600 to-sky-700 px-4 py-4 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-sky-600 focus:ring-2 focus:ring-sky-500/40 focus:outline-none"
       >
         <ArrowRightLeft size={25} />
       </button>

@@ -13,7 +13,7 @@ export function useBooking() {
     queryKey: ["booking", id],
     queryFn: () => getBooking(id),
     retry: false,
-    id,
+    enabled: !!id,
   });
 
   return { isLoading, error, booking };
