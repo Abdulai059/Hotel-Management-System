@@ -12,7 +12,7 @@ export async function getBookings({ filters = [], sortBy, page = 1 }) {
     num_nights,
     num_guests,
     status,
-    total_price,
+  room_rate_snapshot,
 
     guest:guest_id (
       id,
@@ -88,7 +88,14 @@ export async function getBooking(id) {
       `
       *,
       guests(*),
-      rooms(*),
+      rooms(
+        *,
+        room_types:room_type_id (
+          id,
+          name,
+          base_price
+        )
+      ),
       payments(*),
       corporate_booking(*)
     `,

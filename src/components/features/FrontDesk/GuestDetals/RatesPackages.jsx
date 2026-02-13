@@ -2,22 +2,24 @@ import { formatDate } from "@/utils/dateHelpers";
 import { Gift, Plus } from "lucide-react";
 
 export default function RatesPackages({ booking }) {
+  const room = booking.rooms;
+
   if (!booking) return null;
 
   const checkIn = formatDate(booking.start_date);
   const checkOut = formatDate(booking.end_date);
 
   const roomRate = booking.rooms?.price_per_night || 0;
-  const totalPrice = booking.total_price || 0;
+  const totalPrice = booking.room_rate_snapshot || 0;
   const roomType = booking.rooms?.room_type || "Standard";
 
   return (
     <div className="rounded-lg bg-[#666666] p-2">
       <h2 className="mb-6 text-xl font-medium text-white">Rates / Packages</h2>
 
-      <div className="rounded-lg bg-[#eef4ff] p-6">
+      <div className="rounded-lg bg-[#eef4ff] p-4">
         <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <div className="min-w-[60px] rounded-lg border-t-4 border-green-500 px-3 py-2 text-center">
               <div className="text-xl font-bold text-gray-900">{checkIn.day}</div>
               <div className="text-xs text-gray-700">{checkIn.month}</div>
@@ -44,9 +46,11 @@ export default function RatesPackages({ booking }) {
           </div>
 
           <div className="text-right">
-            <div className="text-3xl font-bold text-green-600">GH₵ {totalPrice.toFixed(2)}</div>
-            <div className="text-sm font-medium text-blue-600">{roomType} Room</div>
-            <div className="text-xs text-gray-600">GH₵ {roomRate}/night</div>
+            <div className="text-3xl font-bold text-green-600">
+              <span className="text-2xl">GH₵</span> {room?.room_types?.base_price.toFixed(2)}
+            </div>
+            <div className="text-sm font-medium text-blue-600">{room?.room_types?.name} Room</div>
+            <div className="text-xs text-gray-600">GH₵ {room?.room_types?.base_price}/night</div>
           </div>
         </div>
 

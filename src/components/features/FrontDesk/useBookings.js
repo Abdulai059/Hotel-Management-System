@@ -10,7 +10,7 @@ export function useBookings() {
   const page = Number(searchParams.get("page") || 1);
   const sortRaw = searchParams.get("sortBy") || "startDate-desc";
   const [field, direction] = sortRaw.split("-");
-  const sortMap = { startDate: "start_date", createdAt: "created_at", totalPrice: "total_price" };
+  const sortMap = { startDate: "start_date", createdAt: "created_at", totalPrice: "room_rate_snapshot" };
   const sortBy = { field: sortMap[field] || field, direction };
 
   const { isLoading, error, data } = useQuery({
