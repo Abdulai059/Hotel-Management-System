@@ -1,6 +1,53 @@
 import { Bed } from "lucide-react";
 
-export default function BookingHeader({ booking, isEditing, setIsEditing, handleInputChange }) {
+export default function BookingHeader({ booking, isEditing, setIsEditing, onCheckIn, onCheckOut, onCancel }) {
+  if (!booking) return null;
+
+  const room = booking.rooms;
+  const status = booking.status;
+
+  const renderActions = () => {
+    if (status === "RESERVED") {
+      return (
+        <>
+          <button
+            onClick={onCheckIn}
+            className="rounded bg-green-500 px-3 py-1.5 text-xs font-bold uppercase shadow hover:bg-green-600"
+          >
+            Check In
+          </button>
+          <button
+            onClick={onCancel}
+            className="rounded bg-red-500 px-3 py-1.5 text-xs font-bold uppercase shadow hover:bg-red-600"
+          >
+            Cancel
+          </button>
+        </>
+      );
+    }
+
+    if (status === "CHECKED_IN") {
+      return (
+        <button
+          onClick={onCheckOut}
+          className="rounded bg-blue-500 px-3 py-1.5 text-xs font-bold uppercase shadow hover:bg-blue-600"
+        >
+          Check Out
+        </button>
+      );
+    }
+
+    return null;
+  };
+
+  const statusColor =
+    {
+      RESERVED: "text-yellow-300",
+      CHECKED_IN: "text-blue-200",
+      CHECKED_OUT: "text-green-300",
+      CANCELLED: "text-red-300",
+    }[status] || "text-white";
+
   return (
     <div className="mb-4 flex items-center justify-between rounded-sm bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-white">
       <div className="flex items-center gap-4">
@@ -15,73 +62,18 @@ export default function BookingHeader({ booking, isEditing, setIsEditing, handle
 
         <div className="flex items-center gap-2">
           <Bed size={20} />
-          {isEditing ? (
-            <input
-              type="text"
-              value={booking.rooms.room_type || ""}
-              onChange={(e) => handleInputChange("room", "room_type", e.target.value)}
-              className="border-b border-white bg-transparent px-2 text-lg font-semibold text-white outline-none"
-            />
-          ) : (
-            <span className="text-lg font-semibold">{booking.rooms.room_type}</span>
-          )}
+          <span className="text-lg font-semibold">{room?.room_types?.name || "Not Assigned"}</span>
         </div>
 
-        <span className="text-lg">
-          #
-          {isEditing ? (
-            <input
-              type="text"
-              value={booking.rooms.room_number || ""}
-              onChange={(e) => handleInputChange("room", "room_number", e.target.value)}
-              className="ml-1 w-24 border-b border-white bg-transparent text-white outline-none"
-            />
-          ) : (
-            booking.rooms.room_number
-          )}
-        </span>
+        <span className="text-lg font-semibold">#{room?.room_number || "-"}</span>
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white">
-          <span className="text-xs font-bold text-blue-600">i</span>
-        </div>
+        <span className={`text-lg font-semibold ${statusColor}`}>{status}</span>
 
-        <span className="text-lg font-semibold text-yellow-300">
-          {isEditing ? (
-            <select
-              value={booking.status || ""}
-              onChange={(e) => handleInputChange("room", "status", e.target.value)}
-              className="border-b border-yellow-300 bg-transparent text-yellow-300 outline-none"
-            >
-              <option className="text-black" value="Reserved">
-                Reserved
-              </option>
-              <option className="text-black" value="Checked In">
-                Checked In
-              </option>
-              <option className="text-black" value="Checked Out">
-                Checked Out
-              </option>
-            </select>
-          ) : (
-            booking.status
-          )}
-        </span>
+        <span className="text-lg font-semibold text-yellow-300">Res# {booking.resId}</span>
 
-        <span className="text-lg font-semibold text-yellow-300">
-          Res#
-          {isEditing ? (
-            <input
-              type="text"
-              value={booking.resId || ""}
-              onChange={(e) => handleInputChange("room", "resId", e.target.value)}
-              className="ml-1 w-24 border-b border-yellow-300 bg-transparent text-yellow-300 outline-none"
-            />
-          ) : (
-            ` ${booking.resId}`
-          )}
-        </span>
+        <div className="flex items-center gap-2">{renderActions()}</div>
       </div>
     </div>
   );

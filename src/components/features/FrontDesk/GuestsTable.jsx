@@ -16,7 +16,7 @@ const tableHeaders = [
   { label: "Status" },
   { label: "Amount", right: true },
   { label: "Paid", right: true },
-  { label: "Balance", right: true },
+  // { label: "Balance", right: true },
   { label: "Actions", center: true, noPrint: true },
 ];
 
@@ -24,6 +24,7 @@ const STATUS_STYLES = {
   CHECKED_OUT: "bg-gray-100 text-gray-700",
   CHECKED_IN: "bg-green-50 text-green-700",
   RESERVED: "bg-blue-50 text-blue-700",
+  CANCELLED: "bg-red-50 text-red-600",
 };
 
 const FLAG_COLORS = {
@@ -94,13 +95,31 @@ const StatusBadge = ({ status }) => {
 
 const ActionButtons = () => (
   <div className="flex items-center justify-center gap-1.5">
-    <button className="text-gray-500 transition hover:text-gray-700" title="Print">
+    <button
+      className="text-gray-500 transition hover:text-gray-700"
+      title="Print"
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <Printer size={16} />
     </button>
-    <button className="text-gray-500 transition hover:text-gray-700" title="Email">
+    <button
+      className="text-gray-500 transition hover:text-gray-700"
+      title="Email"
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <Mail size={16} />
     </button>
-    <button className="text-gray-500 transition hover:text-gray-700" title="More options">
+    <button
+      className="text-gray-500 transition hover:text-gray-700"
+      title="More options"
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <MoreVertical size={16} />
     </button>
   </div>
@@ -108,10 +127,11 @@ const ActionButtons = () => (
 
 const TableRow = ({ booking, index, onRowClick }) => {
   const rowClass = booking.corporate ? "bg-amber-50 hover:bg-amber-100" : "bg-white hover:bg-gray-50";
-
   const handleClick = () => {
     if (onRowClick) onRowClick(booking);
   };
+
+  const room = booking.rooms;
 
   return (
     <tr className={`cursor-pointer border-b border-gray-200 transition ${rowClass}`} onClick={handleClick}>
@@ -125,17 +145,13 @@ const TableRow = ({ booking, index, onRowClick }) => {
         {booking.corporate?.group_code || ""}
       </td>
       <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{booking.resId}</td>
-      <td className="border-r border-gray-200 px-3 py-1.5">
-        <div className="text-sm font-normal text-gray-900">{booking.guest?.full_name || ""}</div>
+      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-900">{booking.guest?.full_name || ""}</td>
+      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">
+        {booking.start_date && booking.end_date ? `${booking.start_date} - ${booking.end_date}` : ""}
       </td>
-      <td className="border-r border-gray-200 px-3 py-1.5">
-        <div className="text-sm text-gray-700">
-          {booking.start_date && booking.end_date ? `${booking.start_date} - ${booking.end_date}` : ""}
-        </div>
-      </td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{booking.rooms?.room_type || ""}</td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{booking.rooms?.room_number || ""}</td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{booking.rooms?.room_name || ""}</td>
+      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700 uppercase">{room?.room_types?.name}</td>
+      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{room?.room_number || ""}</td>
+      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{room?.room_name || ""}</td>
       <td className="border-r border-gray-200 px-3 py-1.5">
         <ServiceFlags flags={booking.flags} />
       </td>
@@ -143,14 +159,14 @@ const TableRow = ({ booking, index, onRowClick }) => {
         <StatusBadge status={booking.status} />
       </td>
       <td className="border-r border-gray-200 px-3 py-1.5 text-right text-sm font-medium text-gray-900">
-        {formatCurrency(booking.payment?.amount)}
+        {formatCurrency(room?.room_types?.base_price)}
       </td>
       <td className="border-r border-gray-200 px-3 py-1.5 text-right text-sm text-gray-700">
-        {booking.payment?.paid ? formatCurrency(booking.payment.amount) : ""}
+        {room?.room_types?.base_price ? formatCurrency(room?.room_types?.base_price) : ""}
       </td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-right text-sm font-medium text-gray-900">
+      {/* <td className="border-r border-gray-200 px-3 py-1.5 text-right text-sm font-medium text-gray-900">
         {formatCurrency(booking.payment?.balance)}
-      </td>
+      </td> */}
       <td className="no-print px-3 py-1.5">
         <ActionButtons />
       </td>
@@ -189,7 +205,7 @@ export default function GuestsTable({ bookings = [], isLoading, error }) {
                 booking={booking}
                 index={index}
                 onRowClick={(booking) => {
-                  navigate(`reservation/${booking.id}`);
+                  navigate(`${booking.id}`);
                 }}
               />
             ))}
