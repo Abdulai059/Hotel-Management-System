@@ -65,7 +65,7 @@ export default function BookingForm() {
     <div className="px-4 py-12 md:min-h-screen">
       <div className="mx-auto max-w-4xl">
         {!isConfirmed && (
-          <div className="mb-12 flex items-center justify-center gap-4 px-20">
+          <div className="mb-12 flex items-center justify-center gap-4 px-4">
             <StepIndicator
               stepNumber={1}
               label="Guest Info"
@@ -106,7 +106,7 @@ export default function BookingForm() {
           </div>
         )}
 
-        <div className="rounded-lg p-8">
+        <div className="rounded-lg p-2">
           {isConfirmed ? (
             <ConfirmationScreen formData={formData} calculateNights={calculateNights} onNewBooking={handleNewBooking} />
           ) : (
