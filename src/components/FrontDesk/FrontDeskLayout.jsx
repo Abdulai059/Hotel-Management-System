@@ -19,6 +19,7 @@ import { HiArrowLeftEndOnRectangle } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import NavbarRefresh from "../ui/NavbarRefresh";
 
 const links = [
   {
@@ -134,7 +135,7 @@ export default function FrontDeskLayout() {
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         } ${isExpanded ? "w-64" : "w-16"}`}
       >
-        <div className="flex items-center gap-4 bg-sky-100 p-2 shadow-sm">
+        <div className="flex items-center gap-4 bg-sky-200 p-[7.5px] shadow-sm">
           <div className="flex h-12 w-12 shrink-0 rotate-3 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-xl">
             <img src="/global-dreams.png" alt="global dream logo" />
           </div>
@@ -238,23 +239,26 @@ export default function FrontDeskLayout() {
 
       {/* Main Content */}
       <div className="flex min-h-screen flex-1 flex-col">
-        <header className="flex h-14 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-md sm:h-16 sm:px-6">
+        <header className="flex h-14 items-center justify-between border-b border-gray-200 bg-stone-800 px-4 shadow-md sm:h-16 sm:px-6">
           {/* Mobile Menu Button */}
           <button onClick={() => setIsMobileMenuOpen(true)} className="shrink-0 lg:hidden" aria-label="Open menu">
             <Menu size={24} className="text-gray-700" />
           </button>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <span className="text-sm font-semibold text-gray-800 sm:text-base">
+            <span className="text-sm font-semibold text-white sm:text-base">
               Welcome to{" "}
-              <span className="text-red-600">{profile?.role === "admin" ? "Admin" : "Front Desk Staff"}</span>
+              <span className="text-orange-300">{profile?.role === "admin" ? "Admin" : "Front Desk Staff"}</span>
             </span>
             <span className="animate-wave inline-block origin-bottom text-xl sm:text-2xl">👋</span>
           </div>
 
-          <button className="rounded-full border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:bg-gray-100 hover:shadow-sm sm:px-4 sm:py-2 sm:text-sm">
-            Logout
-          </button>
+          <div className="flex items-center gap-2">
+            <NavbarRefresh />
+            <button className="rounded-full border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:bg-gray-100 hover:shadow-sm sm:px-4 sm:py-2 sm:text-sm">
+              Logout
+            </button>
+          </div>
         </header>
 
         <main className="flex-1 overflow-y-auto bg-gray-100 px-4 py-4 sm:px-6">
