@@ -11,6 +11,7 @@ import {
   Youtube,
   Palette,
   Sparkles,
+  X,
   ClipboardCheck,
   ChevronsLeft,
 } from "lucide-react";
@@ -114,12 +115,24 @@ const links = [
 export default function FrontDeskLayout() {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { profile } = useAuth();
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen overflow-hidden bg-gray-50">
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="bg-opacity-50 fixed inset-0 z-40 bg-black lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
       <aside
-        className={`flex flex-col border-r border-gray-200 bg-white transition-all duration-300 ${isExpanded ? "w-64" : "w-16"}`}
+        className={`fixed inset-y-0 left-0 z-50 flex flex-col border-r border-gray-200 bg-white transition-all duration-300 lg:static lg:translate-x-0 ${
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        } ${isExpanded ? "w-64" : "w-16"}`}
       >
         <div className="flex items-center gap-4 bg-sky-100 p-2 shadow-sm">
           <div className="flex h-12 w-12 shrink-0 rotate-3 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-xl">
@@ -135,11 +148,20 @@ export default function FrontDeskLayout() {
               </div>
             </div>
           )}
+
+          {/* Close button for mobile */}
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="ml-auto shrink-0 lg:hidden"
+            aria-label="Close menu"
+          >
+            <X size={24} className="text-gray-700" />
+          </button>
         </div>
 
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="mt-0 flex items-center justify-center bg-[#444444] p-2 font-bold text-gray-100 transition-colors"
+          className="mt-0 hidden items-center justify-center bg-[#444444] p-2 font-bold text-gray-100 transition-colors lg:flex"
           aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
         >
           {isExpanded ? (
@@ -166,6 +188,7 @@ export default function FrontDeskLayout() {
                   <NavLink
                     key={label}
                     to={path}
+                    onClick={() => setIsMobileMenuOpen(false)}
                     className={({ isActive }) =>
                       `relative flex items-center gap-3 rounded-lg px-4 py-2 text-sm transition-all duration-200 ${
                         isActive
@@ -204,31 +227,37 @@ export default function FrontDeskLayout() {
 
         <button
           onClick={() => navigate("/dashboard")}
-          className={`mx-auto mb-6 rounded-md bg-emerald-500 px-3 py-3 text-white transition-colors hover:bg-emerald-600 ${isExpanded ? "w-50" : ""}`}
+          className={`mx-auto mb-6 rounded-md bg-linear-to-r from-sky-600 to-sky-700 px-3 py-3 font-bold text-yellow-300 transition-colors hover:bg-emerald-600 ${isExpanded ? "w-50" : ""}`}
         >
           <div className="flex items-center justify-center gap-2">
-            <HiArrowLeftEndOnRectangle size={20} className="shrink-0" />
+            <HiArrowLeftEndOnRectangle size={22} className="shrink-0 text-yellow-300" />
             {isExpanded && <span className="text-sm">Back to Dashboard</span>}
           </div>
         </button>
       </aside>
 
-      <div className="flex flex-1 flex-col">
-        <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-md">
-          <div className="flex items-center gap-3">
-            <span className="text-base font-semibold text-gray-800">
+      {/* Main Content */}
+      <div className="flex min-h-screen flex-1 flex-col">
+        <header className="flex h-14 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-md sm:h-16 sm:px-6">
+          {/* Mobile Menu Button */}
+          <button onClick={() => setIsMobileMenuOpen(true)} className="shrink-0 lg:hidden" aria-label="Open menu">
+            <Menu size={24} className="text-gray-700" />
+          </button>
+
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-sm font-semibold text-gray-800 sm:text-base">
               Welcome to{" "}
-              <span className="text-red-600"> {profile?.role === "admin" ? "Admin" : "Front Desk Staff"}</span>
+              <span className="text-red-600">{profile?.role === "admin" ? "Admin" : "Front Desk Staff"}</span>
             </span>
-            <span className="animate-wave inline-block origin-bottom text-2xl">👋</span>
+            <span className="animate-wave inline-block origin-bottom text-xl sm:text-2xl">👋</span>
           </div>
 
-          <button className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:shadow-sm">
+          <button className="rounded-full border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:bg-gray-100 hover:shadow-sm sm:px-4 sm:py-2 sm:text-sm">
             Logout
           </button>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-gray-100 px-6 py-4">
+        <main className="flex-1 overflow-y-auto bg-gray-100 px-4 py-4 sm:px-6">
           <Outlet />
         </main>
       </div>

@@ -31,7 +31,7 @@ export default function BookingingSlider() {
               ✕
             </button>
 
-            <div className="max-h-[90vh] overflow-y-auto p-6 sm:p-10">
+            <div className="max-h-[90vh] overflow-y-auto p-0 sm:p-0">
               <BookingForm />
             </div>
           </div>

@@ -76,9 +76,9 @@ export default function Modules() {
     <>
       <Navbar />
 
-      <div className="mx-auto mt-20 max-w-375 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto mt-20 max-w-375 px-4 sm:px-4 lg:px-8">
         <div className="flex flex-col gap-20">
-          <div className="rounded-sm p-8 shadow-md">
+          <div className="rounded-sm p-4 shadow-md">
             <div className="mb-6 flex w-full flex-col items-center gap-6 lg:flex-row lg:items-start">
               <div className="relative">
                 <div className="h-24 w-24 overflow-hidden rounded-full border-2 border-blue-700 shadow-lg shadow-blue-500/30">
@@ -124,9 +124,14 @@ export default function Modules() {
               </div>
             </div>
 
-            <div className="rounded-sm bg-green-100 p-4">
-              <p className="text-center text-sm text-green-900">
-                Welcome to your dashboard! You have access to the following modules:
+            <div className="rounded-sm bg-sky-50 p-4">
+              <p className="text-center text-sm text-slate-900">
+                Welcome to your{" "}
+                <span className="font-bold">
+                  {profile?.role || "No Role"}{" "}
+                  <span className="animate-wave inline-block origin-bottom text-2xl">👋</span>
+                </span>{" "}
+                dashboard! You have access to the following modules:
               </p>
             </div>
           </div>

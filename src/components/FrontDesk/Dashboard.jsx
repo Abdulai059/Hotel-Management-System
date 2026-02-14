@@ -1,6 +1,7 @@
 import ActivityAvailability from "../features/FrontDesk/ActivityAvailability";
+import CustomerFeedback from "../features/FrontDesk/CustomerFeedback";
 import DashboardTopNav from "../features/FrontDesk/DashboardTopNav";
-import OccupancyAndFeedback from "../features/FrontDesk/OccupancyAndFeedback";
+import OccupancyStatistics from "../features/FrontDesk/OccupancyStatistics";
 import RoomType from "../features/FrontDesk/RoomType";
 import Stats from "../features/FrontDesk/Stats";
 import { useStats } from "../features/FrontDesk/useStatsService";
@@ -13,17 +14,22 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="mb-6 space-y-6 bg-gray-100">
+      <div className="min-h-screen space-y-4 bg-gray-100 pb-6 sm:space-y-6">
         <div className="bg-gray-50 pb-0">
           <DashboardTopNav />
           <BookingingSlider />
         </div>
 
-        <Stats stats={stats} isLoading={isLoading} error={error} />
-        <RoomHeatmap />
-        <RoomType />
-        <ActivityAvailability stats={stats} isLoading={isLoading} error={error} />
-        <OccupancyAndFeedback />
+        <div className="space-y-4 px-4 sm:space-y-6 sm:px-0">
+          <Stats stats={stats} isLoading={isLoading} error={error} />
+          <RoomHeatmap />
+          <RoomType />
+          <ActivityAvailability stats={stats} isLoading={isLoading} error={error} />
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-2">
+            <OccupancyStatistics />
+            <CustomerFeedback />
+          </div>
+        </div>
       </div>
       <WelcomePoppin />
     </>
