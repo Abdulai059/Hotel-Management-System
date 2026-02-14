@@ -28,9 +28,27 @@ export default defineConfig({
             type: "image/png",
           },
           {
-            src: "/favicon/favicon.svg",
+            src: "/favicon/favicon.png",
             sizes: "512x512",
             type: "image/png",
+          },
+        ],
+      },
+
+      workbox: {
+        runtimeCaching: [
+          {
+            // Match all Supabase API endpoints
+            urlPattern: /^https:\/\/ihyofvwopmweqvcoewzs\.supabase\.co\/.*$/i,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "supabase-api-cache",
+              expiration: {
+                maxEntries: 200,
+                maxAgeSeconds: 24 * 60 * 60, // 1 day
+              },
+              networkTimeoutSeconds: 5, // fallback to cache if network slow
+            },
           },
         ],
       },
