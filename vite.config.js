@@ -23,12 +23,12 @@ export default defineConfig({
         start_url: "/",
         icons: [
           {
-            src: "/gdh-192.png",
+            src: "/favicon/web-app-manifest-192x192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "/gdh-512.png",
+            src: "/favicon/favicon.svg",
             sizes: "512x512",
             type: "image/png",
           },
