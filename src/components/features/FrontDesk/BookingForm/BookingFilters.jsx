@@ -6,18 +6,16 @@ import { useSearchParams } from "react-router-dom";
 export default function BookingFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Helper to update search params
   const updateParam = (key, value) => {
     if (!value || value === "" || value === "all") {
       searchParams.delete(key);
     } else {
       searchParams.set(key, value);
     }
-    searchParams.set("page", "1"); // Reset to page 1
+    searchParams.set("page", "1");
     setSearchParams(searchParams);
   };
 
-  // Helper to update multiple params at once
   const updateMultipleParams = (updates) => {
     Object.entries(updates).forEach(([key, value]) => {
       if (!value || value === "" || value === "all") {
@@ -30,7 +28,6 @@ export default function BookingFilters() {
     setSearchParams(searchParams);
   };
 
-  // Get current values
   const searchTerm = searchParams.get("searchTerm") || "";
   const dateType = searchParams.get("dateType") || "createdOn";
   const createdOnDate = searchParams.get("createdOnDate") || "";
@@ -41,14 +38,12 @@ export default function BookingFilters() {
   const sortBy = searchParams.get("sortBy") || "startDate-desc";
   const groupBy = searchParams.get("groupBy") || "all";
 
-  // Flags
   const excludeComp = searchParams.get("excludeComp") === "true";
   const thirdPartyResID = searchParams.get("thirdPartyResID") === "true";
   const dayUseOnly = searchParams.get("dayUseOnly") === "true";
   const summary = searchParams.get("summary") === "true";
 
   const handleSearch = () => {
-    // Trigger a manual search (optional, filters update automatically)
     setSearchParams(searchParams);
   };
 
@@ -56,10 +51,30 @@ export default function BookingFilters() {
     setSearchParams({});
   };
 
+  const statusOptions = [
+    { value: "all", label: "All" },
+    { value: "checked-out", label: "Checked out" },
+    { value: "checked-in", label: "Checked in" },
+    { value: "unconfirmed", label: "Unconfirmed" },
+  ];
+
+  const sortOptions = [
+    { value: "startDate-desc", label: "Date (recent first)" },
+    { value: "startDate-asc", label: "Date (earlier first)" },
+    { value: "totalPrice-desc", label: "Amount (high first)" },
+    { value: "totalPrice-asc", label: "Amount (low first)" },
+  ];
+
+  const checkboxFilters = [
+    { key: "excludeComp", label: "excl. comp.", checked: excludeComp },
+    { key: "thirdPartyResID", label: "3rd Party ResID", checked: thirdPartyResID },
+    { key: "dayUseOnly", label: "Show Day Use Only", checked: dayUseOnly },
+    { key: "summary", label: "Show Summary", checked: summary },
+  ];
+
   return (
     <div className="w-full border-b border-gray-200 bg-white">
-      {/* HEADER */}
-      <div className="flex items-center justify-between px-4 py-2">
+      <div className="flex flex-col gap-2 px-4 py-2 sm:flex-row sm:items-center sm:justify-between">
         <button className="rounded border-b-2 border-blue-700 bg-green-700 px-4 py-1.5 text-sm font-semibold text-white shadow-sm">
           FrontDesk
         </button>
@@ -79,63 +94,57 @@ export default function BookingFilters() {
         </div>
       </div>
 
-      {/* FILTER BAR */}
       <div className="bg-[#3c76a3] px-4 py-3">
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          {/* SEARCH */}
           <input
             placeholder="Name/Group/Res ID"
             value={searchTerm}
             onChange={(e) => updateParam("searchTerm", e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            className="w-40 rounded border bg-white px-3 py-1 text-sm"
+            className="w-full rounded border bg-white px-3 py-1 text-sm sm:w-40"
           />
 
-          {/* DATE FILTER */}
-          <div className="flex gap-2 rounded border-2 border-gray-400 px-2 py-1.5">
-            {["createdOn", "checkIn"].map((type) => (
-              <label key={type} className="flex items-center gap-2 text-sm text-white">
-                <input type="radio" checked={dateType === type} onChange={() => updateParam("dateType", type)} />
-                <span>{type === "createdOn" ? "Created On" : "Check In"}</span>
-              </label>
-            ))}
+          <div className="flex w-full flex-col gap-2 rounded border-2 border-gray-400 px-2 py-1.5 sm:w-auto sm:flex-row">
+            <div className="flex gap-2">
+              {["createdOn", "checkIn"].map((type) => (
+                <label key={type} className="flex items-center gap-2 text-sm text-white">
+                  <input type="radio" checked={dateType === type} onChange={() => updateParam("dateType", type)} />
+                  <span className="whitespace-nowrap">{type === "createdOn" ? "Created On" : "Check In"}</span>
+                </label>
+              ))}
+            </div>
 
-            <input
-              type="date"
-              value={createdOnDate}
-              onChange={(e) => updateParam("createdOnDate", e.target.value)}
-              className="rounded border bg-white px-2 py-1 text-sm"
-            />
+            <div className="flex gap-2">
+              <input
+                type="date"
+                value={createdOnDate}
+                onChange={(e) => updateParam("createdOnDate", e.target.value)}
+                className="w-full rounded border bg-white px-2 py-1 text-sm sm:w-auto"
+              />
 
-            <input
-              type="date"
-              value={checkInDate}
-              onChange={(e) => updateParam("checkInDate", e.target.value)}
-              className="rounded border bg-white px-2 py-1 text-sm"
-            />
+              <input
+                type="date"
+                value={checkInDate}
+                onChange={(e) => updateParam("checkInDate", e.target.value)}
+                className="w-full rounded border bg-white px-2 py-1 text-sm sm:w-auto"
+              />
+            </div>
           </div>
 
-          {/* STATUS */}
           <Filter
             filterField="status"
             value={status}
             onChange={(value) => updateParam("status", value)}
-            options={[
-              { value: "all", label: "All" },
-              { value: "checked-out", label: "Checked out" },
-              { value: "checked-in", label: "Checked in" },
-              { value: "unconfirmed", label: "Unconfirmed" },
-            ]}
+            options={statusOptions}
           />
 
-          {/* FILTER BY */}
-          <div className="flex gap-2 rounded border-2 border-gray-400 px-2 py-1.5">
+          <div className="flex w-full flex-col gap-2 rounded border-2 border-gray-400 px-2 py-1.5 sm:w-auto sm:flex-row">
             <select
               value={filterBy}
               onChange={(e) => {
                 updateMultipleParams({
                   filterBy: e.target.value,
-                  filterByValue: "", // Reset value when type changes
+                  filterByValue: "",
                 });
               }}
               className="rounded border bg-white px-2 py-1 text-sm"
@@ -151,42 +160,29 @@ export default function BookingFilters() {
               value={filterByValue}
               onChange={(e) => updateParam("filterByValue", e.target.value)}
               disabled={!filterBy}
-              className="w-24 rounded border bg-white px-2 py-1 text-sm disabled:bg-gray-100"
+              className="w-full rounded border bg-white px-2 py-1 text-sm disabled:bg-gray-100 sm:w-24"
             />
           </div>
 
-          {/* SORT */}
-          <SortBy
-            value={sortBy}
-            onChange={(value) => updateParam("sortBy", value)}
-            options={[
-              { value: "startDate-desc", label: "Date (recent first)" },
-              { value: "startDate-asc", label: "Date (earlier first)" },
-              { value: "totalPrice-desc", label: "Amount (high first)" },
-              { value: "totalPrice-asc", label: "Amount (low first)" },
-            ]}
-          />
+          <SortBy value={sortBy} onChange={(value) => updateParam("sortBy", value)} options={sortOptions} />
 
-          <button onClick={handleSearch} className="rounded bg-yellow-400 px-4 py-1 text-sm font-semibold">
+          <button
+            onClick={handleSearch}
+            className="w-full rounded bg-yellow-400 px-4 py-1 text-sm font-semibold sm:w-auto"
+          >
             Search
           </button>
         </div>
 
-        {/* FLAGS + GROUP */}
         <div className="flex flex-wrap items-center gap-4 text-white">
-          {[
-            ["excludeComp", "excl. comp.", excludeComp],
-            ["thirdPartyResID", "3rd Party ResID", thirdPartyResID],
-            ["dayUseOnly", "Show Day Use Only", dayUseOnly],
-            ["summary", "Show Summary", summary],
-          ].map(([key, label, checked]) => (
+          {checkboxFilters.map(({ key, label, checked }) => (
             <label key={key} className="flex items-center gap-2 text-sm">
               <input
                 type="checkbox"
                 checked={checked}
                 onChange={(e) => updateParam(key, e.target.checked ? "true" : "")}
               />
-              <span>{label}</span>
+              <span className="whitespace-nowrap">{label}</span>
             </label>
           ))}
 

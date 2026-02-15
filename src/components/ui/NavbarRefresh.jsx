@@ -24,9 +24,9 @@ export default function NavbarRefresh() {
     <button
       onClick={handleRefresh}
       title="Refresh App"
-      className="flex items-center justify-center rounded-full bg-gray-200 p-2 transition-colors hover:bg-gray-300"
+      className="flex items-center justify-center rounded-full bg-gray-200 p-1.5 transition-colors hover:bg-gray-300"
     >
-      <RotateCw size={20} />
+      <RotateCw size={18} />
     </button>
   );
 }

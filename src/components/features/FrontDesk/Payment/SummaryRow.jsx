@@ -1,3 +1,5 @@
+import { formatCurrency } from "@/utils/helpers";
+
 function SummaryRow({ label, value, bold, border, large }) {
   const baseClass = "flex justify-between py-1";
   const borderClass = border ? "border-t border-gray-300 py-2" : "";
@@ -8,7 +10,7 @@ function SummaryRow({ label, value, bold, border, large }) {
   return (
     <div className={`${baseClass} ${borderClass} ${fontClass} ${sizeClass}`}>
       <span className={bold || large ? "" : "text-gray-700"}>{label}</span>
-      <span className={valueClass}>$ {value.toFixed(2)}</span>
+      <span className={valueClass}> {formatCurrency(value.toFixed(2))}</span>
     </div>
   );
 }

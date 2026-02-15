@@ -1,5 +1,35 @@
-export default function Spinner() {
-    return (
-        <div className="mx-auto my-20 w-16 h-16 rounded-full border-4 border-t-indigo-600 border-b-transparent border-l-transparent border-r-transparent animate-spin"></div>
-    );
+function Spinner() {
+  return (
+    <div>
+      <div className="flex gap-2">
+        {[...Array(5)].map((_, i) => (
+          <div
+            key={i}
+            className="w-3 rounded-full bg-indigo-600"
+            style={{
+              animation: `bar-bounce 1s ease-in-out infinite`,
+              animationDelay: `${i * 0.1}s`,
+              height: "60px",
+            }}
+          />
+        ))}
+      </div>
+
+      <style jsx>{`
+        @keyframes bar-bounce {
+          0%,
+          100% {
+            transform: scaleY(0.3);
+            opacity: 0.5;
+          }
+          50% {
+            transform: scaleY(1);
+            opacity: 1;
+          }
+        }
+      `}</style>
+    </div>
+  );
 }
+
+export default Spinner;
