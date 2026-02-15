@@ -13,7 +13,7 @@ export default function StayDetails({ booking, isEditing, onUpdate }) {
   if (!booking) return null;
 
   const roomRate = toNumber(booking.room_rate_snapshot);
-  const TotalRoomRate = roomRate * booking.num_nights;
+  const totalRoomRate = roomRate * booking.num_nights;
 
   const room = booking.rooms;
   const checkIn = formatDate(booking.start_date);
@@ -21,9 +21,12 @@ export default function StayDetails({ booking, isEditing, onUpdate }) {
   const checkInDay = format(parseISO(booking.start_date), "EEE");
   const checkOutDay = format(parseISO(booking.end_date), "EEE");
 
-  const isReserved = booking.status === "reserved";
-  const isCheckedIn = booking.status === "checked-in";
-  const isCheckedOut = booking.status === "checked-out";
+  // Normalize status to lowercase and replace underscores with hyphens
+  const status = booking.status?.toLowerCase().replace(/_/g, "-") || "";
+
+  const isReserved = status === "reserved";
+  const isCheckedIn = status === "checked-in";
+  const isCheckedOut = status === "checked-out";
 
   const canEditCheckIn = isEditing && isReserved;
   const canEditCheckOut = isEditing && (isReserved || isCheckedIn);
@@ -56,7 +59,13 @@ export default function StayDetails({ booking, isEditing, onUpdate }) {
               <Edit className="h-4 w-4 text-gray-600" />
             </div>
           )}
-          <div className="rounded-t-md bg-red-600 p-2 text-xs font-semibold text-white">{checkInDay}</div>
+          <div
+            className={`rounded-t-md p-2 text-xs font-semibold text-white ${
+              isCheckedIn || isCheckedOut ? "bg-green-600" : "bg-blue-600"
+            }`}
+          >
+            {checkInDay}
+          </div>
           <span className="block bg-gray-50 py-2 text-center">
             <div className="pb-2 text-2xl font-bold">{checkIn.day}</div>
             <div className="text-xs">{checkIn.month}</div>
@@ -72,6 +81,7 @@ export default function StayDetails({ booking, isEditing, onUpdate }) {
           )}
         </div>
 
+        {/* NIGHTS & GUESTS INFO */}
         <div className="mx-4 flex flex-col items-center">
           <div className="text-xl font-bold text-gray-700">{booking.num_nights}</div>
           <div className="text-xs text-gray-500">Nt</div>
@@ -93,7 +103,13 @@ export default function StayDetails({ booking, isEditing, onUpdate }) {
               <Edit className="h-4 w-4 text-gray-600" />
             </div>
           )}
-          <div className="rounded-t-md bg-red-600 p-2 text-xs font-semibold text-white">{checkOutDay}</div>
+          <div
+            className={`rounded-t-md p-2 text-xs font-semibold text-white ${
+              isCheckedOut ? "bg-red-600" : isCheckedIn ? "bg-green-600" : "bg-blue-600"
+            }`}
+          >
+            {checkOutDay}
+          </div>
           <span className="block bg-gray-50 py-2 text-center">
             <div className="pb-2 text-2xl font-bold text-gray-900">{checkOut.day}</div>
             <div className="text-xs">{checkOut.month}</div>
@@ -118,7 +134,7 @@ export default function StayDetails({ booking, isEditing, onUpdate }) {
 
         <div className="flex justify-between border-b border-gray-200 py-2">
           <span className="text-gray-500">Status</span>
-          <span className="text-gray-700">{booking.status}</span>
+          <span className="font-medium text-gray-900 capitalize">{status.replace(/-/g, " ")}</span>
         </div>
 
         <div className="flex justify-between border-b border-gray-200 py-2">
@@ -131,7 +147,7 @@ export default function StayDetails({ booking, isEditing, onUpdate }) {
 
         <div className="flex justify-between border-b border-gray-200 py-2">
           <span className="text-gray-500">Total Price</span>
-          <span className="font-semibold text-emerald-600">GH₵ {TotalRoomRate}</span>
+          <span className="font-semibold text-emerald-600">GH₵ {totalRoomRate.toFixed(2)}</span>
         </div>
 
         <div className="flex justify-between border-b border-gray-200 py-2">

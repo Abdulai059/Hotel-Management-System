@@ -1,4 +1,6 @@
 import { Pagination } from "@/components/ui/Pagination";
+import TableHeader from "@/components/ui/TableHeader";
+import { formatCurrency } from "@/utils/helpers";
 import { Printer, Mail, MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,8 +16,8 @@ const tableHeaders = [
   { label: "Block" },
   { label: "Service Flags" },
   { label: "Status" },
-  { label: "Amount", right: true },
-  { label: "Paid", right: true },
+  { label: "Room Rate", right: true },
+  { label: "Amount Due", right: true },
   // { label: "Balance", right: true },
   { label: "Actions", center: true, noPrint: true },
 ];
@@ -36,8 +38,6 @@ const FLAG_COLORS = {
 const Flag = ({ show, label, color }) =>
   show ? <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${color}`}>{label}</span> : null;
 
-const formatCurrency = (amount) => (amount !== undefined ? `GH₵ ${amount.toFixed(2)}` : "");
-
 const formatStatus = (status) =>
   status
     ?.replace(/_/g, " ")
@@ -45,27 +45,6 @@ const formatStatus = (status) =>
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-
-const TableHeader = ({ headers }) => (
-  <thead>
-    <tr className="border-b-2 border-gray-300 bg-gray-100">
-      {headers.map((header, idx) => (
-        <th
-          key={idx}
-          className={`${!header.noBorder ? "border-r border-gray-300" : ""} px-3 py-3 text-xs font-bold tracking-wide text-gray-700 uppercase ${
-            header.center ? "text-center" : header.right ? "text-right" : "text-left"
-          } ${header.noPrint ? "no-print" : ""}`}
-        >
-          {header.type === "checkbox" ? (
-            <input type="checkbox" className="h-4 w-4 rounded border-gray-300" />
-          ) : (
-            header.label
-          )}
-        </th>
-      ))}
-    </tr>
-  </thead>
-);
 
 const ServiceFlags = ({ flags }) => {
   if (!flags) return null;
@@ -126,54 +105,131 @@ const ActionButtons = () => (
 );
 
 const TableRow = ({ booking, index, onRowClick }) => {
-  const rowClass = booking.corporate ? "bg-amber-50 hover:bg-amber-100" : "bg-white hover:bg-gray-50";
+  const isEvenRow = index % 2 === 0;
+  const isCorporate = booking.corporate;
+
+  const rowClass = isCorporate
+    ? "bg-[#f2f2cd] hover:bg-[#f2f2cd]"
+    : isEvenRow
+      ? "bg-[#F2F2F2] hover:bg-gray-300"
+      : "bg-white hover:bg-gray-50";
+
   const handleClick = () => {
     if (onRowClick) onRowClick(booking);
   };
 
   const room = booking.rooms;
+  const numNights = Number(booking.num_nights) || 0;
+  const roomRate = Number(room?.room_types?.base_price) || 0;
+  const totalAmount = numNights * roomRate;
 
   return (
-    <tr className={`cursor-pointer border-b border-gray-200 transition ${rowClass}`} onClick={handleClick}>
-      <td className="border-r border-gray-200 px-2 py-1.5 text-center">
-        <input type="checkbox" className="h-4 w-4 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
-      </td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-center text-sm font-semibold text-gray-900">
-        {index + 1}
-      </td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-sm font-bold text-gray-900">
-        {booking.corporate?.group_code || ""}
-      </td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{booking.resId}</td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-900">{booking.guest?.full_name || ""}</td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">
-        {booking.start_date && booking.end_date ? `${booking.start_date} - ${booking.end_date}` : ""}
-      </td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700 uppercase">{room?.room_types?.name}</td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{room?.room_number || ""}</td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{room?.room_name || ""}</td>
-      <td className="border-r border-gray-200 px-3 py-1.5">
-        <ServiceFlags flags={booking.flags} />
-      </td>
-      <td className="border-r border-gray-200 px-3 py-1.5">
-        <StatusBadge status={booking.status} />
-      </td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-right text-sm font-medium text-gray-900">
-        {formatCurrency(room?.room_types?.base_price)}
-      </td>
-      <td className="border-r border-gray-200 px-3 py-1.5 text-right text-sm text-gray-700">
-        {room?.room_types?.base_price ? formatCurrency(room?.room_types?.base_price) : ""}
-      </td>
-      {/* <td className="border-r border-gray-200 px-3 py-1.5 text-right text-sm font-medium text-gray-900">
-        {formatCurrency(booking.payment?.balance)}
-      </td> */}
-      <td className="no-print px-3 py-1.5">
-        <ActionButtons />
-      </td>
-    </tr>
+    <>
+      <tr
+        className={`hidden cursor-pointer border-b border-gray-200 transition lg:table-row ${rowClass} ${isCorporate ? "[&>td]:py-3" : ""}`}
+        onClick={handleClick}
+      >
+        <td className="border-r border-gray-200 px-2 py-1.5 text-center">
+          <input type="checkbox" className="h-4 w-4 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
+        </td>
+        <td className="border-r border-gray-200 px-3 py-1.5 text-center text-sm font-semibold text-gray-900">
+          {index + 1}
+        </td>
+        <td className="border-r border-gray-200 px-3 py-1.5 text-sm font-bold text-gray-900">
+          {booking.corporate?.group_code || ""}
+        </td>
+        <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{booking.resId}</td>
+        <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-900">{booking.guest?.full_name || ""}</td>
+        <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">
+          {booking.start_date && booking.end_date ? `${booking.start_date} - ${booking.end_date}` : ""}
+        </td>
+        <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{room?.room_types?.name}</td>
+        <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{room?.room_number || ""}</td>
+        <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">{room?.room_name || ""}</td>
+        <td className="border-r border-gray-200 px-3 py-1.5">
+          <ServiceFlags flags={booking.flags} />
+        </td>
+        <td className="border-r border-gray-200 px-3 py-1.5">
+          <StatusBadge status={booking.status} />
+        </td>
+        <td className="border-r border-gray-200 px-3 py-1.5 text-right text-sm text-gray-700">
+          {formatCurrency(roomRate)}
+        </td>
+        <td className="border-r border-gray-200 px-3 py-1.5 text-right text-sm text-gray-900">
+          {formatCurrency(totalAmount)}
+        </td>
+        <td className="no-print px-3 py-1.5">
+          <ActionButtons />
+        </td>
+      </tr>
+
+      <tr className="lg:hidden">
+        <td colSpan="100%" className="p-0">
+          <div className={`cursor-pointer border-b border-gray-200 p-4 transition ${rowClass}`} onClick={handleClick}>
+            <div className="mb-3 flex items-start justify-between">
+              <div className="flex items-start gap-3">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-gray-500">#{index + 1}</span>
+                    {booking.corporate?.group_code && (
+                      <span className="text-sm font-bold text-gray-900">{booking.corporate.group_code}</span>
+                    )}
+                  </div>
+                  <h3 className="mt-1 text-base font-semibold text-gray-900">{booking.guest?.full_name || "N/A"}</h3>
+                  <p className="mt-0.5 text-xs text-gray-600">ID: {booking.resId}</p>
+                </div>
+              </div>
+              <StatusBadge status={booking.status} />
+            </div>
+
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Stay Duration</span>
+                <span className="text-gray-900">
+                  {booking.start_date && booking.end_date ? `${booking.start_date} - ${booking.end_date}` : "N/A"}
+                </span>
+              </div>
+
+              <div className="flex justify-between">
+                <span className="text-gray-600">Room</span>
+                <span className="text-gray-900">
+                  {room?.room_types?.name} - {room?.room_number || "N/A"}
+                </span>
+              </div>
+
+              {room?.room_name && (
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Block</span>
+                  <span className="text-gray-900">{room.room_name}</span>
+                </div>
+              )}
+
+              <div className="flex justify-between">
+                <span className="text-gray-600">Room Rate</span>
+                <span className="text-gray-900">{formatCurrency(roomRate)}</span>
+              </div>
+
+              <div className="flex justify-between border-t pt-2">
+                <span className="font-medium text-gray-900">Total Amount</span>
+                <span className="font-semibold text-gray-900">{formatCurrency(totalAmount)}</span>
+              </div>
+            </div>
+
+            {booking.flags && (
+              <div className="mt-3">
+                <ServiceFlags flags={booking.flags} />
+              </div>
+            )}
+
+            <div className="mt-3 flex justify-end border-t pt-3">
+              <ActionButtons />
+            </div>
+          </div>
+        </td>
+      </tr>
+    </>
   );
 };
-
 const EmptyState = ({ message }) => (
   <div className="flex items-center justify-center py-12">
     <p className="text-sm text-gray-600">{message}</p>
@@ -188,6 +244,7 @@ const ErrorState = () => (
 
 export default function GuestsTable({ bookings = [], isLoading, error }) {
   const navigate = useNavigate();
+  console.log(bookings);
 
   if (isLoading) return <EmptyState message="Loading bookings..." />;
   if (error) return <ErrorState />;
@@ -207,6 +264,21 @@ export default function GuestsTable({ bookings = [], isLoading, error }) {
                 onRowClick={(booking) => {
                   navigate(`${booking.id}`);
                 }}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="lg:hidden">
+        <table className="w-full">
+          <tbody>
+            {bookings.map((booking, index) => (
+              <TableRow
+                key={booking.id || index}
+                booking={booking}
+                index={index}
+                onRowClick={(booking) => navigate(`${booking.id}`)}
               />
             ))}
           </tbody>

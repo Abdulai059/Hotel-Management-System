@@ -1,3 +1,5 @@
+import { formatCurrency } from "@/utils/helpers";
+
 function TransactionRow({ transaction, isSelected, onSelect }) {
   return (
     <tr className={`border-b border-gray-200 ${transaction.isPayment ? "bg-yellow-100" : ""}`}>
@@ -17,11 +19,13 @@ function TransactionRow({ transaction, isSelected, onSelect }) {
       </td>
       <td className="px-4 py-3 text-gray-700">{transaction.discAllwnce}</td>
       <td className="px-4 py-3 text-right text-gray-700">
-        {transaction.charges ? `$ ${transaction.charges.toFixed(2)}` : ""}
+        {transaction.charges ? ` ${formatCurrency(transaction.charges.toFixed(2))}` : ""}
       </td>
-      <td className="px-4 py-3 text-right text-gray-700">{transaction.tax ? `$ ${transaction.tax.toFixed(2)}` : ""}</td>
       <td className="px-4 py-3 text-right text-gray-700">
-        {transaction.payment ? `$ ${transaction.payment.toFixed(2)}` : ""}
+        {transaction.tax ? ` ${formatCurrency(transaction.tax.toFixed(2))}` : ""}
+      </td>
+      <td className="px-4 py-3 text-right text-gray-700">
+        {transaction.payment ? ` ${formatCurrency(transaction.payment.toFixed(2))}` : ""}
       </td>
     </tr>
   );

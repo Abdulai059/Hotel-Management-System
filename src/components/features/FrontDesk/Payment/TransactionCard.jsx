@@ -1,3 +1,5 @@
+import { formatCurrency } from "@/utils/helpers";
+
 function TransactionCard({ transaction, isSelected, onSelect }) {
   return (
     <div className={`rounded-lg border-2 border-gray-200 p-4 ${transaction.isPayment ? "bg-yellow-50" : "bg-white"}`}>
@@ -26,19 +28,19 @@ function TransactionCard({ transaction, isSelected, onSelect }) {
         {transaction.charges && (
           <div>
             <span className="text-gray-600">Charges:</span>
-            <p className="font-medium text-gray-800">$ {transaction.charges.toFixed(2)}</p>
+            <p className="font-medium text-gray-800"> {formatCurrency(transaction.charges.toFixed(2))}</p>
           </div>
         )}
         {transaction.tax && (
           <div>
             <span className="text-gray-600">Tax:</span>
-            <p className="font-medium text-gray-800">$ {transaction.tax.toFixed(2)}</p>
+            <p className="font-medium text-gray-800"> {formatCurrency(transaction.tax.toFixed(2))}</p>
           </div>
         )}
         {transaction.payment && (
           <div className="col-span-2">
             <span className="text-gray-600">Payment:</span>
-            <p className="font-semibold text-green-700">$ {transaction.payment.toFixed(2)}</p>
+            <p className="font-semibold text-green-700"> {formatCurrency(transaction.payment.toFixed(2))}</p>
           </div>
         )}
       </div>

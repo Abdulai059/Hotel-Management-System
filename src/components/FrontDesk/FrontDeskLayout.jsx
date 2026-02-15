@@ -255,7 +255,7 @@ export default function FrontDeskLayout() {
 
           <div className="flex items-center gap-2">
             <NavbarRefresh />
-            <button className="rounded-full border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:bg-gray-100 hover:shadow-sm sm:px-4 sm:py-2 sm:text-sm">
+            <button className="rounded-full border border-gray-300 bg-white px-3 py-1 text-xs font-medium text-gray-700 transition hover:bg-gray-100 hover:shadow-sm sm:px-4 sm:py-1 sm:text-sm">
               Logout
             </button>
           </div>
