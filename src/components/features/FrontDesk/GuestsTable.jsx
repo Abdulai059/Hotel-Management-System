@@ -126,7 +126,7 @@ const TableRow = ({ booking, index, onRowClick }) => {
   return (
     <>
       <tr
-        className={`hidden cursor-pointer border-b border-gray-200 transition lg:table-row ${rowClass} ${isCorporate ? "[&>td]:py-3" : ""}`}
+        className={`hidden cursor-pointer border-b border-gray-200 transition lg:table-row ${rowClass} ${isCorporate ? "[&>td]:pb-4" : ""}`}
         onClick={handleClick}
       >
         <td className="border-r border-gray-200 px-2 py-1.5 text-center">

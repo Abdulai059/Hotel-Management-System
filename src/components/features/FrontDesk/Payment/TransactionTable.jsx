@@ -19,7 +19,6 @@ function TransactionTable({ transactions, selectedRows, onSelectAll, onSelectRow
         <MobileSummary summary={summary} />
       </div>
 
-      {/* Desktop Table View */}
       <div className="mb-6 hidden overflow-x-auto lg:block">
         <table className="w-full text-sm">
           <thead>
