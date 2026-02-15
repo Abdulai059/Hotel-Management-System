@@ -1,6 +1,7 @@
 import React from "react";
 import { format, parseISO } from "date-fns";
 import { formatCurrency } from "@/utils/helpers";
+import { handlePrintContent } from "@/utils/printHelpers";
 
 export default function BookingPrintPDF({ booking, onClose }) {
   if (!booking) return null;
@@ -41,112 +42,7 @@ export default function BookingPrintPDF({ booking, onClose }) {
     }
   };
 
-  const handlePrint = () => {
-    const printContent = document.getElementById("print-content");
-    if (!printContent) return;
-
-    const printWindow = window.open("", "_blank");
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Invoice Print</title>
-          <style>
-            @page { size: A4; margin: 0.5in; }
-            body {
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-              margin: 0;
-              padding: 0;
-              height: auto;
-              overflow: visible;
-              color: black;
-              background: white;
-              -webkit-print-color-adjust: exact !important;
-              print-color-adjust: exact !important;
-            }
-            .max-w-4xl { max-width: 60rem; margin: 0 auto; }
-            .bg-white { background-color: white; }
-            .p-8 { padding: 2rem; }
-            .text-black { color: black; }
-            .text-center { text-align: center; }
-            .text-right { text-align: right; }
-            .text-end { text-align: end; }
-            .text-xs { font-size: 0.75rem; line-height: 1rem; }
-            .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
-            .text-base { font-size: 1rem; line-height: 1.5rem; }
-            .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-            .font-bold { font-weight: 700; }
-            .font-semibold { font-weight: 600; }
-            .font-normal { font-weight: 400; }
-            .uppercase { text-transform: uppercase; }
-            .mb-4 { margin-bottom: 1rem; }
-            .mb-6 { margin-bottom: 1.5rem; }
-            .mb-3 { margin-bottom: 0.75rem; }
-            .mb-2 { margin-bottom: 0.5rem; }
-            .mb-1 { margin-bottom: 0.25rem; }
-            .mt-2 { margin-top: 0.5rem; }
-            .pt-1 { padding-top: 0.25rem; }
-            .pt-4 { padding-top: 1rem; }
-            .pb-2 { padding-bottom: 0.5rem; }
-            .pb-8 { padding-bottom: 2rem; }
-            .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-            .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
-            .leading-relaxed { line-height: 1.625; }
-            .border-b { border-bottom-width: 1px; }
-            .border-t { border-top-width: 1px; }
-            .border-t-2 { border-top-width: 2px; }
-            .border-gray-200 { border-color: #e5e7eb; }
-            .border-gray-300 { border-color: #d1d5db; }
-            .border-gray-400 { border-color: #9ca3af; }
-            .text-blue-600 { color: #2563eb; }
-            .text-gray-500 { color: #6b7280; }
-            .text-gray-700 { color: #374151; }
-            .text-gray-800 { color: #1f2937; }
-            .text-gray-900 { color: #111827; }
-            .text-\[10px\] { font-size: 10px; }
-            .ml-16 { margin-left: 4rem; }
-            .w-80 { width: 20rem; }
-            .w-8 { width: 2rem; }
-            .ml-auto { margin-left: auto; }
-            .space-y-1 > * + * { margin-top: 0.25rem; }
-            .flex { display: flex; }
-            .gap-4 { gap: 1rem; }
-            .justify-between { justify-content: space-between; }
-            .w-full { width: 100%; }
-            .border-collapse { border-collapse: collapse; }
-            table { width: 100%; border-collapse: collapse; page-break-inside: auto; }
-            th, td {
-              padding: 0.5rem;
-              text-align: left;
-              font-size: 0.75rem;
-              line-height: 1rem;
-              border-bottom: 1px solid #e5e7eb;
-            }
-            th { font-weight: 600; border-bottom: 1px solid #d1d5db; }
-            .avoid-break { page-break-inside: avoid; }
-            tr { page-break-inside: avoid; page-break-after: auto; }
-            thead { display: table-header-group; }
-            @media print {
-              table { page-break-inside: auto; }
-              tr { page-break-inside: avoid; }
-              .avoid-break { page-break-inside: avoid; }
-            }
-          </style>
-        </head>
-        <body>
-          <div class="max-w-4xl bg-white p-8 text-black">
-            ${printContent.innerHTML}
-          </div>
-        </body>
-      </html>
-    `);
-    printWindow.document.close();
-    printWindow.focus();
-    setTimeout(() => {
-      printWindow.print();
-      printWindow.close();
-    }, 250);
-  };
+  const handlePrint = () => handlePrintContent("print-content");
 
   const transactions = [];
   let id = 1;
@@ -188,50 +84,8 @@ export default function BookingPrintPDF({ booking, onClose }) {
   }
 
   return (
-    <>
-      <style>
-        {`
-          @media print {
-            @page { size: A4; margin: 0.5in; }
-            html, body {
-              height: auto !important;
-              min-height: 100% !important;
-              overflow: visible !important;
-              -webkit-print-color-adjust: exact !important;
-              print-color-adjust: exact !important;
-            }
-            body * { visibility: hidden; }
-            #print-content, #print-content * { visibility: visible; }
-            #print-content {
-              position: static !important;
-              left: auto !important;
-              top: auto !important;
-              width: 100% !important;
-              height: auto !important;
-              min-height: auto !important;
-              max-height: none !important;
-              overflow: visible !important;
-              background: white !important;
-              z-index: auto !important;
-              transform: none !important;
-            }
-            .fixed, .inset-0, .bg-black, .bg-opacity-50, .flex.h-full.items-center.justify-center {
-              display: none !important;
-            }
-            .no-print { display: none !important; }
-            * { page-break-inside: auto; }
-            table { page-break-inside: auto; width: 100% !important; }
-            tr { page-break-inside: avoid; page-break-after: auto; }
-            thead { display: table-header-group; }
-            .avoid-break { page-break-inside: avoid; }
-            .mb-6 { page-break-after: auto; }
-            .space-y-1 > * { page-break-inside: avoid; }
-            .h-screen, .max-h-full { height: auto !important; max-height: none !important; }
-          }
-        `}
-      </style>
-
-      <div className="no-print mb-4 flex items-center justify-end gap-3">
+    <div className="py-6">
+      <div className="no-print mx-4 mb-4 flex items-center justify-end gap-3">
         <button
           onClick={handlePrint}
           className="rounded bg-yellow-400 px-6 py-2 font-semibold text-black hover:bg-yellow-500"
@@ -256,13 +110,13 @@ export default function BookingPrintPDF({ booking, onClose }) {
           <div className="avoid-break mb-4 text-right text-xs leading-relaxed">
             <p>{hotel.country || "Ghana"}</p>
             <p>
-              <span className="font-semibold">Phone:</span>
+              <span className="font-semibold">Phone:</span> 0200000000
             </p>
             <p>
               <span className="font-semibold">Email:</span> {hotel.email || "abdulaioismar9080@gmail.com"}
             </p>
             <p>
-              <span className="font-semibold">Website:</span>
+              <span className="font-semibold">Website:</span> globaldreamhotel.com
             </p>
           </div>
 
@@ -348,9 +202,9 @@ export default function BookingPrintPDF({ booking, onClose }) {
                     <td className="px-2 py-2 text-blue-600">{txn.description}</td>
                     <td className="px-2 py-2 text-center">-</td>
                     <td className="px-2 py-2 text-center">-</td>
-                    <td className="px-2 py-2 text-right">{txn.charges > 0 ? formatCurrency(txn.charges) : ""}</td>
-                    <td className="px-2 py-2 text-right">{txn.tax > 0 ? formatCurrency(txn.tax) : ""}</td>
-                    <td className="px-2 py-2 text-right">{txn.payment > 0 ? formatCurrency(txn.payment) : ""}</td>
+                    <td className="px-2 py-2 text-right">{txn.charges > 0 ? formatCurrency(txn.charges) : "-"}</td>
+                    <td className="px-2 py-2 text-right">{txn.tax > 0 ? formatCurrency(txn.tax) : "-"}</td>
+                    <td className="px-2 py-2 text-right">{txn.payment > 0 ? formatCurrency(txn.payment) : "-"}</td>
                   </tr>
                 ))}
                 <tr className="border-t border-gray-400 font-semibold">
@@ -383,22 +237,22 @@ export default function BookingPrintPDF({ booking, onClose }) {
                 <span className="font-semibold">Total Disc/Allw</span>
                 <span className="text-right">{formatCurrency(totalDiscount)}</span>
               </div>
-              <div className="flex justify-between border-t border-gray-300 pt-1 font-bold">
-                <span>Total Amount</span>
+              <div className="flex justify-between border-t border-gray-300 bg-gray-100 py-4 pt-1 font-bold uppercase">
+                <span className="text-base">Total Amount</span>
                 <span className="text-right">{formatCurrency(netTotal)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">Total Paid</span>
                 <span className="text-right">{formatCurrency(amountPaid)}</span>
               </div>
-              <div className="flex justify-between border-t-2 border-gray-400 pt-1 font-bold">
-                <span>Balance</span>
-                <span className="text-right">{formatCurrency(balance)}</span>
+              <div className="flex justify-between border-t-2 border-gray-400 bg-gray-100 py-4 pt-1 font-bold uppercase">
+                <p className="text-base">Balance</p>
+                <p className="text-right text-lg text-green-500">{formatCurrency(balance)}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
