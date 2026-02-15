@@ -187,3 +187,76 @@
     display: none !important;
   }
 }
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0.5in;
+  }
+  html,
+  body {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  #print-content,
+  #print-content * {
+    visibility: visible;
+  }
+  #print-content {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: white !important;
+    z-index: auto !important;
+    transform: none !important;
+  }
+  .fixed,
+  .inset-0,
+  .bg-black,
+  .bg-opacity-50,
+  .flex.h-full.items-center.justify-center {
+    display: none !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  * {
+    page-break-inside: auto;
+  }
+  table {
+    page-break-inside: auto;
+    width: 100% !important;
+  }
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  thead {
+    display: table-header-group;
+  }
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+  .mb-6 {
+    page-break-after: auto;
+  }
+  .space-y-1 > * {
+    page-break-inside: avoid;
+  }
+  .h-screen,
+  .max-h-full {
+    height: auto !important;
+    max-height: none !important;
+  }
+}

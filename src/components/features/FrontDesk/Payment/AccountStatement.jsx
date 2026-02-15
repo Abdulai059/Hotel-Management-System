@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import TransactionTable from "./TransactionTable";
 import SummaryPanel from "./SummaryPanel";
 import AccountButtons from "./AccountButtons";
@@ -14,75 +14,102 @@ export default function AccountStatement({ booking }) {
   const payment = booking.payments || {};
 
   const nights = booking.num_nights || 1;
-  const roomTariff = booking.room_rate_snapshot || 0;
-  const dailyRate = roomTariff / nights;
+  const dailyRate = booking.room_rate_snapshot || 0;
+  const roomTariff = dailyRate * nights;
   const dailyTax = (payment.roomTax || 0) / nights;
 
-  const transactions = useMemo(() => {
-    const txns = [];
-    let id = 1;
+  const transactions = [];
+  let id = 1;
 
+  if (nights <= 10) {
     for (let i = 0; i < nights; i++) {
       const date = new Date(booking.start_date);
       date.setDate(date.getDate() + i);
-      const formattedDate = date.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
+      const formattedDate = date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      });
 
-      txns.push({
+      transactions.push({
         id: id++,
         date: formattedDate,
         description: `${booking.booking_type} Rate Room Rent ${roomType.name || "Room"}/${room.room_number || ""}`,
         folio: booking.resId || "",
         discAllwnce: "-",
-        charges: dailyRate,
+        charges: booking.room_rate_snapshot,
         tax: dailyTax,
         payment: null,
         isPayment: false,
       });
     }
+  } else {
+    const startDate = new Date(booking.start_date);
+    const formattedDate = startDate.toLocaleDateString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    });
 
-    const amountPaid = payment.amount || 0;
-    if (amountPaid > 0) {
-      const paymentDate = payment.paid_at
-        ? new Date(payment.paid_at).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })
-        : new Date(booking.created_at).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
+    transactions.push({
+      id: id++,
+      date: formattedDate,
+      description: `${booking.booking_type} Rate Room Rent ${roomType.name || "Room"}/${room.room_number || ""} (${nights} nights)`,
+      folio: booking.resId || "",
+      discAllwnce: "-",
+      charges: booking.room_rate_snapshot,
+      tax: payment.roomTax || 0,
+      payment: null,
+      isPayment: false,
+    });
+  }
 
-      txns.push({
-        id: id++,
-        date: paymentDate,
-        description: `Paid by ${guest.full_name || "Guest"} with ${payment.payment_method?.replace("_", " ") || "Payment"}`,
-        folio: "",
-        discAllwnce: "",
-        charges: null,
-        tax: "",
-        payment: amountPaid,
-        isPayment: true,
-      });
-    }
+  const amountPaid = payment.amount || 0;
+  if (amountPaid > 0) {
+    const paymentDate = payment.paid_at
+      ? new Date(payment.paid_at).toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        })
+      : new Date(booking.created_at).toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        });
 
-    return txns;
-  }, [booking, guest, room, roomType, payment, nights, dailyRate, dailyTax]);
+    transactions.push({
+      id: id++,
+      date: paymentDate,
+      description: `Paid by ${guest.full_name || "Guest"} with ${payment.payment_method?.replace("_", " ") || "Payment"}`,
+      folio: "",
+      discAllwnce: "",
+      charges: null,
+      tax: "",
+      payment: amountPaid,
+      isPayment: true,
+    });
+  }
 
-  const summary = useMemo(() => {
-    const totalCharges = roomTariff + (payment.addOns || 0) + (payment.otherCharges || 0);
-    const totalTax = (payment.roomTax || 0) + (payment.otherTax || 0);
-    const totalDiscAllw = (payment.discount || 0) + (payment.otherDiscount || 0);
-    const totalPaid = payment.amount || 0;
-    const totalAmount = totalCharges + totalTax;
-    const balance = totalAmount - totalPaid - totalDiscAllw;
+  const totalCharges = roomTariff + (payment.addOns || 0) + (payment.otherCharges || 0);
+  const totalTax = (payment.roomTax || 0) + (payment.otherTax || 0);
+  const totalDiscAllw = (payment.discount || 0) + (payment.otherDiscount || 0);
+  const totalPaid = payment.amount || 0;
+  const totalAmount = totalCharges + totalTax;
+  const balance = totalAmount - totalPaid - totalDiscAllw;
 
-    return {
-      totalCharges,
-      totalTax,
-      totalPayment: totalPaid,
-      bookingTotal: roomTariff,
-      otherCharges: (payment.addOns || 0) + (payment.otherCharges || 0),
-      totalTaxSummary: totalTax,
-      totalDiscAllw,
-      totalAmount,
-      totalPaid,
-      balance,
-    };
-  }, [roomTariff, payment]);
+  const summary = {
+    totalCharges,
+    totalTax,
+    totalPayment: totalPaid,
+    bookingTotal: roomTariff,
+    otherCharges: (payment.addOns || 0) + (payment.otherCharges || 0),
+    totalTaxSummary: totalTax,
+    totalDiscAllw,
+    totalAmount,
+    totalPaid,
+    balance,
+  };
 
   const handleSelectRow = (id) => {
     setSelectedRows((prev) => (prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]));

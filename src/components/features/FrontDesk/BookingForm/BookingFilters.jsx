@@ -66,8 +66,6 @@ export default function BookingFilters() {
   ];
 
   const checkboxFilters = [
-    { key: "excludeComp", label: "excl. comp.", checked: excludeComp },
-    { key: "thirdPartyResID", label: "3rd Party ResID", checked: thirdPartyResID },
     { key: "dayUseOnly", label: "Show Day Use Only", checked: dayUseOnly },
     { key: "summary", label: "Show Summary", checked: summary },
   ];
