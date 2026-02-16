@@ -1,8 +1,11 @@
 import { useState } from "react";
 import BookingPrintPDF from "../Payment/InvocePrintPDF";
 import Modal from "@/components/ui/Modal";
+import { useMoveBack } from "@/hooks/useMoveBack";
 
 export default function ExportBarButton({ booking, onCloseModal }) {
+  const moveBack = useMoveBack();
+
   const handleExport = (format) => {
     console.log(`Exporting as ${format}`);
   };
@@ -42,7 +45,7 @@ export default function ExportBarButton({ booking, onCloseModal }) {
         </div>
 
         <button
-          onClick={onCloseModal}
+          onClick={moveBack}
           className="flex items-center justify-center rounded bg-red-600 px-4 py-1 text-sm font-semibold text-white hover:bg-red-700 sm:w-auto"
         >
           BACK

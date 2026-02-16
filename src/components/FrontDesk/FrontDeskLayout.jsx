@@ -20,6 +20,7 @@ import { NavLink, Outlet, useNavigate } from "react-router";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import NavbarRefresh from "../ui/NavbarRefresh";
+import { useScrollToTop } from "../ui/ ScrollToTop";
 
 const links = [
   {
@@ -118,6 +119,8 @@ export default function FrontDeskLayout() {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { profile } = useAuth();
+
+  const mainRef = useScrollToTop();
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
@@ -261,7 +264,7 @@ export default function FrontDeskLayout() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-gray-100 px-4 py-4 sm:px-6">
+        <main ref={mainRef} className="flex-1 overflow-y-auto bg-gray-100 px-4 py-4 sm:px-6">
           <Outlet />
         </main>
       </div>
