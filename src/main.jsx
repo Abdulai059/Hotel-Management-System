@@ -4,10 +4,14 @@ import "./styles/index.css";
 import "./styles/global.css";
 import App from "./App.jsx";
 import { registerSW } from "virtual:pwa-register";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./components/ui/ErrorFallback";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => window.location.replace("/")}>
+      <App />
+    </ErrorBoundary>
   </StrictMode>,
 );
 

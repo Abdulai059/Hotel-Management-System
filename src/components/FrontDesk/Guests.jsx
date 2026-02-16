@@ -7,14 +7,14 @@ export default function Guests() {
   const { bookings, count, isLoading, error } = useBookings();
 
   return (
-    <div className="flex-1">
+    <div className="flex flex-1 flex-col gap-4">
       <BookingFilters />
 
-      <div className="w-full overflow-hidden rounded-md shadow-sm">
+      <div className="overflow-hidden rounded-md shadow-sm">
         <GuestsTable bookings={bookings} count={count} isLoading={isLoading} error={error} />
       </div>
 
-      <div className="bottom-0 z-10 mt-25">
+      <div className="sticky bottom-0 z-10 mt-auto">
         <ExportBarButton />
       </div>
     </div>

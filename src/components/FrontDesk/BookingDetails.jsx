@@ -9,6 +9,8 @@ import ActionButtons from "../features/FrontDesk/GuestDetals/ActionButtons";
 
 import { useBooking } from "../features/FrontDesk/useBooking";
 import PaymentCard from "../features/FrontDesk/GuestDetals/PaymentCard";
+import Spinner from "../ui/Spinner";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 export default function BookingDetails() {
   const { booking, isLoading, error } = useBooking();
@@ -33,7 +35,7 @@ export default function BookingDetails() {
     return colors[status] || "bg-blue-600";
   };
 
-  if (isLoading) return <div>Loading booking...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (error) return <div>Error loading booking!</div>;
   if (!booking) return null;
 

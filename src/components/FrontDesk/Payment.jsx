@@ -3,13 +3,14 @@ import AccountStatement from "../features/FrontDesk/Payment/AccountStatement";
 import PaymentDetails from "../features/FrontDesk/Payment/PaymentDetails";
 import { useBooking } from "../features/FrontDesk/useBooking";
 import ExportBarButton from "../features/FrontDesk/GuestDetals/ExportBarButton";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 export default function Payment() {
   const { booking, isLoading, error } = useBooking();
 
   console.log(booking);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (error) return <div>Error loading booking</div>;
   if (!booking) return null;
 

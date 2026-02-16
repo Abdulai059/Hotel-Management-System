@@ -1,22 +1,4 @@
-function Stats({ stats, isLoading, error }) {
-  if (isLoading) {
-    return (
-      <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <div className="flex h-32 items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-indigo-500"></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="w-full rounded-lg border border-red-200 bg-red-50 p-6 shadow-sm">
-        <p className="text-sm text-red-800">Failed to load statistics</p>
-      </div>
-    );
-  }
-
+function Stats({ stats }) {
   const statsData = [
     {
       label: "Check-in",

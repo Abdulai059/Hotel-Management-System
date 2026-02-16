@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useRooms } from "../features/FrontDesk/room/useRoomsQuery";
 import { FILTER_ALL } from "@/lib/roomFilters";
 import { useFilteredRooms } from "@/hooks/useFilteredRooms";
-import { Search } from "lucide-react";
 import { Legend } from "../features/FrontDesk/room/Legend";
 
 export default function RoomHeatmap() {
@@ -23,26 +22,32 @@ export default function RoomHeatmap() {
 
   if (isLoading) {
     return (
-      <div className="bg-gradient-to-br from-slate-50 to-slate-100">
-        <main className="mt-4 space-y-4">
-          <div className="rounded-lg bg-white p-4 shadow-sm">
-            <div className="flex h-32 items-center justify-center">
-              <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-indigo-500"></div>
-            </div>
+      <div className="mt-4 space-y-4 bg-gradient-to-br from-slate-50 to-slate-100">
+        <Legend />
+
+        <div className="rounded-lg bg-white p-4 shadow-sm">
+          <div className="grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15">
+            {Array.from({ length: 12 }).map((_, index) => (
+              <div key={index} className="aspect-square w-full animate-pulse rounded bg-gray-200" />
+            ))}
           </div>
-        </main>
+
+          <div className="mt-6 flex gap-6 border-t border-gray-300 pt-4">
+            <div className="h-4 w-20 animate-pulse rounded bg-gray-200"></div>
+            <div className="h-4 w-24 animate-pulse rounded bg-gray-200"></div>
+            <div className="h-4 w-24 animate-pulse rounded bg-gray-200"></div>
+            <div className="h-4 w-28 animate-pulse rounded bg-gray-200"></div>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-gradient-to-br from-slate-50 to-slate-100">
-        <main className="mt-4 space-y-4">
-          <div className="rounded-lg border border-red-200 bg-red-50 p-6 shadow-sm">
-            <p className="text-sm text-red-800">Failed to load rooms: {error.message}</p>
-          </div>
-        </main>
+      <div className="mt-4 rounded-lg bg-red-50 p-6 text-center text-red-600">
+        <p className="font-semibold">Failed to load rooms</p>
+        <p className="text-sm">{error.message}</p>
       </div>
     );
   }
@@ -51,44 +56,33 @@ export default function RoomHeatmap() {
     <div className="mt-4 space-y-4 bg-gradient-to-br from-slate-50 to-slate-100">
       <Legend />
 
-      {sortedRooms.length ? (
-        <div className="rounded-lg bg-white p-4 shadow-sm">
-          <div className="grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15">
-            {sortedRooms.map((room) => (
-              <div
-                key={room.id}
-                className="relative"
-                onMouseEnter={() => setHoveredRoom(room)}
-                onMouseLeave={() => setHoveredRoom(null)}
+      <div className="rounded-lg bg-white p-4 shadow-sm">
+        <div className="grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15">
+          {sortedRooms.map((room) => (
+            <div
+              key={room.id}
+              className="relative"
+              onMouseEnter={() => setHoveredRoom(room)}
+              onMouseLeave={() => setHoveredRoom(null)}
+            >
+              {hoveredRoom?.id === room.id && <Tooltip room={room} />}
+
+              <button
+                type="button"
+                className={`relative aspect-square w-full rounded text-xs font-bold text-white shadow transition ${
+                  statusColor[room.status] ?? "bg-gray-400"
+                }`}
               >
-                {hoveredRoom?.id === room.id && <Tooltip room={room} />}
+                <span className="absolute inset-0 flex items-center justify-center">{room.number}</span>
 
-                <button
-                  type="button"
-                  className={`relative aspect-square w-full rounded text-xs font-bold text-white shadow transition ${
-                    statusColor[room.status] ?? "bg-gray-400"
-                  }`}
-                >
-                  <span className="absolute inset-0 flex items-center justify-center">{room.number}</span>
-
-                  {room.status === "AVAILABLE" && (
-                    <span className="absolute inset-0 animate-pulse rounded bg-white/10" />
-                  )}
-                </button>
-              </div>
-            ))}
-          </div>
-
-          <Stats rooms={sortedRooms} />
+                {room.status === "AVAILABLE" && <span className="absolute inset-0 animate-pulse rounded bg-white/10" />}
+              </button>
+            </div>
+          ))}
         </div>
-      ) : (
-        <EmptyState
-          onReset={() => {
-            setFilterStatus(FILTER_ALL);
-            setSearchQuery("");
-          }}
-        />
-      )}
+
+        <Stats rooms={sortedRooms} />
+      </div>
     </div>
   );
 }
@@ -118,22 +112,6 @@ function Stats({ rooms }) {
       <span className="text-emerald-600">Available: {count("AVAILABLE")}</span>
       <span className="text-rose-600">Occupied: {count("OCCUPIED")}</span>
       <span className="text-amber-600">Maintenance: {count("MAINTENANCE")}</span>
-    </div>
-  );
-}
-
-function EmptyState({ onReset }) {
-  return (
-    <div className="flex flex-col items-center rounded-lg border-2 border-dashed bg-white py-20">
-      <Search className="mb-4 h-12 w-12 text-slate-400" />
-      <h3 className="text-xl font-bold">No Results Found</h3>
-      <p className="mt-2 text-sm text-slate-500">No rooms match your filters.</p>
-      <button
-        onClick={onReset}
-        className="mt-6 rounded bg-slate-800 px-6 py-2 text-sm font-semibold text-white hover:bg-slate-700"
-      >
-        Reset Filters
-      </button>
     </div>
   );
 }
