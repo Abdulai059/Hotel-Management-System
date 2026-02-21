@@ -25,6 +25,7 @@ import { Toaster } from "react-hot-toast";
 import { AdminPanel } from "./pages/AdminPanel";
 import { AuthProvider } from "./context/AuthContext";
 import Unauthorized from "./components/ui/Unauthorized";
+import Calendar from "./components/FrontDesk/Calendar";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -76,6 +77,7 @@ export default function App() {
                 <Route index element={<Dashboard />} />
                 <Route path="guests" element={<Guests />} />
                 <Route path="guests/:id" element={<BookingDetails />} />
+                <Route path="calendar" element={<Calendar />} />
                 <Route path="payment/:id" element={<Payment />} />
                 <Route path="bookings" element={<Bookings />} />
                 <Route path="corporate-bookings" element={<CorporateBookings />} />

@@ -65,43 +65,45 @@ export default function BookingForm() {
     <div className="px-4 py-12 md:min-h-screen">
       <div className="mx-auto max-w-4xl">
         {!isConfirmed && (
-          <div className="mb-12 flex items-center justify-center gap-4 px-4">
+          <div className="mb-12 flex items-center px-4">
             <StepIndicator
               stepNumber={1}
               label="Guest Info"
               isActive={currentStep >= 1}
-              activeBgColor="bg-emerald-500"
+              activeBgColor="bg-[#9dc43b]"
               activeTextColor="text-white"
-              labelActiveColor="text-green-500"
-              inactiveBgColor="bg-gray-300"
-              inactiveTextColor="text-gray-600"
-              labelInactiveColor="text-gray-500"
+              labelActiveColor="text-[#9dc43b]"
+              inactiveBgColor="bg-gray-200"
+              inactiveTextColor="text-gray-500"
+              labelInactiveColor="text-gray-400"
             />
-
-            <div className="h-px flex-1 bg-gray-300"></div>
+            <div
+              className={`h-px flex-1 transition-colors duration-300 ${currentStep >= 2 ? "bg-[#9dc43b]" : "bg-gray-200"}`}
+            />
             <StepIndicator
               stepNumber={2}
               label="Stay Details"
               isActive={currentStep >= 2}
-              activeBgColor="bg-sky-500"
+              activeBgColor="bg-[#9dc43b]"
               activeTextColor="text-white"
-              labelActiveColor="text-blue-500"
-              inactiveBgColor="bg-gray-300"
-              inactiveTextColor="text-gray-600"
-              labelInactiveColor="text-gray-500"
+              labelActiveColor="text-[#9dc43b]"
+              inactiveBgColor="bg-gray-200"
+              inactiveTextColor="text-gray-500"
+              labelInactiveColor="text-gray-400"
             />
-
-            <div className="h-px flex-1 bg-gray-300"></div>
+            <div
+              className={`h-px flex-1 transition-colors duration-300 ${currentStep >= 3 ? "bg-[#9dc43b]" : "bg-gray-200"}`}
+            />
             <StepIndicator
               stepNumber={3}
               label="Room & Location"
               isActive={currentStep >= 3}
-              activeBgColor="bg-rose-500"
+              activeBgColor="bg-[#9dc43b]"
               activeTextColor="text-white"
-              labelActiveColor="text-red-500"
-              inactiveBgColor="bg-gray-300"
-              inactiveTextColor="text-gray-600"
-              labelInactiveColor="text-gray-500"
+              labelActiveColor="text-[#9dc43b]"
+              inactiveBgColor="bg-gray-200"
+              inactiveTextColor="text-gray-500"
+              labelInactiveColor="text-gray-400"
             />
           </div>
         )}

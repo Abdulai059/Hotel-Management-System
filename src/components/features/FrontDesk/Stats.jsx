@@ -78,20 +78,19 @@ export default function Stats({ stats }) {
       iconBg: "bg-primary",
       iconColor: "text-gray-600",
     },
-    {
-      label: "Occupied room",
-      timeframe: "Total",
-      value: stats?.occupiedRooms || 0,
-      icon: DoorClosed,
-      change: -0.8,
-      iconBg: "bg-primary",
-      iconColor: "text-gray-600",
-    },
+    // {
+    //   label: "Occupied room",
+    //   timeframe: "Total",
+    //   value: stats?.occupiedRooms || 0,
+    //   icon: DoorClosed,
+    //   change: -0.8,
+    //   iconBg: "bg-primary",
+    //   iconColor: "text-gray-600",
+    // },
   ];
 
   return (
-    <div className="w-full rounded-lg p-6">
-      {/* <h2 className="mb-6 text-xl font-semibold text-gray-800">Overview</h2> */}
+    <div className="w-full rounded-lg p-0">
       <div className="flex flex-wrap items-start gap-3">
         {statsData.map((stat, index) => (
           <StatCard key={index} {...stat} />

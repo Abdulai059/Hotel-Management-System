@@ -1,47 +1,41 @@
-import BookingByPlatform from "../features/FrontDesk/BookingByPlatform";
 import BookingStats from "../features/FrontDesk/BookingStats";
-import CustomerFeedback from "../features/FrontDesk/CustomerFeedback";
 import DashboardTopNav from "../features/FrontDesk/DashboardTopNav";
-import OccupancyStatistics from "../features/FrontDesk/OccupancyStatistics";
 import ReservationsChart from "../features/charts/ReservationsChart";
 import RoomType from "../features/FrontDesk/RoomType";
 import Stats from "../features/FrontDesk/Stats";
-import { useStats } from "../features/FrontDesk/useStatsService";
-import BookingingSlider from "../ui/BookingingSlider";
-import RoomHeatmap from "../ui/RoomHeatmap";
-import WelcomePoppin from "../ui/WelcomePoppin";
 import BookingList from "../features/charts/BookingList";
+import StateSidebar from "../features/charts/StateSisdebar";
+import BookingSlider from "../ui/BookingingSlider";
+import WelcomeModal from "../ui/WelcomeModal";
+import { useStats } from "../features/FrontDesk/useStatsService";
 import { useBookings } from "../features/FrontDesk/useBookings";
+import DashboardSidebar from "../features/charts/StateSisdebar";
 
 export default function Dashboard() {
   const { data: stats, isLoading, error } = useStats();
   const { bookings, count } = useBookings();
 
-  console.log("bookings", bookings);
-
   return (
     <>
-      <div className="min-h-screen space-y-4 bg-gray-100 pb-6 sm:space-y-6">
-        <div className="bg-gray-50 pb-0">
-          <DashboardTopNav />
-          <BookingingSlider />
-        </div>
+      <BookingSlider />
+      <div className="">
+        <div className="flex w-full gap-4 p-4 sm:gap-6 sm:p-6">
+          <div className="flex w-full flex-col gap-4 lg:flex-row">
+            <div className="min-w-0 flex-1 space-y-4 sm:space-y-6">
+              <Stats stats={stats} isLoading={isLoading} error={error} />
+              <RoomType stats={stats} />
+              <BookingStats bookings={bookings} count={count} />
+              <BookingList bookings={bookings} count={count} />
+            </div>
 
-        <div className="space-y-4 px-4 sm:space-y-6 sm:px-0">
-          <Stats stats={stats} isLoading={isLoading} error={error} />
-          {/* <RoomHeatmap /> */}
-          <RoomType stats={stats} />
-          <BookingStats bookings={bookings} count={count} />
-
-          <BookingList bookings={bookings} count={count} />
-          {/* <ActivityAvailability stats={stats} isLoading={isLoading} error={error} /> */}
-          {/* <div className="grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-2">
-            <OccupancyStatistics />
-            <CustomerFeedback />
-          </div> */}
+            <div className="w-full shrink-0 lg:w-80">
+              <DashboardSidebar />
+            </div>
+          </div>
         </div>
       </div>
-      <WelcomePoppin />
+
+      <WelcomeModal />
     </>
   );
 }

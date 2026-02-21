@@ -3,11 +3,13 @@ import FrontDeskInfo from "../features/FrontDesk/FrontDeskInfo";
 
 export default function Bookings() {
   return (
-    <div>
-      <div className="sticky top-0 z-50 mb-0 border-b border-slate-200/50 bg-white/70 pt-2 pb-4 backdrop-blur-xl">
+    <div className="min-h-screen">
+      <div className="sticky top-0 z-10 border-b border-gray-200 bg-white">
         <FrontDeskInfo />
       </div>
-      <BookingForm />
+      <div className="p-4 sm:p-6">
+        <BookingForm />
+      </div>
     </div>
   );
 }

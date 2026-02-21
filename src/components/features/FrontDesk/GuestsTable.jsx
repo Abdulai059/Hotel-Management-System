@@ -5,7 +5,7 @@ import { Printer, Mail, MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const tableHeaders = [
-  { label: "", type: "checkbox", center: true, noBorder: false },
+  { label: "", type: "checkbox", center: true },
   { label: "#", center: true },
   { label: "Group" },
   { label: "Res ID" },
@@ -18,13 +18,12 @@ const tableHeaders = [
   { label: "Status" },
   { label: "Room Rate", right: true },
   { label: "Amount Due", right: true },
-  // { label: "Balance", right: true },
   { label: "Actions", center: true, noPrint: true },
 ];
 
 const STATUS_STYLES = {
   CHECKED_OUT: "bg-gray-100 text-gray-700",
-  CHECKED_IN: "bg-green-50 text-green-700",
+  CHECKED_IN: "bg-primary text-green-700",
   RESERVED: "bg-blue-50 text-blue-700",
   CANCELLED: "bg-red-50 text-red-600",
 };
@@ -35,22 +34,20 @@ const FLAG_COLORS = {
   noService: "bg-red-50 text-red-600",
 };
 
-const Flag = ({ show, label, color }) =>
-  show ? <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${color}`}>{label}</span> : null;
-
 const formatStatus = (status) =>
   status
     ?.replace(/_/g, " ")
     .toLowerCase()
     .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
+
+const Flag = ({ show, label, color }) =>
+  show ? <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${color}`}>{label}</span> : null;
 
 const ServiceFlags = ({ flags }) => {
   if (!flags) return null;
-
   const hasService = flags.restaurant || flags.laundry;
-
   return (
     <div className="flex flex-wrap gap-1">
       {flags.restaurant && <Flag show label="Restaurant" color={FLAG_COLORS.restaurant} />}
@@ -62,7 +59,6 @@ const ServiceFlags = ({ flags }) => {
 
 const StatusBadge = ({ status }) => {
   if (!status) return null;
-
   return (
     <span
       className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${STATUS_STYLES[status] || STATUS_STYLES.CHECKED_OUT}`}
@@ -74,31 +70,13 @@ const StatusBadge = ({ status }) => {
 
 const ActionButtons = () => (
   <div className="flex items-center justify-center gap-1.5">
-    <button
-      className="text-gray-500 transition hover:text-gray-700"
-      title="Print"
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
-    >
+    <button className="text-gray-500 transition hover:text-gray-700" title="Print" onClick={(e) => e.stopPropagation()}>
       <Printer size={16} />
     </button>
-    <button
-      className="text-gray-500 transition hover:text-gray-700"
-      title="Email"
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
-    >
+    <button className="text-gray-500 transition hover:text-gray-700" title="Email" onClick={(e) => e.stopPropagation()}>
       <Mail size={16} />
     </button>
-    <button
-      className="text-gray-500 transition hover:text-gray-700"
-      title="More options"
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
-    >
+    <button className="text-gray-500 transition hover:text-gray-700" title="More" onClick={(e) => e.stopPropagation()}>
       <MoreVertical size={16} />
     </button>
   </div>
@@ -106,17 +84,13 @@ const ActionButtons = () => (
 
 const TableRow = ({ booking, index, onRowClick }) => {
   const isEvenRow = index % 2 === 0;
-  const isCorporate = booking.corporate;
+  const isCorporate = !!booking.corporate;
 
   const rowClass = isCorporate
-    ? "bg-[#f2f2cd] hover:bg-[#f2f2cd]"
+    ? "bg-foregroundyellow/30 hover:bg-foregroundyellow/40"
     : isEvenRow
-      ? "bg-[#F2F2F2] hover:bg-gray-300"
+      ? "bg-secondary/30 hover:bg-secondary/50"
       : "bg-white hover:bg-gray-50";
-
-  const handleClick = () => {
-    if (onRowClick) onRowClick(booking);
-  };
 
   const room = booking.rooms;
   const numNights = Number(booking.num_nights) || 0;
@@ -125,9 +99,10 @@ const TableRow = ({ booking, index, onRowClick }) => {
 
   return (
     <>
+      {/* Desktop row */}
       <tr
-        className={`hidden cursor-pointer border-b border-gray-200 transition lg:table-row ${rowClass} ${isCorporate ? "[&>td]:pb-4" : ""}`}
-        onClick={handleClick}
+        className={`cursor-pointer border-b border-gray-200 transition ${rowClass} ${isCorporate ? "[&>td]:pb-4" : ""}`}
+        onClick={() => onRowClick?.(booking)}
       >
         <td className="border-r border-gray-200 px-2 py-1.5 text-center">
           <input type="checkbox" className="h-4 w-4 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
@@ -162,74 +137,82 @@ const TableRow = ({ booking, index, onRowClick }) => {
           <ActionButtons />
         </td>
       </tr>
-
-      <tr className="lg:hidden">
-        <td colSpan="100%" className="p-0">
-          <div className={`cursor-pointer border-b border-gray-200 p-4 transition ${rowClass}`} onClick={handleClick}>
-            <div className="mb-3 flex items-start justify-between">
-              <div className="flex items-start gap-3">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-gray-500">#{index + 1}</span>
-                    {booking.corporate?.group_code && (
-                      <span className="text-sm font-bold text-gray-900">{booking.corporate.group_code}</span>
-                    )}
-                  </div>
-                  <h3 className="mt-1 text-base font-semibold text-gray-900">{booking.guest?.full_name || "N/A"}</h3>
-                  <p className="mt-0.5 text-xs text-gray-600">ID: {booking.resId}</p>
-                </div>
-              </div>
-              <StatusBadge status={booking.status} />
-            </div>
-
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Stay Duration</span>
-                <span className="text-gray-900">
-                  {booking.start_date && booking.end_date ? `${booking.start_date} - ${booking.end_date}` : "N/A"}
-                </span>
-              </div>
-
-              <div className="flex justify-between">
-                <span className="text-gray-600">Room</span>
-                <span className="text-gray-900">
-                  {room?.room_types?.name} - {room?.room_number || "N/A"}
-                </span>
-              </div>
-
-              {room?.room_name && (
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Block</span>
-                  <span className="text-gray-900">{room.room_name}</span>
-                </div>
-              )}
-
-              <div className="flex justify-between">
-                <span className="text-gray-600">Room Rate</span>
-                <span className="text-gray-900">{formatCurrency(roomRate)}</span>
-              </div>
-
-              <div className="flex justify-between border-t pt-2">
-                <span className="font-medium text-gray-900">Total Amount</span>
-                <span className="font-semibold text-gray-900">{formatCurrency(totalAmount)}</span>
-              </div>
-            </div>
-
-            {booking.flags && (
-              <div className="mt-3">
-                <ServiceFlags flags={booking.flags} />
-              </div>
-            )}
-
-            <div className="mt-3 flex justify-end border-t pt-3">
-              <ActionButtons />
-            </div>
-          </div>
-        </td>
-      </tr>
     </>
   );
 };
+
+const MobileRow = ({ booking, index, onRowClick }) => {
+  const isCorporate = !!booking.corporate;
+  const room = booking.rooms;
+  const numNights = Number(booking.num_nights) || 0;
+  const roomRate = Number(room?.room_types?.base_price) || 0;
+  const totalAmount = numNights * roomRate;
+
+  const cardClass = isCorporate ? "bg-foregroundyellow/20" : "bg-white";
+
+  return (
+    <div
+      className={`hover:bg-primary/30 cursor-pointer border-b border-gray-200 p-4 transition ${cardClass}`}
+      onClick={() => onRowClick?.(booking)}
+    >
+      <div className="mb-3 flex items-start justify-between gap-2">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-semibold text-gray-500">#{index + 1}</span>
+            {booking.corporate?.group_code && (
+              <span className="bg-foregroundyellow rounded px-1.5 py-0.5 text-xs font-bold text-gray-800">
+                {booking.corporate.group_code}
+              </span>
+            )}
+          </div>
+          <h3 className="mt-1 text-base font-semibold text-gray-900">{booking.guest?.full_name || "N/A"}</h3>
+          <p className="mt-0.5 text-xs text-gray-500">{booking.resId}</p>
+        </div>
+        <StatusBadge status={booking.status} />
+      </div>
+
+      <div className="space-y-2 text-sm">
+        <div className="flex justify-between">
+          <span className="text-gray-500">Stay Duration</span>
+          <span className="text-gray-900">
+            {booking.start_date && booking.end_date ? `${booking.start_date} - ${booking.end_date}` : "N/A"}
+          </span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-gray-500">Room</span>
+          <span className="text-gray-900">
+            {room?.room_types?.name} - {room?.room_number || "N/A"}
+          </span>
+        </div>
+        {room?.room_name && (
+          <div className="flex justify-between">
+            <span className="text-gray-500">Block</span>
+            <span className="text-gray-900">{room.room_name}</span>
+          </div>
+        )}
+        <div className="flex justify-between">
+          <span className="text-gray-500">Room Rate</span>
+          <span className="text-gray-900">{formatCurrency(roomRate)}</span>
+        </div>
+        <div className="flex justify-between border-t border-gray-100 pt-2">
+          <span className="font-medium text-gray-900">Total Amount</span>
+          <span className="font-semibold text-gray-900">{formatCurrency(totalAmount)}</span>
+        </div>
+      </div>
+
+      {booking.flags && (
+        <div className="mt-3">
+          <ServiceFlags flags={booking.flags} />
+        </div>
+      )}
+
+      <div className="mt-3 flex justify-end border-t border-gray-100 pt-3">
+        <ActionButtons />
+      </div>
+    </div>
+  );
+};
+
 const EmptyState = ({ message }) => (
   <div className="flex items-center justify-center py-12">
     <p className="text-sm text-gray-600">{message}</p>
@@ -244,46 +227,34 @@ const ErrorState = () => (
 
 export default function GuestsTable({ bookings = [], isLoading, error }) {
   const navigate = useNavigate();
-  console.log(bookings);
 
   if (isLoading) return <EmptyState message="Loading bookings..." />;
   if (error) return <ErrorState />;
   if (!bookings?.length) return <EmptyState message="No bookings found" />;
 
+  const handleRowClick = (booking) => navigate(`${booking.id}`);
+
   return (
     <div className="w-full overflow-hidden bg-white shadow-sm">
-      <div className="print-guests overflow-x-auto">
+      {/* Desktop table */}
+      <div className="print-guests hidden overflow-x-auto lg:block">
         <table className="w-full border-collapse">
           <TableHeader headers={tableHeaders} />
           <tbody>
             {bookings.map((booking, index) => (
-              <TableRow
-                key={booking.id || index}
-                booking={booking}
-                index={index}
-                onRowClick={(booking) => {
-                  navigate(`${booking.id}`);
-                }}
-              />
+              <TableRow key={booking.id || index} booking={booking} index={index} onRowClick={handleRowClick} />
             ))}
           </tbody>
         </table>
       </div>
 
+      {/* Mobile cards */}
       <div className="lg:hidden">
-        <table className="w-full">
-          <tbody>
-            {bookings.map((booking, index) => (
-              <TableRow
-                key={booking.id || index}
-                booking={booking}
-                index={index}
-                onRowClick={(booking) => navigate(`${booking.id}`)}
-              />
-            ))}
-          </tbody>
-        </table>
+        {bookings.map((booking, index) => (
+          <MobileRow key={booking.id || index} booking={booking} index={index} onRowClick={handleRowClick} />
+        ))}
       </div>
+
       <Pagination />
     </div>
   );

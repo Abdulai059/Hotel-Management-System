@@ -3,11 +3,11 @@ import { RevenueCard } from "./room/RevenueCard";
 
 export default function RoomType({ stats }) {
   return (
-    <div className="flex items-stretch gap-4 px-6">
-      <div className="w-60 sm:w-94">
+    <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch">
+      <div className="w-full lg:w-72 lg:shrink-0">
         <RoomAvailabilityCard stats={stats} />
       </div>
-      <div className="min-w-75 flex-1">
+      <div className="min-h-64 min-w-0 flex-1">
         <RevenueCard stats={stats} />
       </div>
     </div>
