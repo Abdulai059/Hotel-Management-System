@@ -5,9 +5,10 @@ import { useBookings } from "../features/FrontDesk/useBookings";
 
 export default function Guests() {
   const { bookings, count, isLoading, error } = useBookings();
+  console.log("bookings", bookings);
 
   return (
-    <div className="flex flex-1 flex-col gap-4">
+    <div className="bg-w flex flex-1 flex-col gap-4">
       <BookingFilters />
 
       <div className="overflow-hidden rounded-md shadow-sm">

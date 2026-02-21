@@ -1,145 +1,34 @@
-/* Global Color Scheme - Gray and Indigo */
+@layer base {
+  @import "tailwindcss";
 
-/* Primary Colors */
-:root {
-  /* Gray Scale */
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
+  @theme {
+    --color-primary: #d5f6e5;
+    --color-background: #171717;
+    --color-foregroundyellow: #e6f58e;
+    --color-secondary: #d4d4d4;
+    --color-grayc: #2f2f2f;
+    --color-btn-bg: #262626;
 
-  /* Indigo Scale */
-  --indigo-50: #eef2ff;
-  --indigo-100: #e0e7ff;
-  --indigo-200: #c7d2fe;
-  --indigo-300: #a5b4fc;
-  --indigo-400: #818cf8;
-  --indigo-500: #6366f1;
-  --indigo-600: #4f46e5;
-  --indigo-700: #4338ca;
-  --indigo-800: #3730a3;
-  --indigo-900: #312e81;
-
-  /* Status Colors - Pr#10b981;eserved */
-  --status-checked-in: #10b981;
-  /* green-500 */
-  --status-checked-in-bg: #d1fae5;
-  /* green-100 */
-  --status-unconfirmed: #0369a1;
-  /* blue-500 */
-  --status-unconfirmed-bg: #dbeafe;
-  /* blue-100 */
-  --status-checked-out: #6b7280;
-  /* gray-500 */
-  --status-checked-out-bg: #f3f4f6;
-  /* gray-100 */
-  --status-available: #6366f1;
-  /* indigo-500 */
-  --status-available-bg: #eef2ff;
-  /* indigo-50 */
-  --status-booked: #ef4444;
-  /* red-500 */
-  --status-booked-bg: #fee2e2;
-  /* red-100 */
-  --status-reserved: #10b981;
-  /* emerald-500 */
-  --status-reserved-bg: #d1fae5;
-  /* emerald-100 */
-  --status-waitlist: #f59e0b;
-  /* amber-500 */
-  --status-waitlist-bg: #fef3c7;
-  /* amber-100 */
-  --status-blocked: #f97316;
-  /* orange-500 */
-  --status-blocked-bg: #ffedd5;
-  /* orange-100 */
-
-  /* Flag Colors - Preserved */
-  --flag-restaurant: #10b981;
-  /* green-500 */
-  --flag-restaurant-bg: #d1fae5;
-  /* green-100 */
-  --flag-laundry: #3b82f6;
-  /* blue-500 */
-  --flag-laundry-bg: #dbeafe;
-  /* blue-100 */
-  --flag-no-service: #ef4444;
-  /* red-500 */
-  --flag-no-service-bg: #fef2f2;
-  /* red-50 */
-
-  --color-green-200: #10b981;
-  --color-blue-100: #e0f2fe;
-  --color-blue-700: #0369a1;
-
-  --color-red-100: #fee2e2;
-  --color-red-700: #b91c1c;
-  --color-red-800: #991b1b;
+    --color-chatgreen: #d5f6e5;
+    --color-chatlightgreen: #f4fdf8;
+    --color-chatyellow: #e7f68f;
+  }
 }
 
-/* Utility Classes for Gray and Indigo */
-.bg-gray-primary {
-  background-color: var(--gray-50);
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
 }
 
-.bg-gray-secondary {
-  background-color: var(--gray-100);
+.custom-scroll::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 10px;
 }
 
-.bg-gray-tertiary {
-  background-color: var(--gray-200);
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #e7f68f;
+  border-radius: 10px;
 }
 
-.bg-indigo-primary {
-  background-color: var(--indigo-600);
-}
-
-.bg-indigo-secondary {
-  background-color: var(--indigo-500);
-}
-
-.bg-indigo-light {
-  background-color: var(--indigo-50);
-}
-
-.text-gray-primary {
-  color: var(--gray-900);
-}
-
-.text-gray-secondary {
-  color: var(--gray-700);
-}
-
-.text-gray-tertiary {
-  color: var(--gray-600);
-}
-
-.text-gray-muted {
-  color: var(--gray-500);
-}
-
-.text-indigo-primary {
-  color: var(--indigo-600);
-}
-
-.text-indigo-secondary {
-  color: var(--indigo-500);
-}
-
-.border-gray-primary {
-  border-color: var(--gray-200);
-}
-
-.border-gray-secondary {
-  border-color: var(--gray-300);
-}
-
-.border-indigo-primary {
-  border-color: var(--indigo-600);
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #65a30d;
 }
