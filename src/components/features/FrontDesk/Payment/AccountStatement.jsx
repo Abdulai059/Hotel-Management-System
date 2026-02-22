@@ -25,12 +25,7 @@ export default function AccountStatement({ booking }) {
     for (let i = 0; i < nights; i++) {
       const date = new Date(booking.start_date);
       date.setDate(date.getDate() + i);
-      const formattedDate = date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      });
-
+      const formattedDate = date.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
       transactions.push({
         id: id++,
         date: formattedDate,
@@ -45,12 +40,7 @@ export default function AccountStatement({ booking }) {
     }
   } else {
     const startDate = new Date(booking.start_date);
-    const formattedDate = startDate.toLocaleDateString("en-US", {
-      month: "short",
-      day: "2-digit",
-      year: "numeric",
-    });
-
+    const formattedDate = startDate.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
     transactions.push({
       id: id++,
       date: formattedDate,
@@ -67,16 +57,8 @@ export default function AccountStatement({ booking }) {
   const amountPaid = payment.amount || 0;
   if (amountPaid > 0) {
     const paymentDate = payment.paid_at
-      ? new Date(payment.paid_at).toLocaleDateString("en-US", {
-          month: "short",
-          day: "2-digit",
-          year: "numeric",
-        })
-      : new Date(booking.created_at).toLocaleDateString("en-US", {
-          month: "short",
-          day: "2-digit",
-          year: "numeric",
-        });
+      ? new Date(payment.paid_at).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })
+      : new Date(booking.created_at).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
 
     transactions.push({
       id: id++,
@@ -111,8 +93,8 @@ export default function AccountStatement({ booking }) {
     balance,
   };
 
-  const handleSelectRow = (id) => {
-    setSelectedRows((prev) => (prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]));
+  const handleSelectRow = (rowId) => {
+    setSelectedRows((prev) => (prev.includes(rowId) ? prev.filter((id) => id !== rowId) : [...prev, rowId]));
   };
 
   const handleSelectAll = (e) => {
@@ -120,8 +102,8 @@ export default function AccountStatement({ booking }) {
   };
 
   return (
-    <div className="rounded-lg border-2 border-gray-300 bg-white p-4 sm:p-6">
-      <h2 className="mb-4 text-base font-bold text-blue-900 uppercase sm:mb-6 sm:text-lg">Account Statement</h2>
+    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
+      <h2 className="mb-4 text-sm font-bold tracking-widest text-gray-700 uppercase sm:mb-6">Account Statement</h2>
 
       <TransactionTable
         transactions={transactions}
@@ -135,8 +117,7 @@ export default function AccountStatement({ booking }) {
         <div className="flex-1">
           <AccountButtons />
         </div>
-
-        <div className="w-full flex-shrink-0 xl:w-80">
+        <div className="w-full shrink-0 xl:w-80">
           <SummaryPanel summary={summary} />
         </div>
       </div>
