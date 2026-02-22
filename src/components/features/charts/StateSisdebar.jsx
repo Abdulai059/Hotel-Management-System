@@ -45,9 +45,9 @@ const ACTIVITIES = [
 
 function RatingBar({ value }) {
   return (
-    <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
+    <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#ccd97f]">
       <div
-        className="h-full rounded-full bg-[#9dc43b] transition-all duration-700"
+        className="bg-btn-green h-full rounded-full transition-all duration-700"
         style={{ width: `${(value / 5) * 100}%` }}
       />
     </div>
@@ -88,12 +88,12 @@ export default function DashboardSidebar() {
           }
         />
         <div className="mb-4 flex items-center gap-3">
-          <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#e8f5a0] text-xl font-bold text-[#4a6000]">
+          <div className="bg-primary flex h-14 w-16 items-center justify-center rounded-lg text-xl font-bold text-[#4a6000]">
             4.6
           </div>
           <div>
             <p className="text-sm font-semibold text-gray-800">Impressive</p>
-            <p className="text-xs text-gray-400">from 2546 reviews</p>
+            <p className="text-xs text-gray-500">from 2546 reviews</p>
           </div>
         </div>
         <div className="flex flex-col gap-2.5">

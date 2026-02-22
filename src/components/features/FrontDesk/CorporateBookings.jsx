@@ -12,6 +12,15 @@ import {
   Loader2,
 } from "lucide-react";
 import { useCorporateBookings } from "./useCorporateBookings";
+import TableHeader from "@/components/ui/TableHeader";
+
+const headers = [
+  { icon: CreditCard, label: "Group Code" },
+  { icon: Building2, label: "Company" },
+  { icon: User, label: "Contact" },
+  { icon: Mail, label: "Email" },
+  { icon: Percent, label: "Discount" },
+];
 
 function DiscountBadge({ rate }) {
   if (rate == null) return <span className="text-sm text-gray-400">—</span>;
@@ -79,7 +88,6 @@ export default function CorporateBookings() {
   return (
     <section className="min-h-screen bg-gray-100 p-4 sm:p-6">
       <div className="mx-auto max-w-7xl space-y-4">
-        {/* Header */}
         <div className="flex flex-col gap-4 rounded-sm bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-primary flex h-10 w-10 items-center justify-center rounded-xl">
@@ -109,45 +117,24 @@ export default function CorporateBookings() {
           </div>
         </div>
 
-        {/* Loading */}
         {isLoading && (
           <div className="flex items-center justify-center py-16">
             <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
           </div>
         )}
 
-        {/* Error */}
         {error && (
           <div className="rounded-2xl bg-red-50 p-5 text-center text-sm text-red-500">
             Failed to load corporate accounts.
           </div>
         )}
 
-        {/* Desktop table */}
         {!isLoading && !error && (
           <>
             <div className="hidden overflow-hidden rounded-sm bg-white shadow-sm lg:block">
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b border-gray-100 bg-gray-50">
-                      {[
-                        { icon: CreditCard, label: "Group Code" },
-                        { icon: Building2, label: "Company" },
-                        { icon: User, label: "Contact" },
-                        { icon: Mail, label: "Email" },
-                        { icon: Percent, label: "Discount" },
-                      ].map(({ icon: Icon, label }) => (
-                        <th key={label} className="px-4 py-3 text-left">
-                          <div className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-gray-400 uppercase">
-                            <Icon size={13} />
-                            {label}
-                          </div>
-                        </th>
-                      ))}
-                      <th className="px-4 py-3" />
-                    </tr>
-                  </thead>
+                  <TableHeader headers={headers} />
                   <tbody>
                     {filtered.length === 0 ? (
                       <tr>
@@ -159,11 +146,11 @@ export default function CorporateBookings() {
                       filtered.map((booking, idx) => (
                         <tr
                           key={booking.id}
-                          className={`border-b border-gray-50 transition-colors last:border-0 hover:bg-gray-50/60 ${
-                            idx % 2 === 0 ? "bg-white" : "bg-gray-50/30"
+                          className={`cursor-pointer border-b border-gray-200 transition ${
+                            idx % 2 === 0 ? "bg-secondary/25 hover:bg-btn-green/60" : "bg-white hover:bg-gray-50"
                           }`}
                         >
-                          <td className="px-4 py-3">
+                          <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">
                             {booking.group_code ? (
                               <span className="rounded-sm px-2.5 py-1 text-xs font-medium text-gray-700">
                                 {booking.group_code}
@@ -172,13 +159,19 @@ export default function CorporateBookings() {
                               "—"
                             )}
                           </td>
-                          <td className="px-4 py-3 text-sm font-medium text-gray-900">{booking.company_name}</td>
-                          <td className="px-4 py-3 text-sm text-gray-600">{booking.contact_person ?? "—"}</td>
-                          <td className="px-4 py-3 text-sm text-blue-500">{booking.contact_email ?? "—"}</td>
-                          <td className="px-4 py-3">
+                          <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">
+                            {booking.company_name}
+                          </td>
+                          <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">
+                            {booking.contact_person ?? "—"}
+                          </td>
+                          <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-blue-500">
+                            {booking.contact_email ?? "—"}
+                          </td>
+                          <td className="border-r border-gray-200 px-3 py-1.5">
                             <DiscountBadge rate={booking.discountRate} />
                           </td>
-                          <td className="px-4 py-3 text-right">
+                          <td className="border-r border-gray-200 px-3 py-1.5 text-right">
                             <button className="text-gray-300 transition-colors hover:text-gray-500">
                               <MoreHorizontal size={16} />
                             </button>
@@ -191,7 +184,6 @@ export default function CorporateBookings() {
               </div>
             </div>
 
-            {/* Mobile cards */}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:hidden">
               {filtered.length === 0 ? (
                 <EmptyState message="No accounts found." />

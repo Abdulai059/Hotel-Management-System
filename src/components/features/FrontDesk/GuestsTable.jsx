@@ -99,7 +99,6 @@ const TableRow = ({ booking, index, onRowClick }) => {
 
   return (
     <>
-      {/* Desktop row */}
       <tr
         className={`cursor-pointer border-b border-gray-200 transition ${rowClass} ${isCorporate ? "[&>td]:pb-4" : ""}`}
         onClick={() => onRowClick?.(booking)}
@@ -236,7 +235,6 @@ export default function GuestsTable({ bookings = [], isLoading, error }) {
 
   return (
     <div className="w-full overflow-hidden bg-white shadow-sm">
-      {/* Desktop table */}
       <div className="print-guests hidden overflow-x-auto lg:block">
         <table className="w-full border-collapse">
           <TableHeader headers={tableHeaders} />
@@ -248,7 +246,6 @@ export default function GuestsTable({ bookings = [], isLoading, error }) {
         </table>
       </div>
 
-      {/* Mobile cards */}
       <div className="lg:hidden">
         {bookings.map((booking, index) => (
           <MobileRow key={booking.id || index} booking={booking} index={index} onRowClick={handleRowClick} />
