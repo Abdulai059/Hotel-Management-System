@@ -41,7 +41,7 @@ export default function StayDetails({ booking, isEditing, onUpdate }) {
   const checkOutHeaderColor = isCheckedOut ? "bg-red-600" : isCheckedIn ? "bg-green-600" : "bg-blue-600";
 
   return (
-    <div className="relative w-full rounded-2xl border border-gray-200 bg-white p-5">
+    <div className="relative w-full rounded-2xl border border-gray-300 bg-white p-5">
       <h3 className="mb-4 text-sm font-bold tracking-widest text-gray-700 uppercase">Stay Details</h3>
 
       {/* Date cards */}

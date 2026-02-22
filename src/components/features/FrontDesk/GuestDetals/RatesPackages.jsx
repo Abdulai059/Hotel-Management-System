@@ -15,12 +15,12 @@ export default function RatesPackages({ booking }) {
 
   return (
     <div className="rounded-lg bg-[#666666] p-2">
-      <h2 className="mb-6 text-xl font-medium text-white">Rates / Packages</h2>
+      <h2 className="mb-6 text-xl font-medium text-[#e7f68f]">Rates / Packages</h2>
 
       <div className="rounded-lg bg-[#eef4ff] p-4">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="min-w-[60px] rounded-lg border-t-4 border-green-500 px-3 py-2 text-center">
+            <div className="min-w-15 rounded-lg border-t-4 border-green-500 px-3 py-2 text-center">
               <div className="text-xl font-bold text-gray-900">{checkIn.day}</div>
               <div className="text-xs text-gray-700">{checkIn.month}</div>
             </div>
@@ -39,7 +39,7 @@ export default function RatesPackages({ booking }) {
               </div>
             </div>
 
-            <div className="min-w-[60px] rounded-lg border-t-4 border-green-500 px-3 py-2 text-center">
+            <div className="min-w-15 rounded-lg border-t-4 border-green-500 px-3 py-2 text-center">
               <div className="text-xl font-bold text-gray-900">{checkOut.day}</div>
               <div className="text-xs text-gray-700">{checkOut.month}</div>
             </div>

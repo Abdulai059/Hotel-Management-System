@@ -68,7 +68,7 @@ export default function PaymentCard({ booking, isEditing, onUpdate }) {
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-gray-300 bg-white p-5 shadow">
       <h3 className="mb-4 text-right text-sm font-bold tracking-widest text-gray-700 uppercase">Payment Details</h3>
 
       <div className="space-y-2 text-sm">
