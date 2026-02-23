@@ -5,7 +5,7 @@ function Spinner() {
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="w-3 rounded-full bg-indigo-600"
+            className="w-3 rounded-full bg-[#9dc43b]"
             style={{
               animation: `bar-bounce 1s ease-in-out infinite`,
               animationDelay: `${i * 0.1}s`,

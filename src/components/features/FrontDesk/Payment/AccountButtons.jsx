@@ -8,7 +8,7 @@ function AccountButtons() {
         {primaryActions.map((label) => (
           <button
             key={label}
-            className="rounded border-2 border-sky-600 px-3 py-1.5 text-xs font-medium text-sky-600 hover:bg-blue-50 sm:px-4 sm:py-2 sm:text-sm"
+            className="rounded-xl bg-[#9dc43b] px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-[#8ab534]"
           >
             {label}
           </button>
@@ -19,7 +19,7 @@ function AccountButtons() {
         {secondaryActions.map((label) => (
           <button
             key={label}
-            className="rounded border border-gray-400 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 sm:px-4 sm:py-2 sm:text-sm"
+            className="rounded-xl border border-[#9dc43b] px-4 py-2 text-xs font-semibold text-[#9dc43b] transition-colors hover:bg-[#e7f68f]"
           >
             {label}
           </button>

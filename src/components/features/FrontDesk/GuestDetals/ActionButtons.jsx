@@ -12,7 +12,7 @@ export default function ActionButtons({ booking }) {
   };
 
   return (
-    <div className="mt-4 w-full bg-gray-200 px-6 py-4">
+    <div className="mt-4 w-full rounded-lg bg-gray-50 px-6 py-4 shadow-sm">
       <div className="flex items-center justify-center gap-3">
         <button className="rounded bg-yellow-400 px-6 py-1 text-sm font-semibold text-slate-900 uppercase hover:bg-yellow-500">
           ENABLE EDITING

@@ -109,3 +109,36 @@ export async function getBooking(id) {
 
   return data;
 }
+
+const BOOKED_STATUSES = ["RESERVED", "CHECKED_IN"];
+
+const BOOKING_TYPE_CONFIG = {
+  WALK_IN: { label: "Walk-in", color: "#a3d9a5" },
+  ONLINE: { label: "Online", color: "#ffe082" },
+  CORPORATE: { label: "Corporate", color: "#c8e6c9" },
+};
+
+export async function getBookingStats() {
+  const { data, error } = await supabase.from("bookings").select("status, booking_type, start_date");
+
+  if (error) throw new Error(error.message);
+
+  const booked = data.filter((b) => BOOKED_STATUSES.includes(b.status));
+  const cancelled = data.filter((b) => b.status === "CANCELLED");
+
+  const typeCounts = data.reduce((acc, { booking_type }) => {
+    if (!booking_type) return acc;
+    acc[booking_type] = (acc[booking_type] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  const total = Object.values(typeCounts).reduce((sum, n) => sum + n, 0);
+
+  const bookingTypes = Object.entries(BOOKING_TYPE_CONFIG).map(([key, { label, color }]) => ({
+    name: label,
+    value: total ? Math.round(((typeCounts[key] ?? 0) / total) * 100) : 0,
+    color,
+  }));
+
+  return { booked, cancelled, bookingTypes };
+}

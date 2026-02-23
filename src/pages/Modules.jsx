@@ -78,65 +78,60 @@ export default function Modules() {
 
       <div className="mx-auto mt-20 max-w-375 px-4 sm:px-4 lg:px-8">
         <div className="flex flex-col gap-20">
-          <div className="rounded-sm p-4 shadow-md">
-            <div className="mb-6 flex w-full flex-col items-center gap-6 lg:flex-row lg:items-start">
-              <div className="relative">
-                <div className="h-24 w-24 overflow-hidden rounded-full border-2 border-blue-700 shadow-lg shadow-blue-500/30">
+          <div className="rounded-2xl bg-white p-5 shadow-sm">
+            <div className="mb-5 flex w-full flex-col items-center gap-5 lg:flex-row lg:items-start">
+              <div className="relative shrink-0">
+                <div className="ring-btn-green h-20 w-20 overflow-hidden rounded-full ring-2 ring-offset-2">
                   <img src={user?.avatar || "/avator.webp"} alt={user?.name} className="h-full w-full object-cover" />
                 </div>
-                <div className="absolute -right-1 -bottom-1 flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-900 bg-gradient-to-br from-blue-500 to-indigo-500">
-                  <Shield size={16} className="text-white" />
+                <div className="bg-btn-green absolute -right-1 -bottom-1 flex h-7 w-7 items-center justify-center rounded-full shadow-sm">
+                  <Shield size={13} className="text-gray-700" />
                 </div>
               </div>
 
-              <div className="flex flex-1 flex-col items-center gap-4 lg:items-start">
+              <div className="flex flex-1 flex-col items-center gap-3 lg:items-start">
                 <div className="text-center lg:text-left">
-                  <p className="text-sm font-medium text-gray-900">{getGreeting()},</p>
-                  <h1 className="text-4xl font-bold text-gray-900">{user?.name}!</h1>
-                  <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/20 px-4 py-1.5">
-                    <Shield size={14} className="text-indigo-500" />
-                    <span className="text-sm font-semibold text-indigo-500">{profile?.role || "No Role"}</span>
+                  <p className="text-xs text-gray-400">{getGreeting()}</p>
+                  <h1 className="text-2xl font-bold text-gray-900">{user?.name}!</h1>
+                  <span className="bg-primary mt-1.5 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-emerald-700">
+                    <Shield size={11} />
+                    {profile?.role || "No Role"}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gray-100">
+                    <img src="/global-dreams.png" alt="logo" className="h-full w-full object-cover" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-gray-400">Currently Managing</p>
+                    <p className="text-sm font-bold text-gray-900">Global Dream Hotel</p>
                   </div>
                 </div>
 
-                <div className="mt-4 flex w-full items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 shadow-md">
-                    <img src="/global-dreams.png" alt="logo" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="mb-0.5 text-xs font-medium text-gray-500">Currently Managing</p>
-                    <h3 className="text-base font-bold text-gray-900">Global Dream Hotel</h3>
-                  </div>
-                </div>
-
-                <div className="mt-1 flex items-center gap-2 text-sm text-gray-600">
-                  <MapPin size={14} />
+                <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                  <MapPin size={12} />
                   <span>Downtown, New York</span>
                 </div>
               </div>
 
-              {/* Today's Date */}
-              <div className="hidden flex-col text-right lg:flex">
-                <p className="mb-1 text-sm text-gray-900">Today's Date</p>
-                <p className="text-lg font-semibold text-gray-900">
+              <div className="hidden flex-col items-end lg:flex">
+                <p className="text-[10px] text-gray-400">Today</p>
+                <p className="text-sm font-semibold text-gray-800">
                   {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                 </p>
               </div>
             </div>
 
-            <div className="rounded-sm bg-sky-50 p-4">
-              <p className="text-center text-sm text-slate-900">
-                Welcome to your{" "}
-                <span className="font-bold">
-                  {profile?.role || "No Role"}{" "}
-                  <span className="animate-wave inline-block origin-bottom text-2xl">👋</span>
-                </span>{" "}
-                dashboard! You have access to the following modules:
+            <div className="bg-primary/60 rounded-xl px-4 py-3">
+              <p className="text-center text-sm text-gray-700">
+                Welcome to your <span className="font-bold">{profile?.role || "No Role"}</span> dashboard!{" "}
+                <span className="animate-wave inline-block origin-bottom">👋</span> You have access to the following
+                modules:
               </p>
             </div>
           </div>
 
-          {/* Modules */}
           <div className="flex flex-wrap gap-6">
             {modules
               .filter((m) => m.roles.includes(profile?.role))

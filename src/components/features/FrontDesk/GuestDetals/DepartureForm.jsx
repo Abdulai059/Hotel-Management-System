@@ -13,18 +13,22 @@ export default function DepartureForm() {
 
   const updateField = (field, value) => setFormData((prev) => ({ ...prev, [field]: value }));
 
+  const inputClass =
+    "flex-1 rounded-xl border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm focus:border-[#9dc43b] focus:bg-white focus:outline-none";
+  const labelClass = "w-36 shrink-0 text-sm font-medium text-gray-500";
+
   return (
     <div className="space-y-4">
-      <div className="overflow-hidden rounded-lg border-2 border-gray-300 bg-white">
-        <div className="flex border-b-2 border-gray-300">
+      <div className="overflow-hidden rounded-2xl border border-gray-300 bg-white shadow-sm ring-1 ring-gray-100">
+        <div className="flex border-b border-gray-100">
           {["arrival", "departure"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 px-6 py-3 text-base font-medium transition ${
+              className={`flex-1 px-6 py-3 text-sm font-semibold capitalize transition-colors ${
                 activeTab === tab
-                  ? "border-b-4 border-blue-700 text-blue-700"
-                  : "bg-gray-50 text-gray-500 hover:bg-gray-100"
+                  ? "border-b-2 border-[#9dc43b] text-[#9dc43b]"
+                  : "text-gray-400 hover:bg-gray-50 hover:text-gray-600"
               }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -32,13 +36,13 @@ export default function DepartureForm() {
           ))}
         </div>
 
-        <div className="space-y-4 p-4">
-          <div className="flex items-center gap-4 rounded bg-gray-100 p-2">
-            <label className="w-32 font-medium text-gray-700">Mode</label>
+        <div className="space-y-3 p-5">
+          <div className="flex items-center gap-4 rounded-xl bg-gray-50 px-4 py-2.5">
+            <label className={labelClass}>Mode</label>
             <select
               value={formData.mode}
               onChange={(e) => updateField("mode", e.target.value)}
-              className="flex-1 rounded border border-gray-300 px-3 py-0 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="flex-1 rounded-xl border border-gray-200 bg-white px-3 py-1.5 text-sm focus:border-[#9dc43b] focus:outline-none"
             >
               <option value="">Select Mode</option>
               <option value="flight">Flight</option>
@@ -48,66 +52,66 @@ export default function DepartureForm() {
             </select>
           </div>
 
-          <div className="flex items-center gap-4">
-            <label className="w-32 font-medium text-gray-600">Departure / Flight#</label>
+          <div className="flex items-center gap-4 px-4">
+            <label className={labelClass}>Departure / Flight#</label>
             <input
               type="text"
               value={formData.departureFlightNumber}
               onChange={(e) => updateField("departureFlightNumber", e.target.value)}
-              className="py-0focus:ring-2 flex-1 rounded border border-gray-300 px-3 focus:ring-blue-500 focus:outline-none"
+              className={inputClass}
             />
           </div>
 
-          <div className="flex items-center gap-4 rounded bg-gray-100 p-0">
-            <label className="w-32 font-medium text-gray-700">Departure Time</label>
+          <div className="flex items-center gap-4 rounded-xl bg-gray-50 px-4 py-2.5">
+            <label className={labelClass}>Departure Time</label>
             <input
               type="text"
               value={formData.departureTime}
               onChange={(e) => updateField("departureTime", e.target.value)}
-              placeholder=":"
-              className="w-20 rounded border border-gray-300 px-3 py-0 text-center focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="HH:MM"
+              className="w-24 rounded-xl border border-gray-200 bg-white px-3 py-1.5 text-center text-sm focus:border-[#9dc43b] focus:outline-none"
             />
             <select
               value={formData.departureTimePeriod}
               onChange={(e) => updateField("departureTimePeriod", e.target.value)}
-              className="rounded border border-gray-300 px-3 py-0 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="rounded-xl border border-gray-200 bg-white px-3 py-1.5 text-sm focus:border-[#9dc43b] focus:outline-none"
             >
               <option value="AM">AM</option>
               <option value="PM">PM</option>
             </select>
           </div>
 
-          <div className="flex items-center gap-4">
-            <label className="w-32 font-medium text-gray-600">Assign Task</label>
+          <div className="flex items-center gap-4 px-4 py-1">
+            <label className={labelClass}>Assign Task</label>
             <input
               type="checkbox"
               checked={formData.assignTask}
               onChange={(e) => updateField("assignTask", e.target.checked)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+              className="h-4 w-4 accent-[#9dc43b]"
             />
           </div>
 
-          <div className="flex items-center gap-4 rounded">
-            <label className="w-32 font-medium text-gray-700">Send Email</label>
+          <div className="flex items-center gap-4 px-4 py-1">
+            <label className={labelClass}>Send Email</label>
             <input
               type="checkbox"
               checked={formData.sendEmail}
               onChange={(e) => updateField("sendEmail", e.target.checked)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+              className="h-4 w-4 accent-[#9dc43b]"
             />
           </div>
         </div>
       </div>
 
-      <div className="rounded-lg border-2 border-gray-300 bg-white p-4">
-        <h2 className="mb-4 text-lg font-semibold text-blue-900">Split Reservation</h2>
+      <div className="rounded-2xl border border-gray-300 bg-white p-5 shadow-sm ring-1 ring-gray-100">
+        <h2 className="mb-4 text-sm font-bold tracking-widest text-gray-700 uppercase">Split Reservation</h2>
 
-        <div className="mb-4 grid grid-cols-2 border-b-2 border-gray-800 pb-2 text-sm font-medium text-gray-800">
-          <div>Date</div>
-          <div>Room Type / Room</div>
+        <div className="mb-3 grid grid-cols-2 border-b border-gray-100 pb-2">
+          <span className="text-xs font-semibold tracking-wide text-gray-400 uppercase">Date</span>
+          <span className="text-xs font-semibold tracking-wide text-gray-400 uppercase">Room Type / Room</span>
         </div>
 
-        <div className="rounded bg-gray-100 p-2 text-center text-gray-600">There are no room splits</div>
+        <div className="rounded-xl bg-gray-50 px-4 py-3 text-center text-sm text-gray-400">No room splits</div>
       </div>
     </div>
   );

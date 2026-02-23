@@ -6,7 +6,6 @@ import TransactionRow from "./TransactionRow";
 function TransactionTable({ transactions, selectedRows, onSelectAll, onSelectRow, summary }) {
   return (
     <>
-      {/* Mobile Card View */}
       <div className="mb-6 block space-y-4 lg:hidden">
         {transactions.map((transaction) => (
           <TransactionCard
@@ -22,22 +21,27 @@ function TransactionTable({ transactions, selectedRows, onSelectAll, onSelectRow
       <div className="mb-6 hidden overflow-x-auto lg:block">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b-2 border-gray-300">
-              <th className="px-2 py-3 text-left">
+            <tr className="border-b border-gray-100">
+              <th className="px-2 py-3">
                 <input
                   type="checkbox"
                   onChange={onSelectAll}
                   checked={selectedRows.length === transactions.length}
-                  className="h-4 w-4"
+                  className="h-4 w-4 accent-[#9dc43b]"
                 />
               </th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-800">Date</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-800">Description - References</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-800">Folio #</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-800">Disc/Allwnce</th>
-              <th className="px-4 py-3 text-right font-semibold text-gray-800">Charges</th>
-              <th className="px-4 py-3 text-right font-semibold text-gray-800">Tax</th>
-              <th className="px-4 py-3 text-right font-semibold text-gray-800">Payment</th>
+              {["Date", "Description - References", "Folio #", "Disc/Allwnce", "Charges", "Tax", "Payment"].map(
+                (header, index) => (
+                  <th
+                    key={header}
+                    className={`px-4 py-3 text-xs font-bold tracking-wide text-gray-400 uppercase ${
+                      index >= 4 ? "text-right" : "text-left"
+                    }`}
+                  >
+                    {header}
+                  </th>
+                ),
+              )}
             </tr>
           </thead>
           <tbody>

@@ -4,7 +4,6 @@ import { MOCK_ROOMS } from "@/services/mockData";
 import RoomCard from "@/components/ui/RoomCard";
 import FilterButton from "@/components/ui/FilterButton";
 import { Icons } from "@/components/ui/constants";
-
 import { FILTER_ALL } from "@/lib/roomFilters";
 import { useFilteredRooms } from "@/hooks/useFilteredRooms";
 import { Search } from "lucide-react";
@@ -12,21 +11,23 @@ import { Legend } from "./room/Legend";
 
 export default function RoomPage() {
   const rooms = MOCK_ROOMS;
-
   const [filterStatus, setFilterStatus] = useState(FILTER_ALL);
   const [searchQuery, setSearchQuery] = useState("");
-
   const filteredRooms = useFilteredRooms(rooms, filterStatus, searchQuery);
 
+  const handleReset = () => {
+    setFilterStatus(FILTER_ALL);
+    setSearchQuery("");
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 pb-20">
-      <main className="max-w-8xl mx-auto mt-10 space-y-10 px-6">
-        <div className="flex flex-col gap-8 xl:flex-row xl:items-center xl:justify-between">
-          <div className="flex flex-wrap justify-center gap-3">
+    <div className="min-h-screen bg-gray-50 pb-20">
+      <main className="mx-auto mt-8 max-w-screen-2xl space-y-8 px-6">
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+          <div className="flex flex-wrap gap-2">
             <FilterButton active={filterStatus === FILTER_ALL} onClick={() => setFilterStatus(FILTER_ALL)}>
               All Rooms
             </FilterButton>
-
             <FilterButton
               active={filterStatus === RoomStatus.AVAILABLE}
               onClick={() => setFilterStatus(RoomStatus.AVAILABLE)}
@@ -34,7 +35,6 @@ export default function RoomPage() {
             >
               Available
             </FilterButton>
-
             <FilterButton
               active={filterStatus === RoomStatus.OCCUPIED}
               onClick={() => setFilterStatus(RoomStatus.OCCUPIED)}
@@ -42,7 +42,6 @@ export default function RoomPage() {
             >
               Occupied
             </FilterButton>
-
             <FilterButton
               active={filterStatus === RoomStatus.MAINTENANCE}
               onClick={() => setFilterStatus(RoomStatus.MAINTENANCE)}
@@ -52,15 +51,14 @@ export default function RoomPage() {
             </FilterButton>
           </div>
 
-          <div className="flex h-[40px] w-92 max-w-md items-center gap-2 overflow-hidden rounded-full border border-gray-500/30 bg-white pl-4 shadow-sm">
-            <Search size={22} className="text-gray-500" />
-
+          <div className="flex h-10 w-full max-w-sm items-center gap-2 overflow-hidden rounded-xl border border-gray-200 bg-white px-4 shadow-sm">
+            <Search size={16} className="shrink-0 text-gray-400" />
             <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               type="text"
               placeholder="Search by room number or type..."
-              className="h-full w-full bg-transparent text-sm text-gray-500 placeholder-gray-500 outline-none"
+              className="h-full w-full bg-transparent text-sm text-gray-600 placeholder-gray-400 outline-none"
             />
           </div>
         </div>
@@ -74,12 +72,7 @@ export default function RoomPage() {
             ))}
           </div>
         ) : (
-          <EmptyState
-            onReset={() => {
-              setFilterStatus(FILTER_ALL);
-              setSearchQuery("");
-            }}
-          />
+          <EmptyState onReset={handleReset} />
         )}
       </main>
     </div>
@@ -88,17 +81,17 @@ export default function RoomPage() {
 
 function EmptyState({ onReset }) {
   return (
-    <div className="rounded-sm border-2 border-dashed border-slate-100 bg-white py-32 shadow-inner">
-      <div className="mb-6 rounded-full bg-slate-50 p-8 text-slate-200">
+    <div className="flex flex-col items-center rounded-2xl border border-dashed border-gray-200 bg-white py-24">
+      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100 text-gray-300">
         <Icons.Search />
       </div>
-      <h3 className="text-2xl font-black text-slate-800">No Results Found</h3>
-      <p className="mt-1 font-medium text-slate-400">No rooms match your current filters.</p>
+      <h3 className="text-lg font-bold text-gray-800">No Results Found</h3>
+      <p className="mt-1 text-sm text-gray-400">No rooms match your current filters.</p>
       <button
         onClick={onReset}
-        className="mt-8 rounded-2xl bg-slate-100 px-8 py-3 font-bold text-slate-600 hover:bg-slate-200"
+        className="mt-6 rounded-xl bg-[#e7f68f] px-6 py-2.5 text-sm font-bold text-gray-700 transition-colors hover:bg-[#d4e87a]"
       >
-        Reset Dashboard
+        Reset Filters
       </button>
     </div>
   );

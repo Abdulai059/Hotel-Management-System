@@ -25,6 +25,7 @@ export function useStats() {
       const totalRooms = allRooms.data?.length || 0;
       const availableRooms = allRooms.data?.filter((room) => room.status === "AVAILABLE").length || 0;
       const occupiedRooms = allRooms.data?.filter((room) => room.status === "OCCUPIED").length || 0;
+      const occupiedMaintenance = allRooms.data?.filter((room) => room.status === "MAINTENANCE").length || 0;
 
       // Calculate occupancy percentage
       const occupancyPercentage = totalRooms > 0 ? Math.round((occupiedRooms / totalRooms) * 100) : 0;
@@ -35,7 +36,8 @@ export function useStats() {
         totalRooms,
         availableRooms,
         occupiedRooms,
-        occupancyPercentage, // Add this
+        occupiedMaintenance,
+        occupancyPercentage,
       };
     },
     refetchInterval: 60000,

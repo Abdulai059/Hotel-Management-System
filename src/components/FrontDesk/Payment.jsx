@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import AccountStatement from "../features/FrontDesk/Payment/AccountStatement";
 import PaymentDetails from "../features/FrontDesk/Payment/PaymentDetails";
 import { useBooking } from "../features/FrontDesk/useBooking";
