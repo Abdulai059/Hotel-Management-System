@@ -35,8 +35,8 @@ const links = [
       { label: "Bookings", path: "/dashboard/frontdesk/bookings", icon: CalendarCheck },
       { label: "Room Operations", path: "/dashboard/frontdesk/rooms", icon: BedDouble },
       { label: "Corporate Bookings", path: "/dashboard/frontdesk/corporate-bookings", icon: Building2 },
-      { label: "Housekeeping Audit", path: "/dashboard/frontdesk/housekeeping-audit", icon: ClipboardCheck },
-      { label: "Room Type", path: "/dashboard/frontdesk/room-type", icon: BedDouble },
+      { label: "Room ", path: "/dashboard/frontdesk/room-type", icon: BedDouble },
+      { label: "Calendar", path: "/dashboard/frontdesk/calendar", icon: Calendar },
     ],
   },
   {
@@ -49,7 +49,7 @@ const links = [
     color: "text-rose-600",
     items: [
       { label: "Help Videos", path: "/dashboard/frontdesk/help-videos", icon: Youtube },
-      { label: "Calendar", path: "/dashboard/frontdesk/calendar", icon: Calendar },
+      { label: "Housekeeping Audit", path: "/dashboard/frontdesk/housekeeping-audit", icon: ClipboardCheck },
       {
         label: "Housekeeping Legends",
         path: "/dashboard/frontdesk/housekeeping-legends",
