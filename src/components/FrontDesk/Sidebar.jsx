@@ -50,14 +50,12 @@ const links = [
     items: [
       { label: "Help Videos", path: "/dashboard/frontdesk/help-videos", icon: Youtube },
       { label: "Calendar", path: "/dashboard/frontdesk/calendar", icon: Calendar },
-      { label: "Room Legends", path: "/dashboard/frontdesk/room-legends", icon: Palette, hasDropdown: true },
       {
         label: "Housekeeping Legends",
         path: "/dashboard/frontdesk/housekeeping-legends",
         icon: Sparkles,
         hasDropdown: true,
       },
-      { label: "House Status", path: "/dashboard/frontdesk/house-status", icon: Clock },
       { label: "User Accounts", path: "/dashboard/frontdesk/accounts", icon: UserCog },
     ],
   },
