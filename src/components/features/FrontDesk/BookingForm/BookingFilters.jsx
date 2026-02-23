@@ -162,7 +162,7 @@ export default function BookingFilters() {
 
           <button
             onClick={() => setSearchParams(searchParams)}
-            className="w-full rounded-xl bg-[#9dc43b] px-4 py-1.5 text-sm font-bold text-white transition-colors hover:bg-[#8ab534] sm:w-auto"
+            className="w-full rounded-full bg-yellow-400 px-6 py-1.5 text-sm font-bold text-gray-700 transition-colors hover:bg-yellow-500 sm:w-auto"
           >
             Search
           </button>

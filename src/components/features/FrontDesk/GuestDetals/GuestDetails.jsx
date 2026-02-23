@@ -53,7 +53,7 @@ export default function GuestDetails({ booking, isEditing, handleInputChange, on
   };
 
   return (
-    <div className="w-full rounded-2xl bg-gray-700 p-5">
+    <div className="w-full rounded-2xl bg-linear-to-br from-slate-500 to-gray-700 p-5">
       <h2 className="mb-4 text-sm font-bold tracking-widest text-[#e7f68f] uppercase">Guest Details</h2>
 
       <div className="w-full rounded-xl bg-white p-5">

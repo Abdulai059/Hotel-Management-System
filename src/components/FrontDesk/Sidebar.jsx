@@ -16,7 +16,6 @@ import {
   ChevronsLeft,
   Menu,
 } from "lucide-react";
-import { HiArrowLeftEndOnRectangle } from "react-icons/hi2";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSidebarState } from "@/hooks/useSidebarState";
 
@@ -37,6 +36,7 @@ const links = [
       { label: "Room Operations", path: "/dashboard/frontdesk/rooms", icon: BedDouble },
       { label: "Corporate Bookings", path: "/dashboard/frontdesk/corporate-bookings", icon: Building2 },
       { label: "Housekeeping Audit", path: "/dashboard/frontdesk/housekeeping-audit", icon: ClipboardCheck },
+      { label: "Room Type", path: "/dashboard/frontdesk/room-type", icon: BedDouble },
     ],
   },
   {

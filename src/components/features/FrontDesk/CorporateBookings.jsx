@@ -107,10 +107,10 @@ export default function CorporateBookings() {
                 placeholder="Search company, contact, code..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2 pr-4 pl-9 text-sm placeholder:text-gray-400 focus:border-[#9dc43b] focus:bg-white focus:outline-none sm:w-64"
+                className="w-full rounded-full border border-gray-200 bg-gray-50 py-1.5 pr-4 pl-9 text-sm placeholder:text-gray-400 focus:border-[#9dc43b] focus:bg-white focus:outline-none sm:w-64"
               />
             </div>
-            <button className="bg-btn-green flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold text-gray-800 transition-colors hover:bg-[#d4e87a]">
+            <button className="flex items-center gap-1.5 rounded-full bg-[#d4e87a] px-4 py-1.5 text-sm font-semibold text-gray-800 transition-colors hover:bg-[#d4e87a]">
               <Plus size={15} />
               <span className="hidden sm:inline">Add Account</span>
             </button>
@@ -147,7 +147,7 @@ export default function CorporateBookings() {
                         <tr
                           key={booking.id}
                           className={`cursor-pointer border-b border-gray-200 transition ${
-                            idx % 2 === 0 ? "bg-secondary/25 hover:bg-btn-green/60" : "bg-white hover:bg-gray-50"
+                            idx % 2 === 0 ? "bg-secondary/25 hover:bg-btn-green/30" : "bg-white hover:bg-gray-50"
                           }`}
                         >
                           <td className="border-r border-gray-200 px-3 py-1.5 text-sm text-gray-700">

@@ -1,10 +1,7 @@
 import BookingStats from "../features/FrontDesk/BookingStats";
-import DashboardTopNav from "../features/FrontDesk/DashboardTopNav";
-import ReservationsChart from "../features/charts/ReservationsChart";
 import RoomType from "../features/FrontDesk/RoomType";
 import Stats from "../features/FrontDesk/Stats";
 import BookingList from "../features/charts/BookingList";
-import StateSidebar from "../features/charts/StateSisdebar";
 import BookingSlider from "../ui/BookingingSlider";
 import WelcomeModal from "../ui/WelcomeModal";
 import { useStats } from "../features/FrontDesk/useStatsService";
@@ -18,6 +15,7 @@ export default function Dashboard() {
   return (
     <>
       <BookingSlider />
+
       <div className="">
         <div className="flex w-full gap-4 p-4 sm:gap-6 sm:p-6">
           <div className="flex w-full flex-col gap-4 lg:flex-row">
