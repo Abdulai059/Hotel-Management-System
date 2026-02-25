@@ -2,9 +2,22 @@ import { useState } from "react";
 import { RoomStatus } from "@/hooks/types";
 import { Icons } from "./constants";
 import GuestTooltip from "./GuestTooltip";
+import { useNavigate } from "react-router-dom";
 
 export default function RoomCard({ room, onClick }) {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    onClick?.(room);
+    if (room.guest?.id) {
+      navigate(`/dashboard/frontdesk/rooms/reservation/${room.guest.id}`);
+    }
+  };
+
+  if (!room) return null;
+
+  const guest = room.guest ?? null;
   const isOccupied = room.status === RoomStatus.OCCUPIED;
 
   const getHeatmapStyle = () => {
@@ -19,6 +32,10 @@ export default function RoomCard({ room, onClick }) {
         return `${baseStyles} bg-gradient-to-br from-rose-500 to-rose-700 ${
           isHovered ? "shadow-[0_0_30px_rgba(244,63,94,0.6)]" : "shadow-lg"
         }`;
+      case RoomStatus.RESERVED:
+        return `${baseStyles} bg-gradient-to-br from-blue-500 to-blue-700 ${
+          isHovered ? "shadow-[0_0_30px_rgba(59,130,246,0.6)]" : "shadow-lg"
+        }`;
       case RoomStatus.MAINTENANCE:
         return `${baseStyles} bg-gradient-to-br from-amber-400 to-amber-600 ${
           isHovered ? "shadow-[0_0_30px_rgba(251,191,36,0.6)]" : "shadow-lg"
@@ -30,11 +47,11 @@ export default function RoomCard({ room, onClick }) {
 
   return (
     <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      {isOccupied && isHovered && room.guest && <GuestTooltip guest={room.guest} />}
+      {isOccupied && isHovered && guest && <GuestTooltip guest={guest} booking={room} />}
 
       <button
         type="button"
-        onClick={() => onClick?.(room)}
+        onClick={handleClick}
         className={`flex h-36 w-full flex-col items-center justify-center gap-1 rounded-lg border-2 border-white/20 text-white ${getHeatmapStyle()} ${
           isHovered ? "-translate-y-2 scale-105" : "scale-100"
         } group active:scale-95`}
@@ -69,7 +86,7 @@ export default function RoomCard({ room, onClick }) {
           <div className={`mb-2 h-px bg-white/40 transition-all duration-300 ${isHovered ? "w-16" : "w-8"}`} />
 
           <span className="text-[10px] font-bold tracking-[0.2em] uppercase opacity-90 drop-shadow-sm">
-            {room.type}
+            {room.type || "Standard"}
           </span>
         </div>
 

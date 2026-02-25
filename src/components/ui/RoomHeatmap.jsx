@@ -10,6 +10,7 @@ export default function RoomHeatmap() {
   const [hoveredRoom, setHoveredRoom] = useState(null);
 
   const { data: rooms, isLoading, error } = useRooms();
+  console.log(rooms);
 
   const filteredRooms = useFilteredRooms(rooms || [], filterStatus, searchQuery);
   const sortedRooms = [...filteredRooms].sort((a, b) => parseInt(a.number) - parseInt(b.number));

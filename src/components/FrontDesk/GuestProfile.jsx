@@ -3,6 +3,7 @@ import { Phone, Mail, Star, Check, Square, BedDouble, Users, User } from "lucide
 import { useBooking } from "../features/FrontDesk/useBooking";
 import { formatDate, fullformatDate } from "@/utils/dateHelpers";
 import ActionButtons from "../features/FrontDesk/GuestDetals/ActionButtons";
+import { useParams } from "react-router-dom";
 
 const Divider = () => <div className="my-4 h-px bg-gray-200" />;
 
@@ -315,7 +316,8 @@ const PriceSummaryPanel = ({ booking }) => {
 };
 
 export default function GuestProfile() {
-  const { booking, isLoading, error } = useBooking();
+  const { id } = useParams();
+  const { booking, isLoading, error } = useBooking(id);
 
   return (
     <>

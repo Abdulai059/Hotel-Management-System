@@ -5,7 +5,6 @@ import { useBookings } from "../features/FrontDesk/useBookings";
 
 export default function Guests() {
   const { bookings, count, isLoading, error } = useBookings();
-  console.log("bookings", bookings);
 
   return (
     <div className="bg-w flex flex-1 flex-col gap-4">

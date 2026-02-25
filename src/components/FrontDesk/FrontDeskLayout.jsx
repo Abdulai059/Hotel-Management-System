@@ -1,28 +1,8 @@
-import {
-  LayoutDashboard,
-  Users,
-  CalendarCheck,
-  BedDouble,
-  Receipt,
-  Building2,
-  Menu,
-  Clock,
-  UserCog,
-  Youtube,
-  Palette,
-  Sparkles,
-  X,
-  ClipboardCheck,
-  ChevronsLeft,
-  Calendar,
-} from "lucide-react";
-import { HiArrowLeftEndOnRectangle } from "react-icons/hi2";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useState } from "react";
-import { useSidebarState } from "@/hooks/useSidebarState";
 import DashboardNav from "../features/FrontDesk/DashboardNav";
-import { useScrollToTop } from "../ui/ ScrollToTop";
 import Sidebar from "./Sidebar";
+import { useScrollToTop } from "../ui/ ScrollToTop";
 
 export default function FrontDeskLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
