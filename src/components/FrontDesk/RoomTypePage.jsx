@@ -229,7 +229,7 @@ const BookingButton = ({ status, onClick }) => (
       onClick && onClick();
     }}
     disabled={status === "Occupied"}
-    className={`shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-bold transition-colors ${
+    className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold transition-colors ${
       status === "Available"
         ? "cursor-pointer bg-[#9dc43b] text-white hover:bg-[#8ab534]"
         : "cursor-pointer bg-[#9dc43b] text-white hover:bg-[#8ab534]"
@@ -332,7 +332,7 @@ export default function RoomTypePage() {
           </div>
         </div>
 
-        <ul className="flex-1 divide-y divide-gray-100 overflow-y-auto">
+        <ul className="flex-1 divide-y divide-gray-100 overflow-y-auto pt-10">
           {filtered.map((room) => (
             <li
               key={room.id}
@@ -346,7 +346,7 @@ export default function RoomTypePage() {
                   <BookingButton status={room.status} />
                 </div>
                 <RoomMeta size={room.size} bed={room.bed} guests={room.guests} />
-                <p className="my-2 line-clamp-2 text-xs leading-relaxed text-gray-500">{room.description}</p>
+                <p className="my-2 line-clamp-2 text-sm leading-relaxed text-gray-500">{room.description}</p>
                 <div className="mt-auto flex items-center justify-between">
                   <span className="text-xs text-gray-400">
                     Availability:{" "}

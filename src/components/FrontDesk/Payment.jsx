@@ -7,8 +7,6 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 export default function Payment() {
   const { booking, isLoading, error } = useBooking();
 
-  console.log(booking);
-
   if (isLoading) return <LoadingSpinner />;
   if (error) return <div>Error loading booking</div>;
   if (!booking) return null;

@@ -231,7 +231,7 @@ export default function GuestsTable({ bookings = [], isLoading, error }) {
   if (error) return <ErrorState />;
   if (!bookings?.length) return <EmptyState message="No bookings found" />;
 
-  const handleRowClick = (booking) => navigate(`${booking.id}`);
+  const handleRowClick = (booking) => navigate(`../reservation/${booking.id}`);
 
   return (
     <div className="w-full overflow-hidden bg-white shadow-sm">

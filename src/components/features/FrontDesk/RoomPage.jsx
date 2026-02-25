@@ -1,23 +1,37 @@
 import { useState } from "react";
 import { RoomStatus } from "@/hooks/types";
-import { MOCK_ROOMS } from "@/services/mockData";
+
 import RoomCard from "@/components/ui/RoomCard";
 import FilterButton from "@/components/ui/FilterButton";
-import { Icons } from "@/components/ui/constants";
 import { FILTER_ALL } from "@/lib/roomFilters";
-import { useFilteredRooms } from "@/hooks/useFilteredRooms";
 import { Search } from "lucide-react";
 import { Legend } from "./room/Legend";
 
-export default function RoomPage() {
-  const rooms = MOCK_ROOMS;
+export default function RoomPage({ rooms }) {
   const [filterStatus, setFilterStatus] = useState(FILTER_ALL);
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredRooms = useFilteredRooms(rooms, filterStatus, searchQuery);
+
+  const filteredRooms = (rooms ?? []).filter((room) => {
+    if (filterStatus !== FILTER_ALL && room.status !== filterStatus) return false;
+
+    if (searchQuery === "") return true;
+
+    const roomNumber = room.number ?? "";
+    const roomType = room.type ?? "";
+
+    return (
+      roomNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      roomType.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
 
   const handleReset = () => {
     setFilterStatus(FILTER_ALL);
     setSearchQuery("");
+  };
+
+  const handleClick = (room) => {
+    // Navigation is handled by RoomCard component
   };
 
   return (
@@ -41,6 +55,13 @@ export default function RoomPage() {
               color="rose"
             >
               Occupied
+            </FilterButton>
+            <FilterButton
+              active={filterStatus === RoomStatus.RESERVED}
+              onClick={() => setFilterStatus(RoomStatus.RESERVED)}
+              color="blue"
+            >
+              Reserved
             </FilterButton>
             <FilterButton
               active={filterStatus === RoomStatus.MAINTENANCE}
@@ -68,7 +89,7 @@ export default function RoomPage() {
         {filteredRooms.length ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {filteredRooms.map((room) => (
-              <RoomCard key={room.id} room={room} />
+              <RoomCard key={room.id} room={room} onClick={handleClick} />
             ))}
           </div>
         ) : (

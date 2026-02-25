@@ -17,7 +17,6 @@ import Menu from "./components/Restaurant/Menu";
 import Orders from "./components/Restaurant/Orders";
 import Bookings from "./components/FrontDesk/Bookings";
 import CorporateBookings from "./components/features/FrontDesk/CorporateBookings";
-import BookingDetails from "./components/FrontDesk/BookingDetails";
 import Payment from "./components/FrontDesk/Payment";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -77,15 +76,15 @@ export default function App() {
                 }
               >
                 <Route index element={<Dashboard />} />
-                <Route path="guests" element={<Guests />} />
-                <Route path="guests/:id" element={<GuestProfile />} />
-                <Route path="guests/:id" element={<BookingDetails />} />
+                <Route path="reservation" element={<Guests />} />
+                <Route path="reservation/:id" element={<GuestProfile />} />
                 <Route path="calendar" element={<Calendar />} />
                 <Route path="room-type" element={<RoomTypePage />} />
                 <Route path="payment/:id" element={<Payment />} />
                 <Route path="bookings" element={<Bookings />} />
                 <Route path="corporate-bookings" element={<CorporateBookings />} />
                 <Route path="rooms" element={<Rooms />} />
+                <Route path="rooms/reservation/:id" element={<GuestProfile />} />
                 <Route path="billing" element={<Billing />} />
               </Route>
 

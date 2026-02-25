@@ -1,4 +1,6 @@
-export default function GuestTooltip({ guest }) {
+import { formatDate } from "@/utils/dateHelpers";
+
+export default function GuestTooltip({ guest, booking }) {
   if (!guest) return null;
 
   return (
@@ -12,11 +14,11 @@ export default function GuestTooltip({ guest }) {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <p className="text-[10px] font-medium text-slate-400 uppercase">Check-In</p>
-            <p className="text-xs font-semibold text-slate-700">{guest.checkIn}</p>
+            <p className="text-xs font-semibold text-slate-700">{formatDate(guest.checkIn).full}</p>
           </div>
           <div>
             <p className="text-[10px] font-medium text-slate-400 uppercase">Check-Out</p>
-            <p className="text-xs font-semibold text-slate-700">{guest.checkOut}</p>
+            <p className="text-xs font-semibold text-slate-700">{formatDate(guest.checkOut).full}</p>
           </div>
         </div>
 

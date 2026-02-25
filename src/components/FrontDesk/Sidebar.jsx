@@ -10,7 +10,6 @@ import {
   Calendar,
   Palette,
   Sparkles,
-  Clock,
   UserCog,
   ChevronDown,
   ChevronsLeft,
@@ -25,7 +24,7 @@ const links = [
     color: "text-slate-500",
     items: [
       { label: "Dashboard", path: "/dashboard/frontdesk", icon: LayoutDashboard },
-      { label: "Guest Lookup", path: "/dashboard/frontdesk/guests", icon: Users },
+      { label: "Guest Lookup", path: "/dashboard/frontdesk/reservation", icon: Users },
     ],
   },
   {
