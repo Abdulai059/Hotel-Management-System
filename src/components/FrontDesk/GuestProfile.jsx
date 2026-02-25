@@ -120,6 +120,42 @@ function BookingPanel({ booking }) {
 
   if (!booking) return null;
 
+  const getStatusStyles = (status) => {
+    const s = status?.toLowerCase().replace(/_/g, "-");
+    switch (s) {
+      case "checked-in":
+        return "bg-emerald-100 text-emerald-700 border-emerald-200";
+      case "checked-out":
+        return "bg-gray-100 text-gray-600 border-gray-200";
+      case "unconfirmed":
+        return "bg-blue-100 text-blue-700 border-blue-200";
+      default: // reserved / confirmed
+        return "bg-amber-100 text-amber-700 border-amber-200";
+    }
+  };
+
+  const renderStatusButton = () => {
+    const s = booking.status?.toLowerCase().replace(/_/g, "-");
+
+    if (s === "checked-in") {
+      return (
+        <button className="rounded-full border border-pink-600 bg-pink-600 px-3 py-1 text-xs font-semibold text-white uppercase hover:bg-pink-700">
+          Checkout
+        </button>
+      );
+    }
+
+    if (s === "unconfirmed" || s === "reserved") {
+      return (
+        <button className="rounded-full border border-purple-600 bg-purple-600 px-3 py-1 text-xs font-semibold text-white uppercase hover:bg-purple-700">
+          Assign Room
+        </button>
+      );
+    }
+
+    return null;
+  };
+
   const roomDetails = booking?.rooms;
   const roomTypeName = roomDetails?.room_types?.name ?? "Not Assigned";
   const roomNumber = roomDetails?.room_number ?? "Not Assigned";
@@ -156,10 +192,16 @@ function BookingPanel({ booking }) {
     <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
       <CardHeader title="Booking Information" />
 
-      <span className="bg-primary mb-2.5 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold text-emerald-700">
-        <Check size={12} strokeWidth={2.5} />
-        {bookingStatus}
-      </span>
+      <div className="flex items-center justify-start gap-4 pb-4">
+        <span
+          className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold tracking-wide uppercase ${getStatusStyles(booking.status)}`}
+        >
+          <Check size={12} strokeWidth={2.5} />
+          {bookingStatus}
+        </span>
+
+        <span>{renderStatusButton()}</span>
+      </div>
 
       <p className="mb-1 text-2xl font-bold text-gray-900">
         Booking ID: <span className="text-gray-900">{booking.resId ?? booking.id}</span>
@@ -167,8 +209,8 @@ function BookingPanel({ booking }) {
       <p className="mb-5 text-xs text-gray-400">{formattedCreatedDate}</p>
 
       <div className="mb-5 grid grid-cols-3 gap-x-2 gap-y-4">
-        {bookingInformationFields.map((field) => (
-          <div key={field.label}>
+        {bookingInformationFields.map((field, index) => (
+          <div key={field.label || index}>
             <FieldLabel>{field.label}</FieldLabel>
             <FieldValue>{field.value}</FieldValue>
           </div>
@@ -214,7 +256,11 @@ function BookingPanel({ booking }) {
         </button>
         <button
           onClick={() => setCancelled(!cancelled)}
-          className="rounded-sm border border-red-100 bg-red-100 px-5 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-red-50"
+          className={`rounded-sm border px-5 py-2 text-sm font-semibold transition-colors ${
+            cancelled
+              ? "border-emerald-100 bg-emerald-100 text-emerald-700 hover:bg-emerald-50"
+              : "border-red-100 bg-red-100 text-red-700 hover:bg-red-50"
+          }`}
         >
           {cancelled ? "Undo Cancel" : "Cancel Booking"}
         </button>
