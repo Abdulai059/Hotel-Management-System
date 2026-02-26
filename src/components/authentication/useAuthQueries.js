@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { authService } from "@/services/authService";
+import supabase from "@/services/supabase";
 
 export const authKeys = {
   session: ["session"],

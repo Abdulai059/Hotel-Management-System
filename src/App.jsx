@@ -1,5 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
+import { AdminPanel } from "./pages/AdminPanel";
+import { AuthProvider } from "./context/AuthContext";
+
+import Unauthorized from "./components/ui/Unauthorized";
 import Login from "./components/authentication/Login";
 import HomePage from "./pages/HomePage";
 import AppLayout from "./components/ui/AppLayout";
@@ -10,20 +17,10 @@ import Rooms from "./components/FrontDesk/Rooms";
 import Billing from "./components/FrontDesk/Billing";
 import Dashboard from "./components/FrontDesk/Dashboard";
 import RestaurantDashboard from "./components/Restaurant/RestaurantDashboard";
-import Tables from "./components/Restaurant/Tables";
-import RestaurantReports from "./components/Restaurant/RestaurantReports";
 import RestaurantLayout from "./components/Restaurant/RestaurantLayout";
-import Menu from "./components/Restaurant/Menu";
-import Orders from "./components/Restaurant/Orders";
 import Bookings from "./components/FrontDesk/Bookings";
 import CorporateBookings from "./components/features/FrontDesk/CorporateBookings";
 import Payment from "./components/FrontDesk/Payment";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "react-hot-toast";
-import { AdminPanel } from "./pages/AdminPanel";
-import { AuthProvider } from "./context/AuthContext";
-import Unauthorized from "./components/ui/Unauthorized";
 import Calendar from "./components/FrontDesk/Calendar";
 import GuestProfile from "./components/FrontDesk/GuestProfile";
 import RoomTypePage from "./components/FrontDesk/RoomTypePage";
@@ -49,7 +46,7 @@ export default function App() {
             <Route path="/" element={<Login />} />
 
             <Route
-              path="/dashboard"
+              path="/app"
               element={
                 <ProtectedRoute>
                   <AppLayout />
@@ -68,7 +65,7 @@ export default function App() {
               />
 
               <Route
-                path="frontdesk"
+                path="fd"
                 element={
                   <ProtectedRoute allowedRoles={["admin", "frontdesk"]}>
                     <FrontDeskLayout />
@@ -76,15 +73,15 @@ export default function App() {
                 }
               >
                 <Route index element={<Dashboard />} />
-                <Route path="reservation" element={<Guests />} />
+                <Route path="reservations" element={<Guests />} />
                 <Route path="reservation/:id" element={<GuestProfile />} />
                 <Route path="calendar" element={<Calendar />} />
-                <Route path="room-type" element={<RoomTypePage />} />
+                <Route path="room-types" element={<RoomTypePage />} />
                 <Route path="payment/:id" element={<Payment />} />
                 <Route path="bookings" element={<Bookings />} />
-                <Route path="corporate-bookings" element={<CorporateBookings />} />
+                <Route path="corporate" element={<CorporateBookings />} />
                 <Route path="rooms" element={<Rooms />} />
-                <Route path="rooms/reservation/:id" element={<GuestProfile />} />
+                <Route path="room/:id" element={<GuestProfile />} />
                 <Route path="billing" element={<Billing />} />
               </Route>
 
@@ -97,10 +94,6 @@ export default function App() {
                 }
               >
                 <Route index element={<RestaurantDashboard />} />
-                <Route path="orders" element={<Orders />} />
-                <Route path="menu" element={<Menu />} />
-                <Route path="tables" element={<Tables />} />
-                <Route path="reports" element={<RestaurantReports />} />
               </Route>
             </Route>
 

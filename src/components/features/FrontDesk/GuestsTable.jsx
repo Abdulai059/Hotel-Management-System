@@ -1,5 +1,6 @@
 import { Pagination } from "@/components/ui/Pagination";
 import TableHeader from "@/components/ui/TableHeader";
+import { PAGE_SIZE } from "@/lib/constants";
 import { formatCurrency } from "@/utils/helpers";
 import { Printer, Mail, MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -224,14 +225,14 @@ const ErrorState = () => (
   </div>
 );
 
-export default function GuestsTable({ bookings = [], isLoading, error }) {
+export default function GuestsTable({ bookings = [], count, isLoading, error }) {
   const navigate = useNavigate();
 
   if (isLoading) return <EmptyState message="Loading bookings..." />;
   if (error) return <ErrorState />;
   if (!bookings?.length) return <EmptyState message="No bookings found" />;
 
-  const handleRowClick = (booking) => navigate(`../reservation/${booking.id}`);
+  const handleRowClick = (booking) => navigate(`/app/fd/reservation/${booking.id}`);
 
   return (
     <div className="w-full overflow-hidden bg-white shadow-sm">
@@ -252,7 +253,11 @@ export default function GuestsTable({ bookings = [], isLoading, error }) {
         ))}
       </div>
 
-      <Pagination />
+      {count > PAGE_SIZE && (
+        <div className="mt-4">
+          <Pagination count={count} />
+        </div>
+      )}
     </div>
   );
 }
