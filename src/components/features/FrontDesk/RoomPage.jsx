@@ -4,8 +4,8 @@ import { RoomStatus } from "@/hooks/types";
 import RoomCard from "@/components/ui/RoomCard";
 import FilterButton from "@/components/ui/FilterButton";
 import { FILTER_ALL } from "@/lib/roomFilters";
-import { Search } from "lucide-react";
 import { Legend } from "./room/Legend";
+import { Search } from "lucide-react";
 
 export default function RoomPage({ rooms }) {
   const [filterStatus, setFilterStatus] = useState(FILTER_ALL);
@@ -104,7 +104,7 @@ function EmptyState({ onReset }) {
   return (
     <div className="flex flex-col items-center rounded-2xl border border-dashed border-gray-200 bg-white py-24">
       <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100 text-gray-300">
-        <Icons.Search />
+        <Search />
       </div>
       <h3 className="text-lg font-bold text-gray-800">No Results Found</h3>
       <p className="mt-1 text-sm text-gray-400">No rooms match your current filters.</p>
