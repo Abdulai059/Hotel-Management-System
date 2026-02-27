@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     {
       theme: "light",
       language: "en",
-      lastVisitedPage: "/dashboard",
+      lastVisitedPage: "/app",
       rememberMe: false,
     },
     "userPreferences",

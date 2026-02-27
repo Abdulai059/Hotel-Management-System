@@ -1,9 +1,11 @@
-import InputField from "../inputField";
 import CountrySelect from "@/components/ui/CountrySelect";
-import SelectField from "../SelectField";
 import { MapPin, User } from "lucide-react";
 
 export default function GuestInfoStep({ formData, onChange, onNext }) {
+  const handleCountrySelect = (country) => {
+    onChange({ target: { name: "country", value: country.name } });
+  };
+
   return (
     <div>
       <div className="mb-8">
@@ -22,49 +24,69 @@ export default function GuestInfoStep({ formData, onChange, onNext }) {
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <InputField
-              label="Full Name"
-              id="fullName"
-              name="fullName"
-              value={formData.fullName}
-              onChange={onChange}
-              placeholder="Adam Walma"
-              required
-            />
-
-            <InputField
-              label="Phone Number"
-              type="tel"
-              id="phoneNumber"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={onChange}
-              placeholder="055 0000 0000"
-              required
-            />
+            <div>
+              <label htmlFor="fullName" className="mb-2 block text-sm font-semibold text-gray-900">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={onChange}
+                placeholder="Adam Walma"
+                required
+                className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-gray-900">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={onChange}
+                placeholder="055 0000 0000"
+                required
+                className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 focus:outline-none"
+              />
+            </div>
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-            <InputField
-              label="Email Address"
-              type="email"
-              id="emailAddress"
-              name="emailAddress"
-              value={formData.emailAddress}
-              onChange={onChange}
-              placeholder="john@example.com"
-              required
-            />
-
-            <InputField
-              label="National ID / Passport Number"
-              id="NationalID"
-              name="NationalID"
-              value={formData.NationalID}
-              onChange={onChange}
-              placeholder="Passport Number"
-              required
-            />
+            <div>
+              <label htmlFor="email" className="mb-2 block text-sm font-semibold text-gray-900">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={onChange}
+                placeholder="john@example.com"
+                required
+                className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label htmlFor="nationalId" className="mb-2 block text-sm font-semibold text-gray-900">
+                National ID / Passport Number
+              </label>
+              <input
+                type="text"
+                id="nationalId"
+                name="nationalId"
+                value={formData.nationalId}
+                onChange={onChange}
+                placeholder="Passport Number"
+                required
+                className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 focus:outline-none"
+              />
+            </div>
           </div>
         </section>
 
@@ -75,29 +97,38 @@ export default function GuestInfoStep({ formData, onChange, onNext }) {
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <InputField
-              label="Profession or Occupation"
-              id="occupation"
-              name="occupation"
-              value={formData.occupation}
-              onChange={onChange}
-              placeholder="Software Engineer"
-              required
-            />
-
-            <SelectField
-              label="Marital Status"
-              id="maritalStatus"
-              name="maritalStatus"
-              value={formData.maritalStatus}
-              onChange={onChange}
-              required
-              options={[
-                { value: "", label: "Select marital status" },
-                { value: "single", label: "Single" },
-                { value: "married", label: "Married" },
-              ]}
-            />
+            <div>
+              <label htmlFor="occupation" className="mb-2 block text-sm font-semibold text-gray-900">
+                Profession or Occupation
+              </label>
+              <input
+                type="text"
+                id="occupation"
+                name="occupation"
+                value={formData.occupation}
+                onChange={onChange}
+                placeholder="Software Engineer"
+                required
+                className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label htmlFor="gender" className="mb-2 block text-sm font-semibold text-gray-900">
+                Select Gender
+              </label>
+              <select
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={onChange}
+                className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 ring-sky-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 focus:outline-none"
+              >
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
           </div>
         </section>
 
@@ -110,40 +141,57 @@ export default function GuestInfoStep({ formData, onChange, onNext }) {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
               <label className="mb-2 block text-sm font-semibold text-gray-900">Country</label>
-              <CountrySelect />
+              <CountrySelect onSelect={handleCountrySelect} />
             </div>
 
-            <InputField
-              label="City"
-              id="city"
-              name="city"
-              value={formData.city}
-              onChange={onChange}
-              placeholder="Accra"
-              required
-            />
+            <div>
+              <label htmlFor="city" className="mb-2 block text-sm font-semibold text-gray-900">
+                City
+              </label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={formData.city}
+                onChange={onChange}
+                placeholder="Accra"
+                required
+                className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 focus:outline-none"
+              />
+            </div>
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-            <InputField
-              label="Town"
-              id="town"
-              name="town"
-              value={formData.town}
-              onChange={onChange}
-              placeholder="East Legon"
-              required
-            />
-
-            <InputField
-              label="Residential Address"
-              id="residentialAddress"
-              name="residentialAddress"
-              value={formData.residentialAddress}
-              onChange={onChange}
-              placeholder="House No. 12, Mango Street"
-              required
-            />
+            <div>
+              <label htmlFor="town" className="mb-2 block text-sm font-semibold text-gray-900">
+                Town
+              </label>
+              <input
+                type="text"
+                id="town"
+                name="town"
+                value={formData.town}
+                onChange={onChange}
+                placeholder="East Legon"
+                required
+                className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label htmlFor="address" className="mb-2 block text-sm font-semibold text-gray-900">
+                Residential Address
+              </label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={onChange}
+                placeholder="House No. 12, Mango Street"
+                required
+                className="w-full rounded-lg border-0 bg-gray-100 px-4 py-3 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-0 focus:outline-none"
+              />
+            </div>
           </div>
         </section>
       </div>

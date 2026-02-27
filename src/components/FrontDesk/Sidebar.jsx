@@ -21,41 +21,37 @@ import { useSidebarState } from "@/hooks/useSidebarState";
 const links = [
   {
     group: "Overview",
-    color: "text-slate-500",
     items: [
-      { label: "Dashboard", path: "/dashboard/frontdesk", icon: LayoutDashboard },
-      { label: "Guest Lookup", path: "/dashboard/frontdesk/reservation", icon: Users },
+      { label: "Dashboard", path: "/app/fd", icon: LayoutDashboard },
+      { label: "Guest Lookup", path: "/app/fd/reservations", icon: Users },
     ],
   },
   {
     group: "Operations",
-    color: "text-emerald-600",
     items: [
-      { label: "Bookings", path: "/dashboard/frontdesk/bookings", icon: CalendarCheck },
-      { label: "Room Operations", path: "/dashboard/frontdesk/rooms", icon: BedDouble },
-      { label: "Corporate Bookings", path: "/dashboard/frontdesk/corporate-bookings", icon: Building2 },
-      { label: "Room ", path: "/dashboard/frontdesk/room-type", icon: BedDouble },
-      { label: "Calendar", path: "/dashboard/frontdesk/calendar", icon: Calendar },
+      { label: "Bookings", path: "/app/fd/bookings", icon: CalendarCheck },
+      { label: "Room Operations", path: "/app/fd/rooms", icon: BedDouble },
+      { label: "Corporate Bookings", path: "/app/fd/corporate", icon: Building2 },
+      { label: "Room Types", path: "/app/fd/room-types", icon: BedDouble },
+      { label: "Calendar", path: "/app/fd/calendar", icon: Calendar },
     ],
   },
   {
     group: "Finance",
-    color: "text-blue-600",
-    items: [{ label: "Billing & Invoices", path: "/dashboard/frontdesk/billing", icon: Receipt }],
+    items: [{ label: "Billing & Invoices", path: "/app/fd/billing", icon: Receipt }],
   },
   {
     group: "Resources",
-    color: "text-rose-600",
     items: [
-      { label: "Help Videos", path: "/dashboard/frontdesk/help-videos", icon: Youtube },
-      { label: "Housekeeping Audit", path: "/dashboard/frontdesk/housekeeping-audit", icon: ClipboardCheck },
+      { label: "Help Videos", path: "/app/fd/help-videos", icon: Youtube },
+      { label: "Housekeeping Audit", path: "/app/fd/housekeeping-audit", icon: ClipboardCheck },
       {
         label: "Housekeeping Legends",
-        path: "/dashboard/frontdesk/housekeeping-legends",
+        path: "/app/fd/housekeeping-legends",
         icon: Sparkles,
         hasDropdown: true,
       },
-      { label: "User Accounts", path: "/dashboard/frontdesk/accounts", icon: UserCog },
+      { label: "User Accounts", path: "/app/fd/accounts", icon: UserCog },
     ],
   },
 ];
@@ -109,12 +105,11 @@ export default function Sidebar({ isMobileMenuOpen, setIsMobileMenuOpen }) {
 
       {/* Nav */}
       <nav className="flex flex-1 flex-col gap-5 overflow-y-auto px-2 py-4">
-        {links.map(({ group, color, items }, groupIdx) => (
+        {links.map(({ group, items }, groupIdx) => (
           <div key={group}>
             {isExpanded && (
               <div className="mb-1.5 flex items-center gap-2 px-2">
-                <span className={`h-1.5 w-1.5 rounded-full ${color.replace("text-", "bg-")}`} />
-                <p className={`text-[10px] font-semibold tracking-wider uppercase ${color}`}>{group}</p>
+                <p className="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">{group}</p>
               </div>
             )}
 
@@ -123,7 +118,7 @@ export default function Sidebar({ isMobileMenuOpen, setIsMobileMenuOpen }) {
                 <NavLink
                   key={label}
                   to={path}
-                  end={path === "/dashboard/frontdesk"}
+                  end={path === "/app/fd"}
                   onClick={() => setIsMobileMenuOpen(false)}
                   title={!isExpanded ? label : ""}
                   className={({ isActive }) =>

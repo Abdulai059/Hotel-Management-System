@@ -11,7 +11,7 @@ export default function RoomCard({ room, onClick }) {
   const handleClick = () => {
     onClick?.(room);
     if (room.guest?.id) {
-      navigate(`/dashboard/frontdesk/rooms/reservation/${room.guest.id}`);
+      navigate(`/app/fd/room/${room.guest.id}`);
     }
   };
 
