@@ -24,6 +24,7 @@ import Payment from "./components/FrontDesk/Payment";
 import Calendar from "./components/FrontDesk/Calendar";
 import GuestProfile from "./components/FrontDesk/GuestProfile";
 import RoomTypePage from "./components/FrontDesk/RoomTypePage";
+import ShiftReportView from "./components/FrontDesk/ShiftReport";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -79,6 +80,8 @@ export default function App() {
                 <Route path="room-types" element={<RoomTypePage />} />
                 <Route path="payment/:id" element={<Payment />} />
                 <Route path="bookings" element={<Bookings />} />
+                <Route path="report" element={<ShiftReportView />} />
+
                 <Route path="corporate" element={<CorporateBookings />} />
                 <Route path="rooms" element={<Rooms />} />
                 <Route path="room/:id" element={<GuestProfile />} />

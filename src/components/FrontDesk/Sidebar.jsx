@@ -44,10 +44,10 @@ const links = [
     group: "Resources",
     items: [
       { label: "Help Videos", path: "/app/fd/help-videos", icon: Youtube },
-      { label: "Housekeeping Audit", path: "/app/fd/housekeeping-audit", icon: ClipboardCheck },
+      { label: "SMS Bot", path: "/app/fd/sms-bot", icon: ClipboardCheck },
       {
         label: "Housekeeping Legends",
-        path: "/app/fd/housekeeping-legends",
+        path: "/app/fd/report",
         icon: Sparkles,
         hasDropdown: true,
       },

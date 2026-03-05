@@ -100,8 +100,8 @@ function MiniCalendar({ year, month, today, onDayClick }) {
 
 export default function ScheduleCalendar() {
   const today = new Date();
-  const [year, setYear] = useState(2028);
-  const [month, setMonth] = useState(5);
+  const [year, setYear] = useState(today.getFullYear());
+  const [month, setMonth] = useState(today.getMonth());
   const [view, setView] = useState("Month");
   const [selectedCategory, setSelectedCategory] = useState("All Category");
 
