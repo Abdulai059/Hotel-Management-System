@@ -79,7 +79,7 @@ export default function App() {
                 <Route path="calendar" element={<Calendar />} />
                 <Route path="room-types" element={<RoomTypePage />} />
                 <Route path="payment/:id" element={<Payment />} />
-                <Route path="bookings" element={<Bookings />} />
+
                 <Route path="report" element={<ShiftReportView />} />
 
                 <Route path="corporate" element={<CorporateBookings />} />
