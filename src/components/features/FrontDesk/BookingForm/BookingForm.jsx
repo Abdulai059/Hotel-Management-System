@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import StepIndicator from "./StepIndicator";
 import ConfirmationScreen from "./ConfirmationScreen";
 import GuestInfoStep from "./steps/GuestInfoStep";
@@ -63,30 +64,50 @@ export default function BookingForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Validate required fields
+    const isRoomRequired = formData.status === "CHECKED_IN";
+    const missingFields = [];
+
+    if (!formData.fullName) missingFields.push("Full Name");
+    if (!formData.phone) missingFields.push("Phone");
+    if (!formData.checkInDate) missingFields.push("Check-in Date");
+    if (!formData.checkOutDate) missingFields.push("Check-out Date");
+    if (isRoomRequired && !formData.roomId) missingFields.push("Room");
+
+    if (missingFields.length > 0) {
+      toast.error(`Please fill in required fields: ${missingFields.join(", ")}`);
+      return;
+    }
+
     const bookingPayload = {
       guestData: {
         full_name: formData.fullName,
         phone: formData.phone,
-        email: formData.email,
-        nationality: formData.country,
-        address: formData.address,
-        city: formData.city,
-        country: formData.country,
-        gender: formData.gender,
+        email: formData.email || null,
+        nationality: formData.country || "Ghana",
+        address: formData.address || "",
+        city: formData.city || "",
+        country: formData.country || "Ghana",
+        gender: formData.gender || "",
       },
       bookingData: {
-        room_id: formData.roomId,
-        booking_type: formData.bookingType,
+        room_id: formData.roomId || null, // Use null instead of empty string
+        booking_type: formData.bookingType || "WALK_IN",
         start_date: formData.checkInDate,
         end_date: formData.checkOutDate,
         num_nights: calculateNights(formData.checkInDate, formData.checkOutDate),
-        num_guests: Number(formData.numberOfAdults) + Number(formData.numberOfChildren),
-        room_rate_snapshot: formData.roomRateSnapshot,
-        status: formData.status,
+        num_guests: Number(formData.numberOfAdults || 1) + Number(formData.numberOfChildren || 0),
+        room_rate_snapshot: formData.roomRateSnapshot || 0,
+        status: formData.status || "RESERVED",
       },
     };
 
-    createBooking(bookingPayload, { onSuccess: () => setIsConfirmed(true) });
+    createBooking(bookingPayload, {
+      onSuccess: () => setIsConfirmed(true),
+      onError: (error) => {
+        toast.error(`Failed to create booking: ${error.message}`);
+      },
+    });
   };
 
   return (

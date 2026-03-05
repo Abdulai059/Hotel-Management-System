@@ -1,22 +1,8 @@
 import { useEffect, useState } from "react";
-import supabase from "@/services/supabase";
+import { useAvailableRooms } from "@/services/apirooms";
 
 export default function RoomDetailsStep({ formData, onChange, onBack, submitting }) {
-  const [rooms, setRooms] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchRooms() {
-      const { data, error } = await supabase
-        .from("rooms")
-        .select("id, room_number, room_name, room_types:room_type_id(name, base_price)")
-        .eq("status", "AVAILABLE");
-
-      if (!error) setRooms(data);
-      setLoading(false);
-    }
-    fetchRooms();
-  }, []);
+  const { rooms, loading } = useAvailableRooms();
 
   const handleRoomChange = (e) => {
     const roomId = e.target.value;

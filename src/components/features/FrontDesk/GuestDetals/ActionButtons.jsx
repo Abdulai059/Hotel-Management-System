@@ -4,7 +4,7 @@ export default function ActionButtons({ booking }) {
   const navigate = useNavigate();
 
   const handlePayment = () => {
-    navigate(`/dashboard/frontdesk/payment/${booking.id}`);
+    navigate(`/app/fd/payment/${booking.id}`);
   };
 
   const handleClose = () => {

@@ -107,37 +107,42 @@ async function generateBookingId() {
 }
 
 export async function createBooking(guestData, bookingData) {
-  const resId = await generateBookingId();
+  try {
+    const resId = await generateBookingId();
 
-  const { data: guest, error: guestError } = await supabase.from("guests").insert(guestData).select("id").single();
+    // Create guest first
+    const { data: guest, error: guestError } = await supabase.from("guests").insert(guestData).select("id").single();
 
-  if (guestError) {
-    console.error("Guest creation error:", guestError);
-    throw new Error(`Guest could not be created: ${guestError.message}`);
-  }
-
-  const { data, error: bookingError } = await supabase
-    .from("bookings")
-    .insert({ ...bookingData, guest_id: guest.id, resId })
-    .select()
-    .single();
-
-  if (bookingError) {
-    console.error("Booking creation error:", bookingError);
-    throw new Error(`Booking could not be created: ${bookingError.message}`);
-  }
-
-  if (bookingData.status === "CHECKED_IN" && bookingData.room_id) {
-    const { error: roomUpdateError } = await supabase
-      .from("rooms")
-      .update({ status: "OCCUPIED" })
-      .eq("id", bookingData.room_id);
-
-    if (roomUpdateError) {
-      console.error("Room status update error:", roomUpdateError);
-      throw new Error(`Room status could not be updated: ${roomUpdateError.message}`);
+    if (guestError) {
+      throw new Error(`Guest could not be created: ${guestError.message}`);
     }
-  }
 
-  return data;
+    // Create booking
+    const { data, error: bookingError } = await supabase
+      .from("bookings")
+      .insert({ ...bookingData, guest_id: guest.id, resId })
+      .select()
+      .single();
+
+    if (bookingError) {
+      throw new Error(`Booking could not be created: ${bookingError.message}`);
+    }
+
+    // Update room status if checking in
+    if (bookingData.status === "CHECKED_IN" && bookingData.room_id) {
+      const { error: roomUpdateError } = await supabase
+        .from("rooms")
+        .update({ status: "OCCUPIED" })
+        .eq("id", bookingData.room_id);
+
+      if (roomUpdateError) {
+        throw new Error(`Room status could not be updated: ${roomUpdateError.message}`);
+      }
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Create booking error:", error);
+    throw error;
+  }
 }
