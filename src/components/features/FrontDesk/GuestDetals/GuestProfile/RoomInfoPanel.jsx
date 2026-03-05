@@ -1,11 +1,5 @@
+import { CardHeader } from "@/components/ui/FieldLabel";
 import { BedDouble, Square, Users } from "lucide-react";
-
-const CardHeader = ({ title, right }) => (
-  <div className="mb-5 flex items-center justify-between">
-    <span className="text-sm font-bold tracking-widest text-gray-700 uppercase">{title}</span>
-    {right ?? <span className="cursor-pointer text-xl tracking-widest text-gray-300">···</span>}
-  </div>
-);
 
 const RoomIllustration = () => (
   <div

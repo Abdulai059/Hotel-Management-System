@@ -24,7 +24,7 @@ export default function Modules() {
     },
     {
       title: "Front Desk Module",
-      description: "Handles all front desk operations including guest management and room assignments.",
+      description: "Manages frontdesk operations including guest management and room assignments.",
       color: "green",
       path: "/app/fd",
       roles: ["admin", "frontdesk"],
@@ -47,28 +47,28 @@ export default function Modules() {
 
   const colorStyles = {
     gray: {
-      bg: "bg-gray-100",
+      bg: "bg-[#0D0C22]",
       border: "border-gray-500",
-      title: "text-gray-700",
+      title: "text-gray-100",
       text: "text-gray-800",
     },
     green: {
-      bg: "bg-green-100",
+      bg: "bg-green-900",
       border: "border-green-500",
-      title: "text-green-700",
+      title: "text-green-50",
       text: "text-green-800",
     },
     red: {
-      bg: "bg-red-100",
-      border: "border-red-500",
-      title: "text-red-700",
-      text: "text-red-800",
+      bg: "bg-orange-900",
+      border: "border-orange-500",
+      title: "text-orange-50",
+      text: "text-orange-800",
     },
     yellow: {
-      bg: "bg-yellow-100",
-      border: "border-yellow-500",
-      title: "text-yellow-700",
-      text: "text-yellow-800",
+      bg: "bg-sky-900",
+      border: "border-sky-500",
+      title: "text-sky-50",
+      text: "text-sky-800",
     },
   };
 
@@ -76,9 +76,9 @@ export default function Modules() {
     <>
       <Navbar />
 
-      <div className="mx-auto mt-20 max-w-375 px-4 sm:px-4 lg:px-8">
+      <div className="mx-auto mt-20 max-w-375 px-4 sm:px-4 md:mt-40 lg:px-4">
         <div className="flex flex-col gap-20">
-          <div className="rounded-2xl bg-white p-5 shadow-sm">
+          <div className="rounded-sm bg-white p-5 shadow-sm">
             <div className="mb-5 flex w-full flex-col items-center gap-5 lg:flex-row lg:items-start">
               <div className="relative shrink-0">
                 <div className="ring-btn-green h-20 w-20 overflow-hidden rounded-full ring-2 ring-offset-2">
@@ -123,11 +123,11 @@ export default function Modules() {
               </div>
             </div>
 
-            <div className="bg-primary/60 rounded-xl px-4 py-3">
+            <div className="rounded-xl px-4 py-3">
               <p className="text-center text-sm text-gray-700">
                 Welcome to your <span className="font-bold">{profile?.role || "No Role"}</span> dashboard!{" "}
-                <span className="animate-wave inline-block origin-bottom">👋</span> You have access to the following
-                modules:
+                <span className="animate-wave inline-block origin-bottom text-3xl">👋</span> You have access to the
+                following modules:
               </p>
             </div>
           </div>
@@ -141,10 +141,14 @@ export default function Modules() {
                   <div
                     key={module.title}
                     onClick={() => navigate(module.path)}
-                    className={`min-w-63 flex-1 cursor-pointer ${style.bg} border-l-4 ${style.border} rounded-lg p-6 shadow transition-transform hover:scale-105`}
+                    className={`w-full max-w-100 cursor-pointer rounded-sm shadow transition-transform hover:scale-105 sm:basis-[calc(50%-12px)] lg:basis-[calc(25%-18px)]`}
                   >
-                    <h2 className={`mb-2 text-2xl font-bold ${style.title}`}>{module.title}</h2>
-                    <p className={`${style.text}`}>{module.description}</p>
+                    <h2
+                      className={`mb-2 p-4 text-lg font-semibold uppercase ${style.bg} ${style.border} ${style.title}`}
+                    >
+                      {module.title}
+                    </h2>
+                    <p className={`px-4 py-2 ${style.text}`}>{module.description}</p>
                   </div>
                 );
               })}
