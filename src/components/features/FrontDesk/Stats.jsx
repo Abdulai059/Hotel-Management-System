@@ -39,6 +39,7 @@ function StatCard({ label, value, icon: Icon, change = 0, accent, iconBg, iconCo
     </div>
   );
 }
+
 export default function Stats({ stats }) {
   const statsData = [
     {

@@ -144,11 +144,11 @@ export default function Modules() {
                     className={`w-full max-w-100 cursor-pointer rounded-sm shadow transition-transform hover:scale-105 sm:basis-[calc(50%-12px)] lg:basis-[calc(25%-18px)]`}
                   >
                     <h2
-                      className={`mb-2 p-4 text-lg font-semibold uppercase ${style.bg} ${style.border} ${style.title}`}
+                      className={`mb-2 p-3 text-base font-semibold uppercase md:p-4 md:text-lg ${style.bg} ${style.border} ${style.title}`}
                     >
                       {module.title}
                     </h2>
-                    <p className={`px-4 py-2 ${style.text}`}>{module.description}</p>
+                    <p className={`px-4 py-2 text-sm md:text-base ${style.text}`}>{module.description}</p>
                   </div>
                 );
               })}
