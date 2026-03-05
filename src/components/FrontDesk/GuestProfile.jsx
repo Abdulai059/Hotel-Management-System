@@ -6,6 +6,7 @@ import { RoomInfoPanel } from "../features/FrontDesk/GuestDetals/GuestProfile/Ro
 import { BookingPanel } from "../features/FrontDesk/GuestDetals/GuestProfile/BookingPanel";
 import { PriceSummaryPanel } from "../features/FrontDesk/GuestDetals/GuestProfile/PriceSummaryPanel";
 import { useQueryClient } from "@tanstack/react-query";
+import GuestProfileSkeleton from "../ui/skeleton/GuestProfileSkeleton";
 
 export default function GuestProfile() {
   const { id } = useParams();
@@ -16,6 +17,8 @@ export default function GuestProfile() {
     // Refresh the booking data to reflect the changes
     queryClient.invalidateQueries(["booking", id]);
   };
+
+  if (isLoading) return <GuestProfileSkeleton />;
 
   return (
     <>

@@ -30,9 +30,9 @@ const links = [
     group: "Operations",
     items: [
       { label: "Bookings", path: "/app/fd/bookings", icon: CalendarCheck },
-      { label: "Room Operations", path: "/app/fd/rooms", icon: BedDouble },
+      { label: "Accommodation Status", path: "/app/fd/rooms", icon: BedDouble },
       { label: "Corporate Bookings", path: "/app/fd/corporate", icon: Building2 },
-      { label: "Room Types", path: "/app/fd/room-types", icon: BedDouble },
+      { label: "Rooms", path: "/app/fd/room-types", icon: BedDouble },
       { label: "Calendar", path: "/app/fd/calendar", icon: Calendar },
     ],
   },
