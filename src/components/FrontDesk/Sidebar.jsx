@@ -29,7 +29,6 @@ const links = [
   {
     group: "Operations",
     items: [
-      { label: "Bookings", path: "/app/fd/bookings", icon: CalendarCheck },
       { label: "Accommodation Status", path: "/app/fd/rooms", icon: BedDouble },
       { label: "Corporate Bookings", path: "/app/fd/corporate", icon: Building2 },
       { label: "Rooms", path: "/app/fd/room-types", icon: BedDouble },

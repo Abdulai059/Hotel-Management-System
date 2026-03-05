@@ -2,6 +2,8 @@ import { Filter } from "@/components/ui/Filter";
 import { SortBy } from "@/components/ui/SortBy";
 import { Download, RefreshCw } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
+import BookingForm from "./BookingForm";
+import Modal from "@/components/ui/Modal";
 
 const STATUS_OPTIONS = [
   { value: "all", label: "All" },
@@ -68,18 +70,29 @@ export default function BookingFilters() {
   return (
     <div className="w-full bg-white">
       <div className="flex flex-col gap-2 border-b border-gray-100 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between">
-        <span className="rounded-sm bg-green-700 px-4 py-1.5 text-sm font-bold text-white">FrontDesk</span>
+        <span className="rounded-full bg-green-700 px-4 py-1.25 text-sm font-bold text-white">FrontDesk</span>
 
         <div className="flex items-center gap-2">
+          <Modal>
+            <Modal.Open opens="booking">
+              <button className="cursor-pointer rounded-full bg-pink-500 px-4 py-1.25 pl-6 text-sm font-bold text-white">
+                Add booking
+              </button>
+            </Modal.Open>
+            <Modal.Window name="booking">
+              <BookingForm />
+            </Modal.Window>
+          </Modal>
+
           <button
             onClick={handleReset}
-            className="rounded-xl bg-gray-100 p-1.5 text-gray-500 transition-colors hover:bg-gray-200"
+            className="cursor-pointer rounded-xl bg-gray-100 p-1.5 text-gray-500 transition-colors hover:bg-gray-200"
             title="Reset Filters"
           >
             <RefreshCw size={16} />
           </button>
           <button
-            className="rounded-xl bg-blue-700 p-1.5 text-white transition-colors hover:bg-blue-800"
+            className="cursor-pointer rounded-xl bg-blue-700 p-1.5 text-white transition-colors hover:bg-blue-800"
             title="Download"
           >
             <Download size={16} />
