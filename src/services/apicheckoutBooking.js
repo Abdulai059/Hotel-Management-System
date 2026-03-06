@@ -1,14 +1,16 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import supabase from "./supabase";
+import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 async function checkoutBooking(bookingId, roomId) {
-  const { error: roomError } = await supabase.from("rooms").update({ status: "AVAILABLE" }).eq("id", roomId);
+  const today = new Date().toISOString().split("T")[0];
+
+  const [{ error: roomError }, { error: bookingError }] = await Promise.all([
+    supabase.from("rooms").update({ status: "AVAILABLE" }).eq("id", roomId),
+    supabase.from("bookings").update({ status: "CHECKED_OUT", end_date: today }).eq("id", bookingId),
+  ]);
 
   if (roomError) throw roomError;
-
-  const { error: bookingError } = await supabase.from("bookings").update({ status: "CHECKED_OUT" }).eq("id", bookingId);
-
   if (bookingError) throw bookingError;
 }
 
@@ -19,7 +21,6 @@ export function useCheckout(bookingId) {
     mutationFn: ({ bookingId, roomId }) => checkoutBooking(bookingId, roomId),
     onSuccess: () => {
       toast.success("Guest checked out successfully!");
-      // Invalidate both the specific booking and general bookings queries
       queryClient.invalidateQueries({ queryKey: ["booking", bookingId] });
       queryClient.invalidateQueries({ queryKey: ["bookings"] });
     },

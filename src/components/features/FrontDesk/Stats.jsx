@@ -1,3 +1,4 @@
+import { useDailyCheckInOut } from "@/services/getDailyCheckInOut";
 import { LogIn, LogOut, BedDouble, DoorOpen, DoorClosed, TrendingUp, TrendingDown } from "lucide-react";
 
 function StatCard({ label, value, icon: Icon, change = 0, accent, iconBg, iconColor }) {
@@ -41,13 +42,15 @@ function StatCard({ label, value, icon: Icon, change = 0, accent, iconBg, iconCo
 }
 
 export default function Stats({ stats }) {
+  const { data: todayStats } = useDailyCheckInOut();
+
   const statsData = [
     {
       label: "Check-in",
       timeframe: "Today's",
-      value: stats?.todayCheckIns || 0,
+      value: todayStats?.checkIns ?? 0,
       icon: LogIn,
-      change: 5.3,
+      change: todayStats?.checkInChange ?? 0,
       iconBg: "bg-gray-100",
       iconColor: "text-gray-600",
       accent: true,
@@ -55,9 +58,9 @@ export default function Stats({ stats }) {
     {
       label: "Check-out",
       timeframe: "Today's",
-      value: stats?.todayCheckOuts || 0,
+      value: todayStats?.checkOuts ?? 0,
       icon: LogOut,
-      change: -1.06,
+      change: todayStats?.checkOutChange ?? 0,
       iconBg: "bg-primary",
       iconColor: "text-gray-600",
     },
@@ -79,15 +82,6 @@ export default function Stats({ stats }) {
       iconBg: "bg-primary",
       iconColor: "text-gray-600",
     },
-    // {
-    //   label: "Occupied room",
-    //   timeframe: "Total",
-    //   value: stats?.occupiedRooms || 0,
-    //   icon: DoorClosed,
-    //   change: -0.8,
-    //   iconBg: "bg-primary",
-    //   iconColor: "text-gray-600",
-    // },
   ];
 
   return (
