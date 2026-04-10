@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import toast from "react-hot-toast";
-import StepIndicator from "./StepIndicator";
 import ConfirmationScreen from "./ConfirmationScreen";
 import GuestInfoStep from "./steps/GuestInfoStep";
 import StayDetailsStep from "./steps/StayDetailsStep";
@@ -28,6 +27,7 @@ const EMPTY_FORM = {
   checkOutDate: "",
   bookingType: "",
   roomId: "",
+  roomType: "",
   roomRateSnapshot: "",
   status: "",
   numberOfAdults: "1",
@@ -47,6 +47,8 @@ export default function BookingForm() {
 
   const { createBooking, isPending } = useCreateBooking();
 
+  const nights = calculateNights(formData.checkInDate, formData.checkOutDate);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -64,7 +66,6 @@ export default function BookingForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate required fields
     const isRoomRequired = formData.status === "CHECKED_IN";
     const missingFields = [];
 
@@ -91,11 +92,11 @@ export default function BookingForm() {
         gender: formData.gender || "",
       },
       bookingData: {
-        room_id: formData.roomId || null, // Use null instead of empty string
+        room_id: formData.roomId || null,
         booking_type: formData.bookingType || "WALK_IN",
         start_date: formData.checkInDate,
         end_date: formData.checkOutDate,
-        num_nights: calculateNights(formData.checkInDate, formData.checkOutDate),
+        num_nights: nights,
         num_guests: Number(formData.numberOfAdults || 1) + Number(formData.numberOfChildren || 0),
         room_rate_snapshot: formData.roomRateSnapshot || 0,
         status: formData.status || "RESERVED",
@@ -103,7 +104,10 @@ export default function BookingForm() {
     };
 
     createBooking(bookingPayload, {
-      onSuccess: () => setIsConfirmed(true),
+      onSuccess: () => {
+        toast.success("Booking created successfully");
+        setIsConfirmed(true);
+      },
       onError: (error) => {
         toast.error(`Failed to create booking: ${error.message}`);
       },
@@ -117,8 +121,8 @@ export default function BookingForm() {
           <div className="mb-8 rounded-2xl bg-white px-8 py-5 shadow-sm">
             <div className="flex items-center">
               {STEPS.map((step, index) => (
-                <>
-                  <div key={step.number} className="flex flex-col items-center gap-1.5">
+                <Fragment key={step.number}>
+                  <div className="flex flex-col items-center gap-1.5">
                     <div
                       className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold transition-all duration-300 ${
                         currentStep >= step.number
@@ -136,15 +140,15 @@ export default function BookingForm() {
                       {step.label}
                     </span>
                   </div>
+
                   {index < STEPS.length - 1 && (
                     <div
-                      key={`line-${index}`}
                       className={`mb-5 h-px flex-1 transition-colors duration-500 ${
                         currentStep > step.number ? "bg-[#9dc43b]" : "bg-gray-200"
                       }`}
                     />
                   )}
-                </>
+                </Fragment>
               ))}
             </div>
           </div>
@@ -156,6 +160,7 @@ export default function BookingForm() {
               <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#e7f68f] text-sm font-bold text-gray-700">
                 {currentStep}
               </div>
+
               <div>
                 <p className="text-[10px] font-semibold tracking-widest text-gray-400 uppercase">
                   Step {currentStep} of {STEPS.length}
@@ -166,17 +171,15 @@ export default function BookingForm() {
           )}
 
           {isConfirmed ? (
-            <ConfirmationScreen
-              formData={formData}
-              calculateNights={() => calculateNights(formData.checkInDate, formData.checkOutDate)}
-              onNewBooking={handleNewBooking}
-            />
+            <ConfirmationScreen formData={formData} nights={nights} onNewBooking={handleNewBooking} />
           ) : (
             <form onSubmit={handleSubmit}>
               {currentStep === 1 && <GuestInfoStep formData={formData} onChange={handleChange} onNext={handleNext} />}
+
               {currentStep === 2 && (
                 <StayDetailsStep formData={formData} onChange={handleChange} onNext={handleNext} onBack={handleBack} />
               )}
+
               {currentStep === 3 && (
                 <RoomDetailsStep
                   formData={formData}
