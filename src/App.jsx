@@ -25,6 +25,7 @@ import Calendar from "./components/FrontDesk/Calendar";
 import GuestProfile from "./components/FrontDesk/GuestProfile";
 import RoomTypePage from "./components/FrontDesk/RoomTypePage";
 import ShiftReportView from "./components/FrontDesk/ShiftReport";
+import Menu from "./components/Restaurant/Menu";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -96,6 +97,7 @@ export default function App() {
                 }
               >
                 <Route index element={<RestaurantDashboard />} />
+                <Route path="menu" element={<Menu />} />
               </Route>
             </Route>
 
