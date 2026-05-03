@@ -1,8 +1,10 @@
 import { useAuth } from "@/context/AuthContext";
-import { LayoutDashboard, Coffee, Utensils, Table, FileText, ChevronsLeft, Menu } from "lucide-react";
+import { LayoutDashboard, Coffee, Utensils, Table, FileText, ChevronsLeft, Menu, ShoppingCart } from "lucide-react";
 import { HiArrowLeftEndOnRectangle } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router";
 import { useSidebarState } from "@/hooks/useSidebarState";
+import { getTotalCartQuantity } from "./cart/cartSlice";
+import { useSelector } from "react-redux";
 
 const links = [
   { label: "Dashboard", path: "", icon: LayoutDashboard },
@@ -136,6 +138,8 @@ function Header() {
   const { profile } = useAuth();
   const role = profile?.role === "admin" ? "Admin" : "Restaurant Staff";
 
+  const totalQuantity = useSelector(getTotalCartQuantity);
+
   return (
     <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-sm">
       <div className="flex items-center gap-3">
@@ -145,9 +149,22 @@ function Header() {
         <span className="animate-wave inline-block origin-bottom text-2xl">👋</span>
       </div>
 
-      <button className="rounded-full border border-gray-300 px-4 py-1 text-sm text-gray-700 hover:bg-gray-100">
-        Logout
-      </button>
+      <div className="flex items-center gap-4">
+        <button className="flex cursor-pointer items-center gap-2">
+          <div className="relative">
+            <ShoppingCart size={22} className="text-gray-700" />
+
+            <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+              {totalQuantity}
+            </span>
+          </div>
+          <span className="ml-2 text-sm text-gray-600">Open cart</span>
+        </button>
+
+        <button className="rounded-full border border-gray-300 px-4 py-1 text-sm text-gray-700 hover:bg-gray-100">
+          Logout
+        </button>
+      </div>
     </header>
   );
 }

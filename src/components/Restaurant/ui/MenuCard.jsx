@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, getCurrentQuantityById } from "../cartSlice";
-import UpdateItemQuantity from "./UpdateItemQuantity";
+import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
+import UpdateItemQuantity from "../cart/UpdateItemQuantity";
 
 export default function MenuCard({ item }) {
   const { id, name, price, tagline, ingredients, img } = item;
@@ -49,12 +49,14 @@ export default function MenuCard({ item }) {
         {ingredients.join(" / ")}
       </p>
 
-      {/* ✅ CONDITIONAL UI */}
       {isInCart ? (
         <UpdateItemQuantity menuId={id} currentQuantity={currentQuantity} />
       ) : (
-        <button onClick={handleAddCart} className="w-full rounded bg-black py-1 text-white">
-          Add to cart
+        <button
+          onClick={handleAddCart}
+          className="w-32 rounded-full bg-[#e7f68f] px-4 py-2 text-xs font-medium text-gray-900 md:px-5 md:py-2.5"
+        >
+          ADD TO CART
         </button>
       )}
     </article>
