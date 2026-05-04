@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const links = [
   { label: "Dashboard", path: "", icon: LayoutDashboard },
   { label: "Orders", path: "orders", icon: Coffee },
-  { label: "Menu", path: "menu", icon: Utensils },
+  { label: "pos", path: "pos", icon: Utensils },
   { label: "Tables", path: "tables", icon: Table },
   { label: "Reports", path: "reports", icon: FileText },
 ];

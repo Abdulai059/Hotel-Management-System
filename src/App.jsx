@@ -26,6 +26,7 @@ import GuestProfile from "./components/FrontDesk/GuestProfile";
 import RoomTypePage from "./components/FrontDesk/RoomTypePage";
 import ShiftReportView from "./components/FrontDesk/ShiftReport";
 import Menu from "./components/Restaurant/Menu";
+import PosLayout from "./components/Restaurant/ui/PosLayout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -97,7 +98,7 @@ export default function App() {
                 }
               >
                 <Route index element={<RestaurantDashboard />} />
-                <Route path="menu" element={<Menu />} />
+                <Route path="pos" element={<PosLayout />} />
               </Route>
             </Route>
 
